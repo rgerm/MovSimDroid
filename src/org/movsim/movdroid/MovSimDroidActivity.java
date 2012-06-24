@@ -13,10 +13,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.actionbarsherlock.view.Window;
-import org.movsim.droid.R;
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener {
 
+    
+
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
