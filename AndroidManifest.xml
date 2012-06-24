@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         <activity
-            android:name="org.movsim.movdroid.MovSimDroidActivity"
+            android:name=".MovSimDroidActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden">
             <intent-filter>
