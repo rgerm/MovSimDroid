@@ -1,6 +1,10 @@
 package org.movsim.movdroid;
 
 
+import org.apache.log4j.Level;
+import org.movsim.input.ProjectMetaData;
+import org.movsim.simulator.Simulator;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,21 +19,22 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.actionbarsherlock.view.Window;
 
+import de.mindpipe.android.logging.log4j.LogConfigurator;
+
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener {
     
-//    static {
-//        final LogConfigurator logConfigurator = new LogConfigurator();
-//
-//        logConfigurator.setUseFileAppender(false);
-//        // logConfigurator.setFileName(Environment.getExternalStorageDirectory() + "myapp.log");
-//        logConfigurator.setRootLevel(Level.ERROR);
-//        // Set log level of a specific logger
-//        logConfigurator.setLevel("org.apache", Level.ERROR);
-//        logConfigurator.configure();
-//    }
-//
-//    final static Logger logger = LoggerFactory.getLogger(Simulator.class);
+    static {
+        final LogConfigurator logConfigurator = new LogConfigurator();
+
+        logConfigurator.setUseFileAppender(false);
+        // logConfigurator.setFileName(Environment.getExternalStorageDirectory() + "myapp.log");
+        logConfigurator.setRootLevel(Level.ERROR);
+        // Set log level of a specific logger
+        logConfigurator.setLevel("org.apache", Level.ERROR);
+        logConfigurator.configure();
+    }
+//    final static Logger logger = LoggerFactory.getLogger(MovSimDroidActivity.class);
     
     /** Called when the activity is first created. */
     @Override
@@ -38,30 +43,31 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-//        System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
+        System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
         
         initActionBar();
+        final ProjectMetaData projectMetaData = ProjectMetaData.getInstance();
 
-//        setupSimulator();
+        setupSimulator();
 
     }
 
-//    private void setupSimulator() {
-//        final ProjectMetaData projectMetaData = ProjectMetaData.getInstance();
-//
-//        projectMetaData.setXmlFromResources(true);
-//        projectMetaData.setInstantaneousFileOutput(false);
-//        projectMetaData.setProjectName("offramp");
-//        projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
-//        
-//        final Simulator simulator = new Simulator(projectMetaData);
-//        
-//        simulator.getRoadNetwork().clear();
-//        simulator.initialize();
-//
-//
-//        simulator.runToCompletion();
-//    }
+    private void setupSimulator() {
+        final ProjectMetaData projectMetaData = ProjectMetaData.getInstance();
+
+        projectMetaData.setXmlFromResources(true);
+        projectMetaData.setInstantaneousFileOutput(false);
+        projectMetaData.setProjectName("offramp");
+        projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
+        
+        final Simulator simulator = new Simulator(projectMetaData);
+        
+        simulator.getRoadNetwork().clear();
+        simulator.initialize();
+
+
+        simulator.runToCompletion();
+    }
 
     private void initActionBar() {
         getSupportActionBar().setBackgroundDrawable(

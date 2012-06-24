@@ -989,26 +989,26 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActionBar_background org.movsim.droid:background}</code></td><td> Specifies a background drawable for the action bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_backgroundSplit org.movsim.droid:backgroundSplit}</code></td><td> Specifies a background drawable for the bottom component of a split action bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_backgroundStacked org.movsim.droid:backgroundStacked}</code></td><td> Specifies a background drawable for a second stacked row of the action bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_customNavigationLayout org.movsim.droid:customNavigationLayout}</code></td><td> Specifies a layout for custom navigation.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_displayOptions org.movsim.droid:displayOptions}</code></td><td> Options affecting how the action bar is displayed.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_divider org.movsim.droid:divider}</code></td><td> Specifies the drawable used for item dividers.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_height org.movsim.droid:height}</code></td><td> Specifies a fixed height.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_homeLayout org.movsim.droid:homeLayout}</code></td><td> Specifies a layout to use for the "home" section of the action bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_icon org.movsim.droid:icon}</code></td><td> Specifies the drawable used for the application icon.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_indeterminateProgressStyle org.movsim.droid:indeterminateProgressStyle}</code></td><td> Specifies a style resource to use for an indeterminate progress spinner.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_itemPadding org.movsim.droid:itemPadding}</code></td><td> Specifies padding that should be applied to the left and right sides of
+           <tr><td><code>{@link #SherlockActionBar_background org.movsim.movdroid:background}</code></td><td> Specifies a background drawable for the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_backgroundSplit org.movsim.movdroid:backgroundSplit}</code></td><td> Specifies a background drawable for the bottom component of a split action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_backgroundStacked org.movsim.movdroid:backgroundStacked}</code></td><td> Specifies a background drawable for a second stacked row of the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_customNavigationLayout org.movsim.movdroid:customNavigationLayout}</code></td><td> Specifies a layout for custom navigation.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_displayOptions org.movsim.movdroid:displayOptions}</code></td><td> Options affecting how the action bar is displayed.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_divider org.movsim.movdroid:divider}</code></td><td> Specifies the drawable used for item dividers.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_height org.movsim.movdroid:height}</code></td><td> Specifies a fixed height.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_homeLayout org.movsim.movdroid:homeLayout}</code></td><td> Specifies a layout to use for the "home" section of the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_icon org.movsim.movdroid:icon}</code></td><td> Specifies the drawable used for the application icon.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_indeterminateProgressStyle org.movsim.movdroid:indeterminateProgressStyle}</code></td><td> Specifies a style resource to use for an indeterminate progress spinner.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_itemPadding org.movsim.movdroid:itemPadding}</code></td><td> Specifies padding that should be applied to the left and right sides of
              system-provided items in the bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_logo org.movsim.droid:logo}</code></td><td> Specifies the drawable used for the application logo.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_navigationMode org.movsim.droid:navigationMode}</code></td><td> The type of navigation to use.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_progressBarPadding org.movsim.droid:progressBarPadding}</code></td><td> Specifies the horizontal padding on either end for an embedded progress bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_progressBarStyle org.movsim.droid:progressBarStyle}</code></td><td> Specifies a style resource to use for an embedded progress bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_subtitle org.movsim.droid:subtitle}</code></td><td> Specifies subtitle text used for navigationMode="normal" </td></tr>
-           <tr><td><code>{@link #SherlockActionBar_subtitleTextStyle org.movsim.droid:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
-           <tr><td><code>{@link #SherlockActionBar_title org.movsim.droid:title}</code></td><td> Specifies title text used for navigationMode="normal" </td></tr>
-           <tr><td><code>{@link #SherlockActionBar_titleTextStyle org.movsim.droid:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_logo org.movsim.movdroid:logo}</code></td><td> Specifies the drawable used for the application logo.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_navigationMode org.movsim.movdroid:navigationMode}</code></td><td> The type of navigation to use.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_progressBarPadding org.movsim.movdroid:progressBarPadding}</code></td><td> Specifies the horizontal padding on either end for an embedded progress bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_progressBarStyle org.movsim.movdroid:progressBarStyle}</code></td><td> Specifies a style resource to use for an embedded progress bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_subtitle org.movsim.movdroid:subtitle}</code></td><td> Specifies subtitle text used for navigationMode="normal" </td></tr>
+           <tr><td><code>{@link #SherlockActionBar_subtitleTextStyle org.movsim.movdroid:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
+           <tr><td><code>{@link #SherlockActionBar_title org.movsim.movdroid:title}</code></td><td> Specifies title text used for navigationMode="normal" </td></tr>
+           <tr><td><code>{@link #SherlockActionBar_titleTextStyle org.movsim.movdroid:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
            </table>
            @see #SherlockActionBar_background
            @see #SherlockActionBar_backgroundSplit
@@ -1323,7 +1323,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActionMenuItemView_android_minWidth org.movsim.droid:android_minWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockActionMenuItemView_android_minWidth org.movsim.movdroid:android_minWidth}</code></td><td></td></tr>
            </table>
            @see #SherlockActionMenuItemView_android_minWidth
          */
@@ -1331,7 +1331,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x0101013f
         };
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#android_minWidth}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#android_minWidth}
           attribute's value can be found in the {@link #SherlockActionMenuItemView} array.
           @attr name android:android_minWidth
         */
@@ -1342,11 +1342,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActionMode_background org.movsim.droid:background}</code></td><td> Specifies a background for the action mode bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionMode_backgroundSplit org.movsim.droid:backgroundSplit}</code></td><td> Specifies a background for the split action mode bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionMode_height org.movsim.droid:height}</code></td><td> Specifies a fixed height for the action mode bar.</td></tr>
-           <tr><td><code>{@link #SherlockActionMode_subtitleTextStyle org.movsim.droid:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
-           <tr><td><code>{@link #SherlockActionMode_titleTextStyle org.movsim.droid:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_background org.movsim.movdroid:background}</code></td><td> Specifies a background for the action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_backgroundSplit org.movsim.movdroid:backgroundSplit}</code></td><td> Specifies a background for the split action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_height org.movsim.movdroid:height}</code></td><td> Specifies a fixed height for the action mode bar.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_subtitleTextStyle org.movsim.movdroid:subtitleTextStyle}</code></td><td> Specifies a style to use for subtitle text.</td></tr>
+           <tr><td><code>{@link #SherlockActionMode_titleTextStyle org.movsim.movdroid:titleTextStyle}</code></td><td> Specifies a style to use for title text.</td></tr>
            </table>
            @see #SherlockActionMode_background
            @see #SherlockActionMode_backgroundSplit
@@ -1434,9 +1434,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActivityChooserView_android_background org.movsim.droid:android_background}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockActivityChooserView_expandActivityOverflowButtonDrawable org.movsim.droid:expandActivityOverflowButtonDrawable}</code></td><td> The drawable to show in the button for expanding the activities overflow popup.</td></tr>
-           <tr><td><code>{@link #SherlockActivityChooserView_initialActivityCount org.movsim.droid:initialActivityCount}</code></td><td> The maximal number of items initially shown in the activity list.</td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_android_background org.movsim.movdroid:android_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_expandActivityOverflowButtonDrawable org.movsim.movdroid:expandActivityOverflowButtonDrawable}</code></td><td> The drawable to show in the button for expanding the activities overflow popup.</td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_initialActivityCount org.movsim.movdroid:initialActivityCount}</code></td><td> The maximal number of items initially shown in the activity list.</td></tr>
            </table>
            @see #SherlockActivityChooserView_android_background
            @see #SherlockActivityChooserView_expandActivityOverflowButtonDrawable
@@ -1446,7 +1446,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x010100d4, 0x7f01004f, 0x7f010050
         };
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#android_background}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#android_background}
           attribute's value can be found in the {@link #SherlockActivityChooserView} array.
           @attr name android:android_background
         */
@@ -1490,12 +1490,12 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_checkableBehavior org.movsim.droid:android_checkableBehavior}</code></td><td> Whether the items are capable of displaying a check mark.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_enabled org.movsim.droid:android_enabled}</code></td><td> Whether the items are enabled.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_id org.movsim.droid:android_id}</code></td><td> The ID of the group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_menuCategory org.movsim.droid:android_menuCategory}</code></td><td> The category applied to all items within this group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_orderInCategory org.movsim.droid:android_orderInCategory}</code></td><td> The order within the category applied to all items within this group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_visible org.movsim.droid:android_visible}</code></td><td> Whether the items are shown/visible.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_checkableBehavior org.movsim.movdroid:android_checkableBehavior}</code></td><td> Whether the items are capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_enabled org.movsim.movdroid:android_enabled}</code></td><td> Whether the items are enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_id org.movsim.movdroid:android_id}</code></td><td> The ID of the group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_menuCategory org.movsim.movdroid:android_menuCategory}</code></td><td> The category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_orderInCategory org.movsim.movdroid:android_orderInCategory}</code></td><td> The order within the category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_visible org.movsim.movdroid:android_visible}</code></td><td> Whether the items are shown/visible.</td></tr>
            </table>
            @see #SherlockMenuGroup_android_checkableBehavior
            @see #SherlockMenuGroup_android_enabled
@@ -1512,7 +1512,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the items are capable of displaying a check mark. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_checkableBehavior}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_checkableBehavior}.
           @attr name android:android_checkableBehavior
         */
         public static final int SherlockMenuGroup_android_checkableBehavior = 5;
@@ -1520,7 +1520,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the items are enabled. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_enabled}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_enabled}.
           @attr name android:android_enabled
         */
         public static final int SherlockMenuGroup_android_enabled = 0;
@@ -1528,7 +1528,7 @@ containing a value of this type.
           <p>
           @attr description
            The ID of the group. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_id}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_id}.
           @attr name android:android_id
         */
         public static final int SherlockMenuGroup_android_id = 1;
@@ -1537,7 +1537,7 @@ containing a value of this type.
           @attr description
            The category applied to all items within this group.
              (This will be or'ed with the orderInCategory attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_menuCategory}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_menuCategory}.
           @attr name android:android_menuCategory
         */
         public static final int SherlockMenuGroup_android_menuCategory = 3;
@@ -1546,7 +1546,7 @@ containing a value of this type.
           @attr description
            The order within the category applied to all items within this group.
              (This will be or'ed with the category attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_orderInCategory}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_orderInCategory}.
           @attr name android:android_orderInCategory
         */
         public static final int SherlockMenuGroup_android_orderInCategory = 4;
@@ -1554,7 +1554,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the items are shown/visible. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_visible}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_visible}.
           @attr name android:android_visible
         */
         public static final int SherlockMenuGroup_android_visible = 2;
@@ -1564,26 +1564,26 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionLayout org.movsim.droid:android_actionLayout}</code></td><td> An optional layout to be used as an action view.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionProviderClass org.movsim.droid:android_actionProviderClass}</code></td><td> The name of an optional ActionProvider class to instantiate an action view
+           <tr><td><code>{@link #SherlockMenuItem_android_actionLayout org.movsim.movdroid:android_actionLayout}</code></td><td> An optional layout to be used as an action view.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_actionProviderClass org.movsim.movdroid:android_actionProviderClass}</code></td><td> The name of an optional ActionProvider class to instantiate an action view
              and perform operations such as default action for that menu item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionViewClass org.movsim.droid:android_actionViewClass}</code></td><td> The name of an optional View class to instantiate and use as an
+           <tr><td><code>{@link #SherlockMenuItem_android_actionViewClass org.movsim.movdroid:android_actionViewClass}</code></td><td> The name of an optional View class to instantiate and use as an
              action view.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_alphabeticShortcut org.movsim.droid:android_alphabeticShortcut}</code></td><td> The alphabetic shortcut key.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_checkable org.movsim.droid:android_checkable}</code></td><td> Whether the item is capable of displaying a check mark.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_checked org.movsim.droid:android_checked}</code></td><td> Whether the item is checked.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_enabled org.movsim.droid:android_enabled}</code></td><td> Whether the item is enabled.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_icon org.movsim.droid:android_icon}</code></td><td> The icon associated with this item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_id org.movsim.droid:android_id}</code></td><td> The ID of the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_menuCategory org.movsim.droid:android_menuCategory}</code></td><td> The category applied to the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_numericShortcut org.movsim.droid:android_numericShortcut}</code></td><td> The numeric shortcut key.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_onClick org.movsim.droid:android_onClick}</code></td><td> Name of a method on the Context used to inflate the menu that will be
+           <tr><td><code>{@link #SherlockMenuItem_android_alphabeticShortcut org.movsim.movdroid:android_alphabeticShortcut}</code></td><td> The alphabetic shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checkable org.movsim.movdroid:android_checkable}</code></td><td> Whether the item is capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checked org.movsim.movdroid:android_checked}</code></td><td> Whether the item is checked.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_enabled org.movsim.movdroid:android_enabled}</code></td><td> Whether the item is enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_icon org.movsim.movdroid:android_icon}</code></td><td> The icon associated with this item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_id org.movsim.movdroid:android_id}</code></td><td> The ID of the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_menuCategory org.movsim.movdroid:android_menuCategory}</code></td><td> The category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_numericShortcut org.movsim.movdroid:android_numericShortcut}</code></td><td> The numeric shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_onClick org.movsim.movdroid:android_onClick}</code></td><td> Name of a method on the Context used to inflate the menu that will be
              called when the item is clicked.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_orderInCategory org.movsim.droid:android_orderInCategory}</code></td><td> The order within the category applied to the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_showAsAction org.movsim.droid:android_showAsAction}</code></td><td> How this item should display in the Action Bar, if present.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_title org.movsim.droid:android_title}</code></td><td> The title associated with the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_titleCondensed org.movsim.droid:android_titleCondensed}</code></td><td> The condensed title associated with the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_visible org.movsim.droid:android_visible}</code></td><td> Whether the item is shown/visible.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_orderInCategory org.movsim.movdroid:android_orderInCategory}</code></td><td> The order within the category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_showAsAction org.movsim.movdroid:android_showAsAction}</code></td><td> How this item should display in the Action Bar, if present.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_title org.movsim.movdroid:android_title}</code></td><td> The title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_titleCondensed org.movsim.movdroid:android_titleCondensed}</code></td><td> The condensed title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_visible org.movsim.movdroid:android_visible}</code></td><td> Whether the item is shown/visible.</td></tr>
            </table>
            @see #SherlockMenuItem_android_actionLayout
            @see #SherlockMenuItem_android_actionProviderClass
@@ -1616,7 +1616,7 @@ containing a value of this type.
            An optional layout to be used as an action view.
              See {@link android.view.MenuItem#setActionView(android.view.View)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_actionLayout}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_actionLayout}.
           @attr name android:android_actionLayout
         */
         public static final int SherlockMenuItem_android_actionLayout = 14;
@@ -1627,7 +1627,7 @@ containing a value of this type.
              and perform operations such as default action for that menu item.
              See {@link android.view.MenuItem#setActionProvider(android.view.ActionProvider)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_actionProviderClass}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_actionProviderClass}.
           @attr name android:android_actionProviderClass
         */
         public static final int SherlockMenuItem_android_actionProviderClass = 16;
@@ -1637,7 +1637,7 @@ containing a value of this type.
            The name of an optional View class to instantiate and use as an
              action view. See {@link android.view.MenuItem#setActionView(android.view.View)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_actionViewClass}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_actionViewClass}.
           @attr name android:android_actionViewClass
         */
         public static final int SherlockMenuItem_android_actionViewClass = 15;
@@ -1646,7 +1646,7 @@ containing a value of this type.
           @attr description
            The alphabetic shortcut key.  This is the shortcut when using a keyboard
              with alphabetic keys. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_alphabeticShortcut}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_alphabeticShortcut}.
           @attr name android:android_alphabeticShortcut
         */
         public static final int SherlockMenuItem_android_alphabeticShortcut = 9;
@@ -1654,7 +1654,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the item is capable of displaying a check mark. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_checkable}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_checkable}.
           @attr name android:android_checkable
         */
         public static final int SherlockMenuItem_android_checkable = 11;
@@ -1663,7 +1663,7 @@ containing a value of this type.
           @attr description
            Whether the item is checked.  Note that you must first have enabled checking with
              the checkable attribute or else the check mark will not appear. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_checked}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_checked}.
           @attr name android:android_checked
         */
         public static final int SherlockMenuItem_android_checked = 3;
@@ -1671,7 +1671,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the item is enabled. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_enabled}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_enabled}.
           @attr name android:android_enabled
         */
         public static final int SherlockMenuItem_android_enabled = 1;
@@ -1680,7 +1680,7 @@ containing a value of this type.
           @attr description
            The icon associated with this item.  This icon will not always be shown, so
              the title should be sufficient in describing this item. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_icon}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_icon}.
           @attr name android:android_icon
         */
         public static final int SherlockMenuItem_android_icon = 0;
@@ -1688,7 +1688,7 @@ containing a value of this type.
           <p>
           @attr description
            The ID of the item. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_id}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_id}.
           @attr name android:android_id
         */
         public static final int SherlockMenuItem_android_id = 2;
@@ -1697,7 +1697,7 @@ containing a value of this type.
           @attr description
            The category applied to the item.
              (This will be or'ed with the orderInCategory attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_menuCategory}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_menuCategory}.
           @attr name android:android_menuCategory
         */
         public static final int SherlockMenuItem_android_menuCategory = 5;
@@ -1706,7 +1706,7 @@ containing a value of this type.
           @attr description
            The numeric shortcut key.  This is the shortcut when using a numeric (e.g., 12-key)
              keyboard. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_numericShortcut}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_numericShortcut}.
           @attr name android:android_numericShortcut
         */
         public static final int SherlockMenuItem_android_numericShortcut = 10;
@@ -1715,7 +1715,7 @@ containing a value of this type.
           @attr description
            Name of a method on the Context used to inflate the menu that will be
              called when the item is clicked. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_onClick}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_onClick}.
           @attr name android:android_onClick
         */
         public static final int SherlockMenuItem_android_onClick = 12;
@@ -1724,7 +1724,7 @@ containing a value of this type.
           @attr description
            The order within the category applied to the item.
              (This will be or'ed with the category attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_orderInCategory}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_orderInCategory}.
           @attr name android:android_orderInCategory
         */
         public static final int SherlockMenuItem_android_orderInCategory = 6;
@@ -1732,7 +1732,7 @@ containing a value of this type.
           <p>
           @attr description
            How this item should display in the Action Bar, if present. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_showAsAction}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_showAsAction}.
           @attr name android:android_showAsAction
         */
         public static final int SherlockMenuItem_android_showAsAction = 13;
@@ -1740,7 +1740,7 @@ containing a value of this type.
           <p>
           @attr description
            The title associated with the item. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_title}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_title}.
           @attr name android:android_title
         */
         public static final int SherlockMenuItem_android_title = 7;
@@ -1749,7 +1749,7 @@ containing a value of this type.
           @attr description
            The condensed title associated with the item.  This is used in situations where the
              normal title may be too long to be displayed. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_titleCondensed}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_titleCondensed}.
           @attr name android:android_titleCondensed
         */
         public static final int SherlockMenuItem_android_titleCondensed = 8;
@@ -1757,7 +1757,7 @@ containing a value of this type.
           <p>
           @attr description
            Whether the item is shown/visible. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_visible}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_visible}.
           @attr name android:android_visible
         */
         public static final int SherlockMenuItem_android_visible = 4;
@@ -1767,14 +1767,14 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockMenuView_headerBackground org.movsim.droid:headerBackground}</code></td><td> Default background for the menu header.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_horizontalDivider org.movsim.droid:horizontalDivider}</code></td><td> Default horizontal divider between rows of menu items.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_itemBackground org.movsim.droid:itemBackground}</code></td><td> Default background for each menu item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_itemIconDisabledAlpha org.movsim.droid:itemIconDisabledAlpha}</code></td><td> Default disabled icon alpha for each menu item that shows an icon.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_itemTextAppearance org.movsim.droid:itemTextAppearance}</code></td><td> Default appearance of menu item text.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_preserveIconSpacing org.movsim.droid:preserveIconSpacing}</code></td><td> Whether space should be reserved in layout when an icon is missing.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_verticalDivider org.movsim.droid:verticalDivider}</code></td><td> Default vertical divider between menu items.</td></tr>
-           <tr><td><code>{@link #SherlockMenuView_windowAnimationStyle org.movsim.droid:windowAnimationStyle}</code></td><td> Default animations for the menu.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_headerBackground org.movsim.movdroid:headerBackground}</code></td><td> Default background for the menu header.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_horizontalDivider org.movsim.movdroid:horizontalDivider}</code></td><td> Default horizontal divider between rows of menu items.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemBackground org.movsim.movdroid:itemBackground}</code></td><td> Default background for each menu item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemIconDisabledAlpha org.movsim.movdroid:itemIconDisabledAlpha}</code></td><td> Default disabled icon alpha for each menu item that shows an icon.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_itemTextAppearance org.movsim.movdroid:itemTextAppearance}</code></td><td> Default appearance of menu item text.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_preserveIconSpacing org.movsim.movdroid:preserveIconSpacing}</code></td><td> Whether space should be reserved in layout when an icon is missing.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_verticalDivider org.movsim.movdroid:verticalDivider}</code></td><td> Default vertical divider between menu items.</td></tr>
+           <tr><td><code>{@link #SherlockMenuView_windowAnimationStyle org.movsim.movdroid:windowAnimationStyle}</code></td><td> Default animations for the menu.</td></tr>
            </table>
            @see #SherlockMenuView_headerBackground
            @see #SherlockMenuView_horizontalDivider
@@ -1903,17 +1903,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownHorizontalOffset org.movsim.droid:android_dropDownHorizontalOffset}</code></td><td> Horizontal offset from the spinner widget for positioning the dropdown
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownHorizontalOffset org.movsim.movdroid:android_dropDownHorizontalOffset}</code></td><td> Horizontal offset from the spinner widget for positioning the dropdown
              in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownSelector org.movsim.droid:android_dropDownSelector}</code></td><td> List selector to use for spinnerMode="dropdown" display.</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownVerticalOffset org.movsim.droid:android_dropDownVerticalOffset}</code></td><td> Vertical offset from the spinner widget for positioning the dropdown in
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownSelector org.movsim.movdroid:android_dropDownSelector}</code></td><td> List selector to use for spinnerMode="dropdown" display.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownVerticalOffset org.movsim.movdroid:android_dropDownVerticalOffset}</code></td><td> Vertical offset from the spinner widget for positioning the dropdown in
              spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownWidth org.movsim.droid:android_dropDownWidth}</code></td><td> Width of the dropdown in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_gravity org.movsim.droid:android_gravity}</code></td><td> Gravity setting for positioning the currently selected item.</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_popupBackground org.movsim.droid:android_popupBackground}</code></td><td> Background drawable to use for the dropdown in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_popupPromptView org.movsim.droid:android_popupPromptView}</code></td><td> Reference to a layout to use for displaying a prompt in the dropdown for
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownWidth org.movsim.movdroid:android_dropDownWidth}</code></td><td> Width of the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_gravity org.movsim.movdroid:android_gravity}</code></td><td> Gravity setting for positioning the currently selected item.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupBackground org.movsim.movdroid:android_popupBackground}</code></td><td> Background drawable to use for the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupPromptView org.movsim.movdroid:android_popupPromptView}</code></td><td> Reference to a layout to use for displaying a prompt in the dropdown for
              spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_prompt org.movsim.droid:android_prompt}</code></td><td> The prompt to display when the spinner's dialog is shown.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_prompt org.movsim.movdroid:android_prompt}</code></td><td> The prompt to display when the spinner's dialog is shown.</td></tr>
            </table>
            @see #SherlockSpinner_android_dropDownHorizontalOffset
            @see #SherlockSpinner_android_dropDownSelector
@@ -1933,7 +1933,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr description
            Horizontal offset from the spinner widget for positioning the dropdown
              in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_dropDownHorizontalOffset}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_dropDownHorizontalOffset}.
           @attr name android:android_dropDownHorizontalOffset
         */
         public static final int SherlockSpinner_android_dropDownHorizontalOffset = 5;
@@ -1941,7 +1941,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            List selector to use for spinnerMode="dropdown" display. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_dropDownSelector}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_dropDownSelector}.
           @attr name android:android_dropDownSelector
         */
         public static final int SherlockSpinner_android_dropDownSelector = 1;
@@ -1950,7 +1950,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr description
            Vertical offset from the spinner widget for positioning the dropdown in
              spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_dropDownVerticalOffset}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_dropDownVerticalOffset}.
           @attr name android:android_dropDownVerticalOffset
         */
         public static final int SherlockSpinner_android_dropDownVerticalOffset = 6;
@@ -1958,7 +1958,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            Width of the dropdown in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_dropDownWidth}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_dropDownWidth}.
           @attr name android:android_dropDownWidth
         */
         public static final int SherlockSpinner_android_dropDownWidth = 4;
@@ -1966,7 +1966,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            Gravity setting for positioning the currently selected item. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_gravity}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_gravity}.
           @attr name android:android_gravity
         */
         public static final int SherlockSpinner_android_gravity = 0;
@@ -1974,7 +1974,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            Background drawable to use for the dropdown in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_popupBackground}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_popupBackground}.
           @attr name android:android_popupBackground
         */
         public static final int SherlockSpinner_android_popupBackground = 2;
@@ -1992,7 +1992,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            The prompt to display when the spinner's dialog is shown. 
-          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.droid.R.attr#android_prompt}.
+          <p>This corresponds to the global attribute          resource symbol {@link org.movsim.movdroid.R.attr#android_prompt}.
           @attr name android:android_prompt
         */
         public static final int SherlockSpinner_android_prompt = 3;
@@ -2002,63 +2002,63 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockTheme_absForceOverflow org.movsim.droid:absForceOverflow}</code></td><td> Specified if we are forcing an action item overflow menu.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarDivider org.movsim.droid:actionBarDivider}</code></td><td> Custom divider drawable to use for elements in the action bar.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarItemBackground org.movsim.droid:actionBarItemBackground}</code></td><td> Custom item state list drawable background for action bar items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarSize org.movsim.droid:actionBarSize}</code></td><td> Size of the Action Bar, including the contextual
+           <tr><td><code>{@link #SherlockTheme_absForceOverflow org.movsim.movdroid:absForceOverflow}</code></td><td> Specified if we are forcing an action item overflow menu.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarDivider org.movsim.movdroid:actionBarDivider}</code></td><td> Custom divider drawable to use for elements in the action bar.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarItemBackground org.movsim.movdroid:actionBarItemBackground}</code></td><td> Custom item state list drawable background for action bar items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarSize org.movsim.movdroid:actionBarSize}</code></td><td> Size of the Action Bar, including the contextual
              bar used to present Action Modes.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarSplitStyle org.movsim.droid:actionBarSplitStyle}</code></td><td> Reference to a style for the split Action Bar.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarStyle org.movsim.droid:actionBarStyle}</code></td><td> Reference to a style for the Action Bar </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarTabBarStyle org.movsim.droid:actionBarTabBarStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarTabStyle org.movsim.droid:actionBarTabStyle}</code></td><td> Default style for tabs within an action bar </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarTabTextStyle org.movsim.droid:actionBarTabTextStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionBarWidgetTheme org.movsim.droid:actionBarWidgetTheme}</code></td><td> Reference to a theme that should be used to inflate widgets
+           <tr><td><code>{@link #SherlockTheme_actionBarSplitStyle org.movsim.movdroid:actionBarSplitStyle}</code></td><td> Reference to a style for the split Action Bar.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarStyle org.movsim.movdroid:actionBarStyle}</code></td><td> Reference to a style for the Action Bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabBarStyle org.movsim.movdroid:actionBarTabBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabStyle org.movsim.movdroid:actionBarTabStyle}</code></td><td> Default style for tabs within an action bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabTextStyle org.movsim.movdroid:actionBarTabTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarWidgetTheme org.movsim.movdroid:actionBarWidgetTheme}</code></td><td> Reference to a theme that should be used to inflate widgets
              and layouts destined for the action bar.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionButtonStyle org.movsim.droid:actionButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionDropDownStyle org.movsim.droid:actionDropDownStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionMenuTextAppearance org.movsim.droid:actionMenuTextAppearance}</code></td><td> TextAppearance style that will be applied to text that
+           <tr><td><code>{@link #SherlockTheme_actionButtonStyle org.movsim.movdroid:actionButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionDropDownStyle org.movsim.movdroid:actionDropDownStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextAppearance org.movsim.movdroid:actionMenuTextAppearance}</code></td><td> TextAppearance style that will be applied to text that
              appears within action menu items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionMenuTextColor org.movsim.droid:actionMenuTextColor}</code></td><td> Color for text that appears within action menu items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeBackground org.movsim.droid:actionModeBackground}</code></td><td> Background drawable to use for action mode UI </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeCloseButtonStyle org.movsim.droid:actionModeCloseButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeCloseDrawable org.movsim.droid:actionModeCloseDrawable}</code></td><td> Drawable to use for the close action mode button </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModePopupWindowStyle org.movsim.droid:actionModePopupWindowStyle}</code></td><td> PopupWindow style to use for action modes when showing as a window overlay.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeShareDrawable org.movsim.droid:actionModeShareDrawable}</code></td><td> Drawable to use for the Share action button in WebView selection action modes </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeSplitBackground org.movsim.droid:actionModeSplitBackground}</code></td><td> Background drawable to use for action mode UI in the lower split bar </td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionModeStyle org.movsim.droid:actionModeStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionOverflowButtonStyle org.movsim.droid:actionOverflowButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_actionSpinnerItemStyle org.movsim.droid:actionSpinnerItemStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_activatedBackgroundIndicator org.movsim.droid:activatedBackgroundIndicator}</code></td><td> Drawable used as a background for activated items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_activityChooserViewStyle org.movsim.droid:activityChooserViewStyle}</code></td><td> Default ActivityChooserView style.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_android_windowIsFloating org.movsim.droid:android_windowIsFloating}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_buttonStyleSmall org.movsim.droid:buttonStyleSmall}</code></td><td> Small Button style.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_dividerVertical org.movsim.droid:dividerVertical}</code></td><td> Drawable to use for generic vertical dividers.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_dropDownListViewStyle org.movsim.droid:dropDownListViewStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_dropdownListPreferredItemHeight org.movsim.droid:dropdownListPreferredItemHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_homeAsUpIndicator org.movsim.droid:homeAsUpIndicator}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_listPopupWindowStyle org.movsim.droid:listPopupWindowStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_listPreferredItemHeightSmall org.movsim.droid:listPreferredItemHeightSmall}</code></td><td> A smaller, sleeker list item height.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingLeft org.movsim.droid:listPreferredItemPaddingLeft}</code></td><td> The preferred padding along the left edge of list items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingRight org.movsim.droid:listPreferredItemPaddingRight}</code></td><td> The preferred padding along the right edge of list items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_popupMenuStyle org.movsim.droid:popupMenuStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_spinnerDropDownItemStyle org.movsim.droid:spinnerDropDownItemStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_spinnerItemStyle org.movsim.droid:spinnerItemStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_textAppearanceLargePopupMenu org.movsim.droid:textAppearanceLargePopupMenu}</code></td><td> Text color, typeface, size, and style for the text inside of a popup menu.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_textAppearanceListItemSmall org.movsim.droid:textAppearanceListItemSmall}</code></td><td> The preferred TextAppearance for the primary text of small list items.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_textAppearanceSmall org.movsim.droid:textAppearanceSmall}</code></td><td> Text color, typeface, size, and style for "small" text.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_textAppearanceSmallPopupMenu org.movsim.droid:textAppearanceSmallPopupMenu}</code></td><td> Text color, typeface, size, and style for small text inside of a popup menu.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_textColorPrimary org.movsim.droid:textColorPrimary}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_textColorPrimaryDisableOnly org.movsim.droid:textColorPrimaryDisableOnly}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_textColorPrimaryInverse org.movsim.droid:textColorPrimaryInverse}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowActionBar org.movsim.droid:windowActionBar}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowActionBarOverlay org.movsim.droid:windowActionBarOverlay}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowActionModeOverlay org.movsim.droid:windowActionModeOverlay}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowContentOverlay org.movsim.droid:windowContentOverlay}</code></td><td> This Drawable is overlaid over the foreground of the Window's content area, usually
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextColor org.movsim.movdroid:actionMenuTextColor}</code></td><td> Color for text that appears within action menu items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeBackground org.movsim.movdroid:actionModeBackground}</code></td><td> Background drawable to use for action mode UI </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseButtonStyle org.movsim.movdroid:actionModeCloseButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseDrawable org.movsim.movdroid:actionModeCloseDrawable}</code></td><td> Drawable to use for the close action mode button </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModePopupWindowStyle org.movsim.movdroid:actionModePopupWindowStyle}</code></td><td> PopupWindow style to use for action modes when showing as a window overlay.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeShareDrawable org.movsim.movdroid:actionModeShareDrawable}</code></td><td> Drawable to use for the Share action button in WebView selection action modes </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeSplitBackground org.movsim.movdroid:actionModeSplitBackground}</code></td><td> Background drawable to use for action mode UI in the lower split bar </td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeStyle org.movsim.movdroid:actionModeStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionOverflowButtonStyle org.movsim.movdroid:actionOverflowButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionSpinnerItemStyle org.movsim.movdroid:actionSpinnerItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_activatedBackgroundIndicator org.movsim.movdroid:activatedBackgroundIndicator}</code></td><td> Drawable used as a background for activated items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_activityChooserViewStyle org.movsim.movdroid:activityChooserViewStyle}</code></td><td> Default ActivityChooserView style.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_android_windowIsFloating org.movsim.movdroid:android_windowIsFloating}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_buttonStyleSmall org.movsim.movdroid:buttonStyleSmall}</code></td><td> Small Button style.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_dividerVertical org.movsim.movdroid:dividerVertical}</code></td><td> Drawable to use for generic vertical dividers.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropDownListViewStyle org.movsim.movdroid:dropDownListViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropdownListPreferredItemHeight org.movsim.movdroid:dropdownListPreferredItemHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_homeAsUpIndicator org.movsim.movdroid:homeAsUpIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPopupWindowStyle org.movsim.movdroid:listPopupWindowStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemHeightSmall org.movsim.movdroid:listPreferredItemHeightSmall}</code></td><td> A smaller, sleeker list item height.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingLeft org.movsim.movdroid:listPreferredItemPaddingLeft}</code></td><td> The preferred padding along the left edge of list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_listPreferredItemPaddingRight org.movsim.movdroid:listPreferredItemPaddingRight}</code></td><td> The preferred padding along the right edge of list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_popupMenuStyle org.movsim.movdroid:popupMenuStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_spinnerDropDownItemStyle org.movsim.movdroid:spinnerDropDownItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_spinnerItemStyle org.movsim.movdroid:spinnerItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceLargePopupMenu org.movsim.movdroid:textAppearanceLargePopupMenu}</code></td><td> Text color, typeface, size, and style for the text inside of a popup menu.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceListItemSmall org.movsim.movdroid:textAppearanceListItemSmall}</code></td><td> The preferred TextAppearance for the primary text of small list items.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSmall org.movsim.movdroid:textAppearanceSmall}</code></td><td> Text color, typeface, size, and style for "small" text.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textAppearanceSmallPopupMenu org.movsim.movdroid:textAppearanceSmallPopupMenu}</code></td><td> Text color, typeface, size, and style for small text inside of a popup menu.</td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimary org.movsim.movdroid:textColorPrimary}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimaryDisableOnly org.movsim.movdroid:textColorPrimaryDisableOnly}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_textColorPrimaryInverse org.movsim.movdroid:textColorPrimaryInverse}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBar org.movsim.movdroid:windowActionBar}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBarOverlay org.movsim.movdroid:windowActionBarOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionModeOverlay org.movsim.movdroid:windowActionModeOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowContentOverlay org.movsim.movdroid:windowContentOverlay}</code></td><td> This Drawable is overlaid over the foreground of the Window's content area, usually
              to place a shadow below the title.</td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowMinWidthMajor org.movsim.droid:windowMinWidthMajor}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowMinWidthMinor org.movsim.droid:windowMinWidthMinor}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowNoTitle org.movsim.droid:windowNoTitle}</code></td><td></td></tr>
-           <tr><td><code>{@link #SherlockTheme_windowSplitActionBar org.movsim.droid:windowSplitActionBar}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowMinWidthMajor org.movsim.movdroid:windowMinWidthMajor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowMinWidthMinor org.movsim.movdroid:windowMinWidthMinor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowNoTitle org.movsim.movdroid:windowNoTitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowSplitActionBar org.movsim.movdroid:windowSplitActionBar}</code></td><td></td></tr>
            </table>
            @see #SherlockTheme_absForceOverflow
            @see #SherlockTheme_actionBarDivider
@@ -2225,7 +2225,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionBarStyle = 5;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionBarTabBarStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionBarTabBarStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2247,7 +2247,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionBarTabStyle = 1;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionBarTabTextStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionBarTabTextStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2275,7 +2275,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionBarWidgetTheme = 7;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionButtonStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionButtonStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2285,7 +2285,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionButtonStyle = 38;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionDropDownStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionDropDownStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2334,7 +2334,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionModeBackground = 15;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionModeCloseButtonStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionModeCloseButtonStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2392,7 +2392,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionModeSplitBackground = 16;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionModeStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionModeStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2402,7 +2402,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionModeStyle = 13;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionOverflowButtonStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionOverflowButtonStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2412,7 +2412,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_actionOverflowButtonStyle = 4;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#actionSpinnerItemStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#actionSpinnerItemStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2446,7 +2446,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_activityChooserViewStyle = 50;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#android_windowIsFloating}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#android_windowIsFloating}
           attribute's value can be found in the {@link #SherlockTheme} array.
           @attr name android:android_windowIsFloating
         */
@@ -2476,7 +2476,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_dividerVertical = 36;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#dropDownListViewStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#dropDownListViewStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2486,7 +2486,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_dropDownListViewStyle = 40;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#dropdownListPreferredItemHeight}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#dropdownListPreferredItemHeight}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2502,7 +2502,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_dropdownListPreferredItemHeight = 42;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#homeAsUpIndicator}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#homeAsUpIndicator}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2512,7 +2512,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_homeAsUpIndicator = 39;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#listPopupWindowStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#listPopupWindowStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2576,7 +2576,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_listPreferredItemPaddingRight = 32;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#popupMenuStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#popupMenuStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2586,7 +2586,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_popupMenuStyle = 41;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#spinnerDropDownItemStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#spinnerDropDownItemStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2596,7 +2596,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_spinnerDropDownItemStyle = 29;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#spinnerItemStyle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#spinnerItemStyle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2654,7 +2654,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_textAppearanceSmallPopupMenu = 23;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#textColorPrimary}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#textColorPrimary}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2669,7 +2669,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_textColorPrimary = 25;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#textColorPrimaryDisableOnly}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#textColorPrimaryDisableOnly}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2684,7 +2684,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_textColorPrimaryDisableOnly = 26;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#textColorPrimaryInverse}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#textColorPrimaryInverse}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2699,7 +2699,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_textColorPrimaryInverse = 27;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowActionBar}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowActionBar}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2713,7 +2713,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_windowActionBar = 45;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowActionBarOverlay}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowActionBarOverlay}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2727,7 +2727,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_windowActionBarOverlay = 46;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowActionModeOverlay}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowActionModeOverlay}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2754,7 +2754,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int SherlockTheme_windowContentOverlay = 21;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowMinWidthMajor}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowMinWidthMajor}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2770,7 +2770,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_windowMinWidthMajor = 34;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowMinWidthMinor}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowMinWidthMinor}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2786,7 +2786,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_windowMinWidthMinor = 35;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowNoTitle}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowNoTitle}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
@@ -2800,7 +2800,7 @@ containing a value of this type.
         */
         public static final int SherlockTheme_windowNoTitle = 44;
         /**
-          <p>This symbol is the offset where the {@link org.movsim.droid.R.attr#windowSplitActionBar}
+          <p>This symbol is the offset where the {@link org.movsim.movdroid.R.attr#windowSplitActionBar}
           attribute's value can be found in the {@link #SherlockTheme} array.
 
 
