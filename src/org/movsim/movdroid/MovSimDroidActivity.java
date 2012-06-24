@@ -1,6 +1,7 @@
 package org.movsim.movdroid;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -15,7 +16,6 @@ import com.actionbarsherlock.view.Window;
 import org.movsim.droid.R;
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener {
-    private String[] projects;
 
     /** Called when the activity is first created. */
     @Override
@@ -28,7 +28,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         getSupportActionBar().setBackgroundDrawable(
                 getResources().getDrawable(R.drawable.abs__ab_transparent_dark_holo));
 
-        projects = getResources().getStringArray(R.array.project);
 
         Context context = getSupportActionBar().getThemedContext();
         ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.project,
@@ -44,8 +43,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         menu.add("Start").setIcon(R.drawable.ic_action_start)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-//        menu.add("Settings").setIcon(R.drawable.ic_action_start)
-//                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         SubMenu subMenu1 = menu.addSubMenu("Menu");
         subMenu1.add("Sample");
@@ -63,7 +60,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public boolean onOptionsItemSelected(MenuItem item) {
         Toast.makeText(this, "Got click: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 
-        // Buttons
+        // ActionBar Buttons
         if (item.getTitle().equals("Start")) {
             item.setIcon(R.drawable.ic_action_pause);
             item.setTitle("Pause");
@@ -81,4 +78,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         Toast.makeText(this, "Got click: " + itemPosition, Toast.LENGTH_SHORT).show();
         return true;
     }
+
+    // this is called on rotation instead in onCreate
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+    
 }
