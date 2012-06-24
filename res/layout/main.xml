@@ -2,6 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_gravity="fill_vertical"
+    android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Textfield" >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/statusTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Time" >
+    </TextView>
 
 </LinearLayout>
