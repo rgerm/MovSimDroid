@@ -7,6 +7,7 @@ import org.movsim.simulator.Simulator;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         logConfigurator.setLevel("org.apache", Level.ERROR);
         logConfigurator.configure();
     }
+
+    private Simulator simulator;
 //    final static Logger logger = LoggerFactory.getLogger(MovSimDroidActivity.class);
     
     /** Called when the activity is first created. */
@@ -46,8 +49,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
         
         initActionBar();
-        final ProjectMetaData projectMetaData = ProjectMetaData.getInstance();
-
+        
         setupSimulator();
 
     }
@@ -60,13 +62,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         projectMetaData.setProjectName("offramp");
         projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
         
-        final Simulator simulator = new Simulator(projectMetaData);
+        simulator = new Simulator(projectMetaData);
         
         simulator.getRoadNetwork().clear();
         simulator.initialize();
 
 
-        simulator.runToCompletion();
     }
 
     private void initActionBar() {
@@ -109,6 +110,19 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         if (item.getTitle().equals("Start")) {
             item.setIcon(R.drawable.ic_action_pause);
             item.setTitle("Pause");
+            
+            new AsyncTask<String, Void, String>() {
+
+                @Override
+                protected String doInBackground(String... params) {
+
+                    simulator.runToCompletion();
+                    return null;
+                }
+                
+            };
+            
+            
         } else if (item.getTitle().equals("Pause")) {
             item.setIcon(R.drawable.ic_action_start);
             item.setTitle("Start");
