@@ -75,6 +75,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
         initActionBar();
@@ -119,6 +120,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add("Start").setIcon(R.drawable.ic_action_start)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add("Restart").setIcon(R.drawable.ic_action_restart)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         SubMenu subMenu1 = menu.addSubMenu("Menu");
