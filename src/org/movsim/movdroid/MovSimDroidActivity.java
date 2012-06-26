@@ -56,10 +56,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         final LogConfigurator logConfigurator = new LogConfigurator();
 
         logConfigurator.setUseFileAppender(false);
+        logConfigurator.setUseLogCatAppender(true);
         // logConfigurator.setFileName(Environment.getExternalStorageDirectory() + "myapp.log");
-        logConfigurator.setRootLevel(Level.ERROR);
+        logConfigurator.setRootLevel(Level.INFO);
         // Set log level of a specific logger
-        logConfigurator.setLevel("org.apache", Level.ERROR);
+        logConfigurator.setLevel("org.apache", Level.INFO);
         logConfigurator.configure();
     }
 
