@@ -34,6 +34,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private AsyncTask<String, String, String> task;
     private TextView statusTime;
     private ProjectMetaData projectMetaData;
+    private TextView statusVehicles;
 
     /** Called when the activity is first created. */
     @Override
@@ -84,6 +86,10 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         statusText = (TextView) findViewById(R.id.statusText);
         statusTime = (TextView) findViewById(R.id.statusTime);
+        statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
+        
+        statusTime.setText("time: " + simulator.getSimulationRunnable().simulationTime());
+        statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
 
     }
 
@@ -160,6 +166,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             simulator.getSimulationRunnable().pause();
             statusTime.setText("time: " + simulator.getSimulationRunnable().simulationTime());
             statusText.setText("Simulation paused");
+            statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
+        } else if (item.getTitle().equals("Restart")) {
+            simulator.getRoadNetwork().clear();
+            simulator.initialize();
+            statusText.setText("Reset simulation");
+            statusTime.setText("time: " + simulator.getSimulationRunnable().simulationTime());
+            statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
         }
         return true;
     }
@@ -169,15 +182,15 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         // project selection
         Toast.makeText(this, "Got click: " + itemPosition, Toast.LENGTH_SHORT).show();
         if (itemPosition == 1) {
-            projectMetaData.setProjectName("cloverleaf");
-            projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
-            simulator.initialize();
-        } else if (itemPosition == 2) {
             projectMetaData.setProjectName("routing");
             projectMetaData.setPathToProjectXmlFile("/sim/games/");
             simulator.initialize();
-        } else if (itemPosition == 3) {
+        } else if (itemPosition == 2) {
             projectMetaData.setProjectName("ringroad_1lane");
+            projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
+            simulator.initialize();
+        } else if (itemPosition == 3) {
+            projectMetaData.setProjectName("cloverleaf");
             projectMetaData.setPathToProjectXmlFile("/sim/buildingBlocks/");
             simulator.initialize();
         } else {
@@ -189,7 +202,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         return true;
     }
 
-    // this is called on rotation instead in onCreate
+    // this is called on rotation instead in onCreate.
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

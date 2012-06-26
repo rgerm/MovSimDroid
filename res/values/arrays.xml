@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="project">
-        <item>ramp metering game</item>
+        <item>offramp</item>
+      <!--  <item>ramp metering game</item>  --> 
         <item>routing  game</item>
         <item>ring road</item>
-        <item>offramp</item>
         <item>clover leaf</item>
     </string-array>
 </resources>
