@@ -2,5 +2,7 @@
 <resources>
 
     <string name="app_name">MovSim</string>
+    <string name="dialog">MovSim Info</string>
+    <string name="dialog_content">Multi-model open-source vehicular-traffic Simulator</string>
 
 </resources>

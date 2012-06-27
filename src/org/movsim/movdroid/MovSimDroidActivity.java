@@ -31,6 +31,7 @@ import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -85,8 +86,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         initActionBar();
 
         setupSimulator();
-        
-        simulationRunnable = simulator.getSimulationRunnable();
 
         statusText = (TextView) findViewById(R.id.statusText);
         statusTime = (TextView) findViewById(R.id.statusTime);
@@ -105,7 +104,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         projectMetaData.setInstantaneousFileOutput(false);
         
         simulator = new Simulator(projectMetaData);
-
+        
+        simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setCompletionCallback(this);
         simulationRunnable.setUpdateDrawingCallback(this);
 
@@ -190,9 +190,10 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 sleepTime = 400;
             }
             simulationRunnable.setSleepTime(sleepTime);
-            
         } else if (item.getTitle().equals("Info")) {
-            
+            Intent intent = new Intent();
+            intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
+            startActivity(intent);
         }
         return true;
     }
