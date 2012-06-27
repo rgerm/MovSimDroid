@@ -91,10 +91,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         statusTime = (TextView) findViewById(R.id.statusTime);
         statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
         
-        ;
-        statusTime.setText("time: " + simulationRunnable.simulationTime());
-        statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
-
+        statusText.setText("project loaded: " + projectMetaData.getProjectName());
+        setStatusViews();
     }
 
     private void setupSimulator() {
@@ -110,7 +108,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.setUpdateDrawingCallback(this);
 
         simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
-
     }
 
     private void initActionBar() {
@@ -167,15 +164,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             item.setIcon(R.drawable.ic_action_start);
             item.setTitle("Start");
             simulationRunnable.pause();
-            statusTime.setText("time: " + simulationRunnable.simulationTime());
             statusText.setText("Simulation paused");
-            statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
+            setStatusViews();
         } else if (item.getTitle().equals("Restart")) {
             simulator.getRoadNetwork().clear();
             simulator.initialize();
             statusText.setText("Reset simulation");
-            statusTime.setText("time: " + simulationRunnable.simulationTime());
-            statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
+            setStatusViews();
         } else if (item.getTitle().equals("Faster")) {
             int sleepTime = simulationRunnable.sleepTime();
             sleepTime -= sleepTime <= 5 ? 1 : 5;
@@ -194,8 +189,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             Intent intent = new Intent();
             intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
             startActivity(intent);
-        }
+        } 
         return true;
+    }
+
+    private void setStatusViews() {
+        statusTime.setText("time: " + simulationRunnable.simulationTime());
+        statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
     }
 
     @Override
@@ -211,7 +211,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         } else {
             simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
         }
-
+        setStatusViews();
+        statusText.setText("project loaded: " + projectMetaData.getProjectName());
         return true;
     }
 
@@ -223,11 +224,22 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public void simulationComplete(double arg0) {
-        System.out.println("Done.");
+        runOnUiThread(new Runnable(){
+            @Override
+            public void run(){
+                Toast.makeText(getApplicationContext(), "Simulation finished", Toast.LENGTH_LONG);
+            }
+        });
     }
 
     @Override
     public void updateDrawing(double simulatioTime) {
+        runOnUiThread(new Runnable(){
+            @Override
+            public void run(){
+                setStatusViews();
+            }
+        });
 
     }
 
