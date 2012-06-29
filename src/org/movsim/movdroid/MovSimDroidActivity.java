@@ -35,7 +35,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +52,7 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener,
         SimulationRun.CompletionCallback, SimulationRunnable.UpdateDrawingCallback {
 
+    // MovSim core uses slf4j as a logging facade for log4j.
     static {
         final LogConfigurator logConfigurator = new LogConfigurator();
 
@@ -90,7 +90,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         statusText = (TextView) findViewById(R.id.statusText);
         statusTime = (TextView) findViewById(R.id.statusTime);
         statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
-        
+
         statusText.setText("project loaded: " + projectMetaData.getProjectName());
         setStatusViews();
     }
@@ -100,9 +100,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         projectMetaData.setXmlFromResources(true);
         projectMetaData.setInstantaneousFileOutput(false);
-        
+
         simulator = new Simulator(projectMetaData);
-        
+
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setCompletionCallback(this);
         simulationRunnable.setUpdateDrawingCallback(this);
@@ -189,7 +189,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             Intent intent = new Intent();
             intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
             startActivity(intent);
-        } 
+        }
         return true;
     }
 
@@ -216,7 +216,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         return true;
     }
 
-    // this is called on rotation instead in onCreate. TODO Does not work with ICS anymore 
+    // this is called on rotation instead in onCreate. TODO Does not work with ICS anymore
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -224,19 +224,19 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public void simulationComplete(double arg0) {
-        runOnUiThread(new Runnable(){
+        runOnUiThread(new Runnable() {
             @Override
-            public void run(){
-                Toast.makeText(getApplicationContext(), "Simulation finished", Toast.LENGTH_LONG);
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Simulation finished", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
     public void updateDrawing(double simulatioTime) {
-        runOnUiThread(new Runnable(){
+        runOnUiThread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 setStatusViews();
             }
         });
