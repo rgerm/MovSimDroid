@@ -22,7 +22,8 @@
  * or <http://www.movsim.org>.
  * 
  * -----------------------------------------------------------------------------------------
- */package org.movsim.movdroid;
+ */
+package org.movsim.movdroid;
 
 import org.apache.log4j.Level;
 import org.movsim.input.ProjectMetaData;
@@ -33,7 +34,6 @@ import org.movsim.simulator.Simulator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -50,7 +50,7 @@ import com.actionbarsherlock.view.Window;
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener,
-        SimulationRun.CompletionCallback, SimulationRunnable.UpdateDrawingCallback {
+        SimulationRun.CompletionCallback {
 
     // MovSim core uses slf4j as a logging facade for log4j.
     static {
@@ -67,17 +67,18 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private Simulator simulator;
     private TextView statusText;
-    private AsyncTask<String, String, String> task;
     private TextView statusTime;
     private ProjectMetaData projectMetaData;
     private TextView statusVehicles;
     private SimulationRunnable simulationRunnable;
+    private MovSimView movsimView;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
 
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
@@ -93,6 +94,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         statusText.setText("project loaded: " + projectMetaData.getProjectName());
         setStatusViews();
+        
+        movsimView = new MovSimView(this, simulator);
+
+        setContentView(movsimView);
+        
     }
 
     private void setupSimulator() {
@@ -105,7 +111,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setCompletionCallback(this);
-        simulationRunnable.setUpdateDrawingCallback(this);
 
         simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
     }
@@ -232,15 +237,5 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         });
     }
 
-    @Override
-    public void updateDrawing(double simulatioTime) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setStatusViews();
-            }
-        });
-
-    }
 
 }

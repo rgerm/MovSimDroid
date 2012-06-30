@@ -9,24 +9,31 @@
 
     <TextView
         android:id="@+id/statusText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:text="Textfield" >
     </TextView>
     
     <TextView
         android:id="@+id/statusTime"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
         android:ems="10"
         android:text="Time" >
     </TextView>
     
     <TextView
         android:id="@+id/statusVehiclesOnRoads"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
         android:ems="10">
     </TextView>
+    
 </LinearLayout>
