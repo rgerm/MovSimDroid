@@ -25,8 +25,6 @@
  */
 package org.movsim.movdroid;
 
-import java.util.Formatter;
-
 import org.apache.log4j.Level;
 import org.movsim.input.ProjectMetaData;
 import org.movsim.simulator.SimulationRun;
@@ -251,11 +249,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), "Simulation finished in " + getFormatedTime(simulationTime), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        "Simulation finished in " + FormatUtil.getFormatedTime(simulationTime), Toast.LENGTH_LONG)
+                        .show();
             }
         });
     }
-    
+
     @Override
     public void updateStatus(double simulationTime) {
         if (simulator.isFinished()) {
@@ -269,18 +269,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.pause();
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
         super.onPause();
-    }
-    
-    private String getFormatedTime(double timeInSeconds) {
-        int intTime = (int) timeInSeconds;
-        final int hours = intTime / 3600;
-        intTime = intTime % 3600;
-        final int min = intTime / 60;
-        intTime = intTime % 60;
-        final StringBuilder stringBuilder = new StringBuilder();
-        final Formatter formatter = new Formatter(stringBuilder);
-        formatter.format("%02d:%02d:%02d", hours, min, intTime);
-        return stringBuilder.toString();
     }
 
 }
