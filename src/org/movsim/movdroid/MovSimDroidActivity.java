@@ -213,6 +213,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void reset() {
         diversionOn = false;
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
     }
 
     @Override
@@ -256,8 +257,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     protected void onPause() {
         simulationRunnable.pause();
-        menu.getItem(0).setIcon(R.drawable.ic_action_start);
-        menu.getItem(0).setTitle("Start");
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
         super.onPause();
     }
 
