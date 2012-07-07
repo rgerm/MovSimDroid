@@ -30,8 +30,10 @@ import org.movsim.input.ProjectMetaData;
 import org.movsim.simulator.SimulationRun;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
+import org.movsim.simulator.roadnetwork.RoadMapping;
 import org.movsim.simulator.roadnetwork.RoadNetwork;
 import org.movsim.simulator.roadnetwork.RoadSegment;
+import org.movsim.simulator.roadnetwork.TrafficLight;
 import org.movsim.simulator.roadnetwork.VariableMessageSignBase;
 import org.movsim.simulator.roadnetwork.VariableMessageSignDiversion;
 
@@ -95,10 +97,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         movSimView = new MovSimView(this, simulator);
         setContentView(movSimView);
 
-        // statusTime = (TextView) findViewById(R.id.statusTime);
-        // statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
-        // setStatusViews();
-
     }
 
     private void setupSimulator() {
@@ -113,7 +111,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.setCompletionCallback(this);
         simulationRunnable.addUpdateStatusCallback(this);
 
-        simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
+        // simulator.loadScenarioFromXml("routing", "/sim/buildingBlocks/");
         roadNetwork = simulator.getRoadNetwork();
     }
 
@@ -204,6 +202,28 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                             roadSegment.removeVariableMessageSign(variableMessageSign);
                         }
                     }
+                    if (roadSegment.trafficLights() != null) {
+                        // final RoadMapping roadMapping = roadSegment.roadMapping();
+                        for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
+                            // final Rectangle2D trafficLightRect = TrafficCanvas.trafficLightRect(roadMapping, trafficLight);
+                            // // check if the user has clicked on a traffic light, if they have then change the
+                            // // traffic light to the next color
+                            // final Point point = e.getPoint();
+                            // final Point2D transformedPoint = new Point2D.Float();
+                            // final GeneralPath path = new GeneralPath();
+                            // try {
+                            // // convert from mouse coordinates to canvas coordinates
+                            // trafficCanvas.transform.inverseTransform(new Point2D.Float(point.x, point.y), transformedPoint);
+                            // } catch (final NoninvertibleTransformException e1) {
+                            // e1.printStackTrace();
+                            // return;
+                            // }
+                            // if (trafficLightRect.contains(transformedPoint)) {
+                            trafficLight.nextState();
+                            movSimView.forceRepaintBackground();
+                            // }
+                        }
+                    }
                 }
 
             }
@@ -254,8 +274,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             public void run() {
                 final StringBuilder message = new StringBuilder("Simulation finished in ");
                 message.append(FormatUtil.getFormatedTime(simulationTime));
-                message.append("\ntotal travel time: ").append(totalVehicleTravelTime);
-                message.append("\ntotal travel distance [km]: ").append(FormatUtil.getFormatedTime(totalVehicleTravelDistance));
+                message.append("\ntotal travel time: ").append(FormatUtil.getFormatedTime(totalVehicleTravelTime));
+                message.append("\ntotal travel distance [km]: ").append(
+                        FormatUtil.getFormatedTime(totalVehicleTravelDistance));
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
@@ -264,7 +285,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public void updateStatus(double simulationTime) {
         if (simulator.isFinished()) {
-            // hack to call simulationComplete
+            // hack to simulationComplete
             simulationRunnable.setDuration(simulationTime);
         }
     }
