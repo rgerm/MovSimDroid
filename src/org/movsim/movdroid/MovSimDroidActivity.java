@@ -53,7 +53,7 @@ import com.actionbarsherlock.view.Window;
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener,
-        SimulationRun.CompletionCallback {
+        SimulationRun.CompletionCallback, SimulationRunnable.UpdateStatusCallback {
 
     // MovSim core uses slf4j as a logging facade for log4j.
     static {
@@ -195,7 +195,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
                 for (RoadSegment roadSegment : roadNetwork) {
                     if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
-
                         if (diversionOn == false) {
                             diversionOn = true;
                             roadSegment.addVariableMessageSign(variableMessageSign);
@@ -252,6 +251,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 Toast.makeText(getApplicationContext(), "Simulation finished", Toast.LENGTH_LONG).show();
             }
         });
+    }
+    
+    @Override
+    public void updateStatus(double arg0) {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
