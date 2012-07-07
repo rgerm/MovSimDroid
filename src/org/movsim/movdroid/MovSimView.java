@@ -193,8 +193,9 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             for (final RoadSegment roadSegment : roadNetwork) {
                 final RoadMapping roadMapping = roadSegment.roadMapping();
                 assert roadMapping != null;
-                // canvas.clipPath not supported on 3.0+
-                // DrawRoadMapping.clipPath(canvas, clipPath, roadMapping);
+                if (androidVersion < 12) {
+                    DrawRoadMapping.clipPath(canvas, clipPath, roadMapping); // TODO clipPath not supported on sdk>12
+                }
                 for (final Vehicle vehicle : roadSegment) {
                     drawVehicle(canvas, simulationTime, roadMapping, vehicle);
                 }
@@ -281,7 +282,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
     private void drawRoadSegment(Canvas canvas, RoadMapping roadMapping) {
 
-       
         roadPath.reset();
 
         final double lateralOffset = 0.5 * roadMapping.trafficLaneMin() * roadMapping.laneWidth();

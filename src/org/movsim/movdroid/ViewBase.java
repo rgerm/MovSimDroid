@@ -98,6 +98,7 @@ public abstract class ViewBase extends View {
     // pinch zoom handling
     private static float touchModeZoomHysteresis = 10.0f;
     private float pinchDistance;
+    protected Integer androidVersion;
 
     /**
      * <p>
@@ -136,7 +137,7 @@ public abstract class ViewBase extends View {
         Display display = wm.getDefaultDisplay();
         int width;
         int height;
-        Integer androidVersion = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+        androidVersion = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
         if (androidVersion >= 13) {
             // since API 13:
             Point size = new Point();
