@@ -36,7 +36,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -65,21 +64,18 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         logConfigurator.configure();
     }
 
-    private Simulator simulator;
-    private TextView statusText;
-    private TextView statusTime;
     private ProjectMetaData projectMetaData;
-    private TextView statusVehicles;
+    private Simulator simulator;
     private SimulationRunnable simulationRunnable;
-    private MovSimView movsimView;
+    
+    private MovSimView movSimView;
+    private Menu menu;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.main);
 
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
@@ -88,17 +84,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         setupSimulator();
 
-        statusText = (TextView) findViewById(R.id.statusText);
-        statusTime = (TextView) findViewById(R.id.statusTime);
-        statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
+        movSimView = new MovSimView(this, simulator);
+        setContentView(movSimView);
 
-        statusText.setText("project loaded: " + projectMetaData.getProjectName());
-        setStatusViews();
-        
-        movsimView = new MovSimView(this, simulator);
+        // statusTime = (TextView) findViewById(R.id.statusTime);
+        // statusVehicles = (TextView) findViewById(R.id.statusVehiclesOnRoads);
+        // setStatusViews();
 
-        setContentView(movsimView);
-        
     }
 
     private void setupSimulator() {
@@ -130,6 +122,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         menu.add("Start").setIcon(R.drawable.ic_action_start)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         menu.add("Restart").setIcon(R.drawable.ic_action_restart)
@@ -155,27 +148,18 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         if (item.getTitle().equals("Start")) {
             item.setIcon(R.drawable.ic_action_pause);
             item.setTitle("Pause");
-
             if (!simulationRunnable.isPaused()) {
                 simulationRunnable.start();
-                statusText.setText("Started");
-
             } else {
                 simulationRunnable.resume();
-                statusText.setText("Resume Simulation");
             }
-
         } else if (item.getTitle().equals("Pause")) {
             item.setIcon(R.drawable.ic_action_start);
             item.setTitle("Start");
             simulationRunnable.pause();
-            statusText.setText("Simulation paused");
-            setStatusViews();
         } else if (item.getTitle().equals("Restart")) {
             simulator.getRoadNetwork().clear();
             simulator.initialize();
-            statusText.setText("Reset simulation");
-            setStatusViews();
         } else if (item.getTitle().equals("Faster")) {
             int sleepTime = simulationRunnable.sleepTime();
             sleepTime -= sleepTime <= 5 ? 1 : 5;
@@ -198,11 +182,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         return true;
     }
 
-    private void setStatusViews() {
-        statusTime.setText("time: " + simulationRunnable.simulationTime());
-        statusVehicles.setText("total vehicle count: " + simulator.getRoadNetwork().vehicleCount());
-    }
-
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         // project selection
@@ -216,8 +195,10 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         } else {
             simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
         }
-        setStatusViews();
-        statusText.setText("project loaded: " + projectMetaData.getProjectName());
+        simulationRunnable.pause();
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
+        movSimView.resetGraphicproperties();
+        movSimView.forceRepaintBackground();
         return true;
     }
 
@@ -237,5 +218,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         });
     }
 
+    @Override
+    protected void onPause() {
+        simulationRunnable.pause();
+        menu.getItem(0).setIcon(R.drawable.ic_action_start);
+        menu.getItem(0).setTitle("Start");
+        super.onPause();
+    }
 
 }

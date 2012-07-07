@@ -51,10 +51,10 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.FloatMath;
 
 public class MovSimView extends ViewBase implements UpdateDrawingCallback {
-    
 
     protected StatusControlCallbacks statusControlCallbacks;
 
@@ -62,37 +62,25 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     private SimulationRunnable simulationRunnable;
     private Properties properties;
     protected final RoadNetwork roadNetwork;
-    
+
     // pre-allocate Path and Paint objects
     private final Path roadPath = new Path();
     private final Path linePath = new Path();
     private final Path vehiclePath = new Path();
     private final Paint vehiclePaint = new Paint();
     private final DashPathEffect roadLineDashPathEffect = new DashPathEffect(new float[] { 10, 20 }, 1);
-    // pre-allocate clipping path for road mappings
     private final Path clipPath = new Path();
 
-    // colors
     protected int roadColor;
     protected int roadEdgeColor;
     protected int roadLineColor;
     protected int sourceColor;
     protected int sinkColor;
-
-    private double vmaxForColorSpectrum;
-
-    protected boolean drawRoadId;
-    protected boolean drawSources;
-    protected boolean drawSinks;
-    protected boolean drawSpeedLimits;
-    protected boolean drawSlopes;
-
     protected int brakeLightColor = Color.RED;
-
-    float lineWidth;
-    float lineLength;
-    float gapLength;
-    float gapLengthExit;
+    private double vmaxForColorSpectrum;
+    protected VehicleColorMode vehicleColorModeSave;
+    private int[] accelerationColors;
+    private final double[] accelerations = new double[] { -7.5, -0.1, 0.2 };
 
     protected enum VehicleColorMode {
         VELOCITY_COLOR, LANE_CHANGE, ACCELERATION_COLOR, VEHICLE_COLOR, VEHICLE_LABEL_COLOR, HIGHLIGHT_VEHICLE, EXIT_COLOR
@@ -101,18 +89,26 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     /** Color mode displayed on startup */
     protected VehicleColorMode vehicleColorMode = VehicleColorMode.VELOCITY_COLOR;
 
-    protected VehicleColorMode vehicleColorModeSave;
-    private int[] accelerationColors;
-    private final double[] accelerations = new double[] { -7.5, -0.1, 0.2 };
+    protected boolean drawRoadId;
+    protected boolean drawSources;
+    protected boolean drawSinks;
+    protected boolean drawSpeedLimits;
+    protected boolean drawSlopes;
+
+    float lineWidth;
+    float lineLength;
+    float gapLength;
+    float gapLengthExit;
 
     /** vehicle mouse-over support */
+    // TODO vehicle information
     String popupString;
     String popupStringExitEndRoad;
     protected Vehicle vehiclePopup;
 
     protected long lastVehicleViewed = -1;
     protected long vehicleToHighlightId = -1;
-    
+
     /**
      * Callbacks from this TrafficCanvas to the application UI.
      * 
@@ -136,6 +132,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setUpdateDrawingCallback(this);
 
+        resetGraphicproperties();
+    }
+
+    public void resetGraphicproperties() {
         if (getProperties() == null) {
             setProperties(loadProperties());
         }
@@ -148,139 +148,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         postInvalidate();
     }
 
-    protected void initGraphicConfigFieldsFromProperties() {
-        setDrawRoadId(Boolean.parseBoolean(properties.getProperty("drawRoadId", "true")));
-        setDrawSinks(Boolean.parseBoolean(properties.getProperty("drawSinks", "true")));
-        setDrawSources(Boolean.parseBoolean(properties.getProperty("drawSources", "true")));
-        setDrawSlopes(Boolean.parseBoolean(properties.getProperty("drawSlopes", "true")));
-        setDrawSpeedLimits(Boolean.parseBoolean(properties.getProperty("drawSpeedLimits", "true")));
-
-        roadColor = Color.GRAY;
-        roadEdgeColor = Color.BLACK;
-        roadLineColor = Color.WHITE;
-        sourceColor = Color.WHITE;
-        sinkColor = Color.BLACK;
-
-        setVmaxForColorSpectrum(Double.parseDouble(properties.getProperty("vmaxForColorSpectrum", "140")));
-
-        lineWidth = Float.parseFloat(properties.getProperty("lineWidth", "1.0"));
-        lineLength = Float.parseFloat(properties.getProperty("lineLength", "5.0"));
-        gapLength = Float.parseFloat(properties.getProperty("gapLength", "15.0"));
-        gapLengthExit = Float.parseFloat(properties.getProperty("gapLengthExit", "6.0"));
-
-        scale = Float.parseFloat(properties.getProperty("initialScale", "0.707106781"));
-        setSleepTime(Integer.parseInt(properties.getProperty("initial_sleep_time", "26")));
-    }
-
-    protected Properties loadProperties() {
-        Properties applicationProps = null;
-        try {
-            // create and load default properties
-            Resources resources = this.getResources();
-            AssetManager assetManager = resources.getAssets();
-            Properties defaultProperties = new Properties();
-            final InputStream is = assetManager.open("defaultviewerconfig.properties");
-            defaultProperties.load(is);
-            is.close();
-
-            // create application properties with default
-            applicationProps = new Properties(defaultProperties);
-
-            // now load specific project properties //TODO viewer properties
-            // String path = ProjectMetaData.getInstance().getPathToProjectXmlFile();
-            // String projectName = ProjectMetaData.getInstance().getProjectName();
-            // if (ProjectMetaData.getInstance().isXmlFromResources()) {
-            // final InputStream inputStream = TrafficCanvas.class.getResourceAsStream(path + projectName
-            // + ".properties");
-            // defaultProperties.load(inputStream);
-            // inputStream.close();
-            // } else {
-            // InputStream in = new FileInputStream(path + projectName + ".properties");
-            // applicationProps.load(in);
-            // in.close();
-            // }
-
-        } catch (FileNotFoundException e) {
-            // ignore exception.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return applicationProps;
-    }
-
     @Override
     protected void reset() {
         super.reset();
         simulator.reset();
-    }
-
-  
-
-    /**
-     * Returns the color of the vehicle. The color may depend on the vehicle's properties, such as its velocity.
-     * 
-     * @param vehicle
-     * @param simulationTime
-     */
-    protected int vehicleColor(Vehicle vehicle, double simulationTime) {
-        int color;
-        final int count;
-
-        switch (vehicleColorMode) {
-        case ACCELERATION_COLOR:
-            final double a = vehicle.physicalQuantities().getAcc();
-            count = accelerations.length;
-            for (int i = 0; i < count; ++i) {
-                if (a < accelerations[i])
-                    return accelerationColors[i];
-            }
-            return accelerationColors[accelerationColors.length - 1];
-        default:
-            final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
-            color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
-        }
-        return color;
-    }
-
-    public int getColorAccordingToSpectrum(double vmin, double vmax, double v) {
-
-        final double hue_vmin = 1.00; // hue value for minimum speed value; red
-        final double hue_vmax = 1.84; // hue value for max speed (1 will be subtracted); violetblue
-
-        float vRelative = (vmax > vmin) ? (float) ((v - vmin) / (vmax - vmin)) : 0;
-        vRelative = Math.min(Math.max(0, vRelative), 1);
-        final float h = (float) (hue_vmin + vRelative * (hue_vmax - hue_vmin));
-        final float s = (float) 1.0;
-        final float b = (float) 0.92;
-        int[] rgbArray = hsv2rgb(h, s, b);
-
-        final int rgb = Color.rgb(rgbArray[0], rgbArray[1], rgbArray[2]);
-        return v > 0 ? rgb : Color.BLACK;
-    }
-
-    private int[] hsv2rgb(float h, float s, float v) {
-        h = (h % 1 + 1) % 1;
-        int i = (int) FloatMath.floor(h * 6);
-        double    f = h * 6 - i;
-        double    p = v * (1 - s);
-        double    q = v * (1 - s * f);
-        double    t = v * (1 - s * (1 - f));
-        
-        switch (i) {
-         case 0:
-             return new int [] {(int) (v*256), (int) (t*256), (int) (p*256)};
-         case 1:
-             return new int [] {(int) (q*256), (int) (v*256), (int) (p*256)};
-         case 2:
-             return new int [] {(int) (p*256), (int) (v*256), (int) (t*256)};
-         case 3:
-             return new int [] {(int) (p*256), (int) (q*256), (int) (v*256)};
-         case 4:
-             return new int [] {(int) (t*256), (int) (p*256), (int) (v*256)};
-         case 5:
-             return new int [] {(int) (v*256), (int) (p*256), (int) (q*256)};
-        }
-        return null;
     }
 
     /**
@@ -304,10 +175,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
      * the canvas.
      * </p>
      * 
-     * @param g
+     * @param canvas
      */
     @Override
-    protected void drawForeground(Canvas g) {
+    protected void drawForeground(Canvas canvas) {
         // moveVehicles occurs in the UI thread, so must synchronize with the
         // update of the road network in the calculation thread.
 
@@ -315,23 +186,23 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
         synchronized (simulationRunnable.dataLock) {
 
-            drawTrafficLights(g);
+            drawTrafficLights(canvas);
 
             final double simulationTime = this.simulationTime();
 
             for (final RoadSegment roadSegment : roadNetwork) {
                 final RoadMapping roadMapping = roadSegment.roadMapping();
                 assert roadMapping != null;
-
-                // DrawRoadMapping.clipPath(g, clipPath, roadMapping); //TODO uncommet
+                // canvas.clipPath not supported on 3.0+
+                // DrawRoadMapping.clipPath(canvas, clipPath, roadMapping);
                 for (final Vehicle vehicle : roadSegment) {
-                    drawVehicle(g, simulationTime, roadMapping, vehicle);
+                    drawVehicle(canvas, simulationTime, roadMapping, vehicle);
                 }
             }
 
             totalAnimationTime += System.currentTimeMillis() - timeBeforePaint_ms;
 
-            drawAfterVehiclesMoved(g, simulationRunnable.simulationTime(), simulationRunnable.iterationCount());
+            drawAfterVehiclesMoved(canvas, simulationRunnable.simulationTime(), simulationRunnable.iterationCount());
 
         }
     }
@@ -367,57 +238,50 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
      * Draws the background: everything that does not move each timestep. The background consists of the road segments and the sources and
      * sinks, if they are visible.
      * 
-     * @param g
+     * @param canvas
      */
     @Override
-    protected void drawBackground(Canvas g) {
+    protected void drawBackground(Canvas canvas) {
         if (drawSources) {
-            drawSources(g);
+            drawSources(canvas);
         }
         if (drawSinks) {
-            drawSinks(g);
+            drawSinks(canvas);
         }
-        drawRoadSegments(g);
 
-        // if (drawSpeedLimits) {
-        // drawSpeedLimits(g);
-        // }
-        //
-        // if (drawSlopes) {
-        // drawSlopes(g);
-        // }
-        //
-        // if (drawRoadId) {
-        // drawRoadSectionIds(g);
-        // }
+        if (drawSpeedLimits) {
+            drawSpeedLimits(canvas);
+        }
 
+        if (drawSlopes) {
+            drawSlopes(canvas);
+        }
+
+        if (drawRoadId) {
+            drawRoadSectionIds(canvas);
+        }
+
+        drawRoadSegments(canvas);
     }
 
     /**
      * Draws each road segment in the road network.
      * 
-     * @param g
+     * @param canvas
      */
-    private void drawRoadSegments(Canvas g) {
+    private void drawRoadSegments(Canvas canvas) {
+
         for (final RoadSegment roadSegment : roadNetwork) {
             final RoadMapping roadMapping = roadSegment.roadMapping();
-            // System.out.println("draw roadSegment: " + roadSegment);
             assert roadMapping != null;
-            drawRoadSegment(g, roadMapping);
-            drawRoadSegmentLines(g, roadMapping); // in one step (parallel or sequential update)?!
+            drawRoadSegment(canvas, roadMapping);
+            drawRoadSegmentLines(canvas, roadMapping); // in one step (parallel or sequential update)?!
         }
     }
 
-    private void drawRoadSegment(Canvas g, RoadMapping roadMapping) {
-        // final BasicStroke roadStroke = new BasicStroke((float) roadMapping.roadWidth(), BasicStroke.CAP_BUTT,
-        // BasicStroke.JOIN_MITER);
-        // g.setStroke(roadStroke);
-        // g.setColor(roadMapping.roadColor());
-        // PaintRoadMapping.paintRoadMapping(g, roadMapping);
-        assert roadMapping != null;
+    private void drawRoadSegment(Canvas canvas, RoadMapping roadMapping) {
 
-        paint.setStrokeWidth((float) roadMapping.roadWidth());
-        paint.setColor(roadMapping.roadColor());
+       
         roadPath.reset();
 
         final double lateralOffset = 0.5 * roadMapping.trafficLaneMin() * roadMapping.laneWidth();
@@ -434,13 +298,17 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 posTheta = roadMapping.map(roadPos);
                 roadPath.lineTo((float) posTheta.x, (float) posTheta.y);
             }
-            g.drawPath(roadPath, paint);
-            // paint.setStrokeWidth(1.0f);
-            // paint.setColor(colors.roadLineColor);
-            // paint.setStyle(Paint.Style.STROKE);
-            // canvas.drawPath(linePath, paint);
+            paint.reset();
+            paint.setStrokeWidth((float) roadMapping.roadWidth());
+            paint.setColor(roadColor);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawPath(roadPath, paint);
         } else {
-            g.drawPath(roadPath, paint);
+            paint.reset();
+            paint.setStrokeWidth((float) roadMapping.roadWidth());
+            paint.setColor(roadColor);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawPath(roadPath, paint);
         }
     }
 
@@ -450,59 +318,26 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
      * @param g
      */
     private void drawRoadSegmentLines(Canvas canvas, RoadMapping roadMapping) {
-        // final float dashPhase = (float) (roadMapping.roadLength() % (lineLength + gapLength));
-        //
-        // final Stroke lineStroke = new BasicStroke(lineWidth, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f,
-        // new float[] { lineLength, gapLength }, dashPhase);
-        // g.setStroke(lineStroke);
-        // g.setColor(roadLineColor);
-        //
-        // // draw the road lines
-        // final int laneCount = roadMapping.laneCount();
-        // for (int lane = 1; lane < laneCount; ++lane) {
-        // final double offset = roadMapping.laneInsideEdgeOffset(lane);
-        // if (lane == roadMapping.trafficLaneMin() || lane == roadMapping.trafficLaneMax()) {
-        // // use exit stroke pattern for on-ramps, off-ramps etc
-        // final Stroke exitStroke = new BasicStroke(lineWidth, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER,
-        // 10.0f, new float[] { 5.0f, gapLengthExit }, 5.0f);
-        // g.setStroke(exitStroke);
-        // } else {
-        // g.setStroke(lineStroke);
-        // }
-        // PaintRoadMapping.paintRoadMapping(g, roadMapping, offset);
-        // }
-        //
-        // // draw the road edges
-        // g.setStroke(new BasicStroke());
-        // g.setColor(roadEdgeColor);
-        // // inside edge
-        // double offset = roadMapping.laneInsideEdgeOffset(0);
-        // PaintRoadMapping.paintRoadMapping(g, roadMapping, offset);
-        // // outside edge
-        // offset = roadMapping.laneInsideEdgeOffset(laneCount);
-        // PaintRoadMapping.paintRoadMapping(g, roadMapping, offset);
-        //
+
+        paint.reset();
+        paint.setStyle(Paint.Style.STROKE);
+
         double offset;
-
         // draw the road lines
-        final int laneCount = roadMapping.laneCount() - 1;
-
+        final int laneCount = roadMapping.laneCount();
         paint.setStrokeWidth(1.0f);
-
-        // draw the road lines
         paint.setPathEffect(roadLineDashPathEffect);
         paint.setColor(roadLineColor);
-        for (int lane = Lane.LANE2; lane < laneCount; ++lane) {
+        for (int lane = 1; lane < laneCount; ++lane) {
             offset = roadMapping.laneInsideEdgeOffset(lane);
             linePath.reset();
             DrawRoadMapping.drawRoadMapping(linePath, roadMapping, offset);
             canvas.drawPath(linePath, paint);
         }
-
         // draw the road edges
         paint.setPathEffect(null);
         paint.setColor(roadEdgeColor);
-        offset = roadMapping.laneInsideEdgeOffset(Lane.LANE1);
+        offset = roadMapping.laneInsideEdgeOffset(0);
         linePath.reset();
         DrawRoadMapping.drawRoadMapping(linePath, roadMapping, offset);
         canvas.drawPath(linePath, paint);
@@ -520,7 +355,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         }
     }
 
-    private void drawTrafficLightsOnRoad(Canvas g, RoadSegment roadSegment) {
+    private void drawTrafficLightsOnRoad(Canvas canvas, RoadSegment roadSegment) {
         if (roadSegment.trafficLights() == null) {
             return;
         }
@@ -531,21 +366,22 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final int size = (int) (2 * roadMapping.laneWidth());
         final int radius = (int) (1.8 * roadMapping.laneWidth());
         for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-            g.drawColor(Color.DKGRAY);
+            canvas.drawColor(Color.DKGRAY);
             paint.setColor(Color.DKGRAY);
             final RoadMapping.PosTheta posTheta = roadMapping.map(trafficLight.position(), offset);
-            g.drawRect((int) posTheta.x - size / 2, (int) posTheta.y - size / 2, size, size, paint);
+            canvas.drawRect((int) posTheta.x - size / 2, (int) posTheta.y - size / 2, size, size, paint);
             final TrafficLightStatus status = trafficLight.status();
             if (status == TrafficLightStatus.GREEN) {
-                g.drawColor(Color.GREEN);
+                canvas.drawColor(Color.GREEN);
             } else if (status == TrafficLightStatus.RED) {
-                g.drawColor(Color.RED);
+                canvas.drawColor(Color.RED);
             } else if (status == TrafficLightStatus.RED_GREEN) {
-                g.drawColor(Color.MAGENTA);
+                canvas.drawColor(Color.MAGENTA);
             } else {
-                g.drawColor(Color.YELLOW);
+                canvas.drawColor(Color.YELLOW);
             }
-            // g.fillOval((int) posTheta.x - radius / 2, (int) posTheta.y - radius / 2, radius, radius);
+            RectF rectf = new RectF((int) posTheta.x - radius / 2, (int) posTheta.y - radius / 2, radius, radius);
+            canvas.drawOval(rectf, paint);
         }
     }
 
@@ -682,6 +518,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     }
 
     private void drawSources(Canvas canvas) {
+        paint.reset();
+        paint.setStyle(Paint.Style.FILL);
         for (final RoadSegment roadSegment : roadNetwork) {
             final RoadMapping roadMapping = roadSegment.roadMapping();
             assert roadMapping != null;
@@ -699,6 +537,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     }
 
     private void drawSinks(Canvas canvas) {
+        paint.reset();
+        paint.setStyle(Paint.Style.FILL);
         for (final RoadSegment roadSegment : roadNetwork) {
             final RoadMapping roadMapping = roadSegment.roadMapping();
             assert roadMapping != null;
@@ -714,7 +554,134 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             }
         }
     }
-    
+
+    /**
+     * Returns the color of the vehicle. The color may depend on the vehicle's properties, such as its velocity.
+     * 
+     * @param vehicle
+     * @param simulationTime
+     */
+    protected int vehicleColor(Vehicle vehicle, double simulationTime) {
+        int color;
+        final int count;
+
+        switch (vehicleColorMode) {
+        case ACCELERATION_COLOR:
+            final double a = vehicle.physicalQuantities().getAcc();
+            count = accelerations.length;
+            for (int i = 0; i < count; ++i) {
+                if (a < accelerations[i])
+                    return accelerationColors[i];
+            }
+            return accelerationColors[accelerationColors.length - 1];
+        default:
+            final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
+            color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
+        }
+        return color;
+    }
+
+    public int getColorAccordingToSpectrum(double vmin, double vmax, double v) {
+
+        final double hue_vmin = 1.00; // hue value for minimum speed value; red
+        final double hue_vmax = 1.84; // hue value for max speed (1 will be subtracted); violetblue
+
+        float vRelative = (vmax > vmin) ? (float) ((v - vmin) / (vmax - vmin)) : 0;
+        vRelative = Math.min(Math.max(0, vRelative), 1);
+        final float h = (float) (hue_vmin + vRelative * (hue_vmax - hue_vmin));
+        final float s = (float) 1.0;
+        final float b = (float) 0.92;
+        int[] rgbArray = hsv2rgb(h, s, b);
+
+        final int rgb = Color.rgb(rgbArray[0], rgbArray[1], rgbArray[2]);
+        return v > 0 ? rgb : Color.BLACK;
+    }
+
+    private int[] hsv2rgb(float h, float s, float v) {
+        h = (h % 1 + 1) % 1;
+        int i = (int) FloatMath.floor(h * 6);
+        double f = h * 6 - i;
+        double p = v * (1 - s);
+        double q = v * (1 - s * f);
+        double t = v * (1 - s * (1 - f));
+
+        switch (i) {
+        case 0:
+            return new int[] { (int) (v * 256), (int) (t * 256), (int) (p * 256) };
+        case 1:
+            return new int[] { (int) (q * 256), (int) (v * 256), (int) (p * 256) };
+        case 2:
+            return new int[] { (int) (p * 256), (int) (v * 256), (int) (t * 256) };
+        case 3:
+            return new int[] { (int) (p * 256), (int) (q * 256), (int) (v * 256) };
+        case 4:
+            return new int[] { (int) (t * 256), (int) (p * 256), (int) (v * 256) };
+        case 5:
+            return new int[] { (int) (v * 256), (int) (p * 256), (int) (q * 256) };
+        }
+        return null;
+    }
+
+    protected void initGraphicConfigFieldsFromProperties() {
+        setDrawRoadId(Boolean.parseBoolean(properties.getProperty("drawRoadId", "true")));
+        setDrawSinks(Boolean.parseBoolean(properties.getProperty("drawSinks", "true")));
+        setDrawSources(Boolean.parseBoolean(properties.getProperty("drawSources", "true")));
+        setDrawSlopes(Boolean.parseBoolean(properties.getProperty("drawSlopes", "true")));
+        setDrawSpeedLimits(Boolean.parseBoolean(properties.getProperty("drawSpeedLimits", "true")));
+
+        roadColor = Color.parseColor("#" + properties.getProperty("roadColor", "808080"));
+        roadEdgeColor = Color.parseColor("#" + properties.getProperty("roadEdgeColor", "222222"));
+        roadLineColor = Color.parseColor("#" + properties.getProperty("roadLineColor", "DDDDDD"));
+        sourceColor = Color.parseColor("#" + properties.getProperty("sourceColor", "FFFFFF"));
+        sinkColor = Color.parseColor("#" + properties.getProperty("sinkColor", "000000"));
+
+        setVmaxForColorSpectrum(Double.parseDouble(properties.getProperty("vmaxForColorSpectrum", "140")));
+
+        lineWidth = Float.parseFloat(properties.getProperty("lineWidth", "1.0"));
+        lineLength = Float.parseFloat(properties.getProperty("lineLength", "5.0"));
+        gapLength = Float.parseFloat(properties.getProperty("gapLength", "15.0"));
+        gapLengthExit = Float.parseFloat(properties.getProperty("gapLengthExit", "6.0"));
+
+        scale = Float.parseFloat(properties.getProperty("initialScale", "0.707106781"));
+        setSleepTime(Integer.parseInt(properties.getProperty("initial_sleep_time", "20")));
+    }
+
+    protected Properties loadProperties() {
+        Properties applicationProps = null;
+        try {
+            // create and load default properties
+            Resources resources = this.getResources();
+            AssetManager assetManager = resources.getAssets();
+            Properties defaultProperties = new Properties();
+            final InputStream is = assetManager.open("defaultviewerconfig.properties");
+            defaultProperties.load(is);
+            is.close();
+
+            // create application properties with default
+            applicationProps = new Properties(defaultProperties);
+
+            // now load specific project properties //TODO project specific viewer properties
+            // String path = ProjectMetaData.getInstance().getPathToProjectXmlFile();
+            // String projectName = ProjectMetaData.getInstance().getProjectName();
+            // if (ProjectMetaData.getInstance().isXmlFromResources()) {
+            // final InputStream inputStream = TrafficCanvas.class.getResourceAsStream(path + projectName
+            // + ".properties");
+            // defaultProperties.load(inputStream);
+            // inputStream.close();
+            // } else {
+            // InputStream in = new FileInputStream(path + projectName + ".properties");
+            // applicationProps.load(in);
+            // in.close();
+            // }
+
+        } catch (FileNotFoundException e) {
+            // ignore exception.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return applicationProps;
+    }
+
     public void setStatusControlCallbacks(StatusControlCallbacks statusCallbacks) {
         this.statusControlCallbacks = statusCallbacks;
     }
@@ -788,7 +755,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         this.drawSlopes = b;
         postInvalidate();
     }
-    
+
     public Properties getProperties() {
         return properties;
     }

@@ -27,16 +27,19 @@ package org.movsim.movdroid;
 
 import org.movsim.simulator.SimulationRunnable;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-
+import android.view.WindowManager;
 
 /**
  * <p>
@@ -56,9 +59,8 @@ import android.view.View;
  * </p>
  * 
  * <p>
- * That is the base class handles the "policy free" aspects of the view. Other aspects of the view
- * (colors, setting up the simulation, drawing the foreground and background) are deferred to a
- * subclass.
+ * That is the base class handles the "policy free" aspects of the view. Other aspects of the view (colors, setting up the simulation,
+ * drawing the foreground and background) are deferred to a subclass.
  * </p>
  */
 public abstract class ViewBase extends View {
@@ -99,16 +101,14 @@ public abstract class ViewBase extends View {
 
     /**
      * <p>
-     * Abstract function to allow the view to draw the simulation background, normally this is
-     * everything that does not move.
+     * Abstract function to allow the view to draw the simulation background, normally this is everything that does not move.
      * </p>
      */
     protected abstract void drawBackground(Canvas canvas);
 
     /**
      * <p>
-     * Abstract function to allow the view to draw the simulation foreground, normally this is
-     * everything that moves.
+     * Abstract function to allow the view to draw the simulation foreground, normally this is everything that moves.
      * </p>
      */
     protected abstract void drawForeground(Canvas canvas);
@@ -121,18 +121,39 @@ public abstract class ViewBase extends View {
      * @param context
      * @param simulationRunnable
      */
+    @SuppressLint("NewApi")
     public ViewBase(Context context, SimulationRunnable simulationRunnable) {
         super(context);
         this.simulationRunnable = simulationRunnable;
         backgroundBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        
-        //TODO better solution to paint background
+
+        // TODO better solution to paint background
         mDrawable = new ShapeDrawable(new RectShape());
-        mDrawable.getPaint().setColor(0xff7a7a7a);
+        mDrawable.getPaint().setColor(0xff303030);
         final int x = 0;
         final int y = 0;
-        final int width = 1300;
-        final int height = 2250;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int width;
+        int height;
+        Integer androidVersion = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+        if (androidVersion >= 13) {
+            // since API 13:
+            Point size = new Point();
+            display.getSize(size);
+            width = size.x;
+            height = size.y;
+        } else {
+            width = display.getWidth(); // deprecated
+            height = display.getHeight(); // deprecated
+        }
+        
+        // rotation hack
+        if (width > height) {
+            height = width;
+        } else {
+            width = height;
+        }
         mDrawable.setBounds(x, y, width, height);
     }
 
@@ -225,8 +246,7 @@ public abstract class ViewBase extends View {
 
     /**
      * <p>
-     * Draw the view by blitting the previously drawn background bitmap and then drawing the
-     * foreground.
+     * Draw the view by blitting the previously drawn background bitmap and then drawing the foreground.
      * </p>
      * 
      * @param canvas
@@ -247,8 +267,7 @@ public abstract class ViewBase extends View {
      * Draw the background bitmap for the view.
      * </p>
      * <p>
-     * For efficiency the background bitmap is not drawn every animation step, rather it is only
-     * drawn when it changes:
+     * For efficiency the background bitmap is not drawn every animation step, rather it is only drawn when it changes:
      * <ul>
      * <li>The view size or scale has changed.</li>
      * <li>The view center has changed.</li>
@@ -310,8 +329,8 @@ public abstract class ViewBase extends View {
      * Returns the time for which the simulation has been running.
      * </p>
      * <p>
-     * This is the logical time in the simulation (that is the sum of the timesteps), not the amount
-     * of real time that has been required to do the simulation calculations.
+     * This is the logical time in the simulation (that is the sum of the timesteps), not the amount of real time that has been required to
+     * do the simulation calculations.
      * </p>
      * 
      * @return the simulation time
@@ -400,7 +419,7 @@ public abstract class ViewBase extends View {
         switch (event.getAction() & ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             touchMode = TOUCH_MODE_DRAG;
-            pause();
+            // pause();
             startDragX = event.getX();
             startDragY = event.getY();
             xOffsetSave = xOffset;
@@ -409,12 +428,12 @@ public abstract class ViewBase extends View {
         case MotionEvent.ACTION_UP:
         case ACTION_POINTER_UP:
             touchMode = TOUCH_MODE_NONE;
-            resume();
+            // resume();
             break;
         case MotionEvent.ACTION_POINTER_DOWN:
             dx = event.getX(0) - event.getX(1);
             dy = event.getY(0) - event.getY(1);
-            pinchDistance = (float)Math.sqrt(dx * dx + dy * dy);
+            pinchDistance = (float) Math.sqrt(dx * dx + dy * dy);
             if (pinchDistance > touchModeZoomHysteresis) {
                 // pinchMidpointX = (event.getX(0) + event.getX(1)) / 2;
                 // pinchMidpointY = (event.getY(0) + event.getY(1)) / 2;
@@ -438,7 +457,7 @@ public abstract class ViewBase extends View {
             } else if (touchMode == TOUCH_MODE_ZOOM) {
                 dx = event.getX(0) - event.getX(1);
                 dy = event.getY(0) - event.getY(1);
-                final float distance = (float)Math.sqrt(dx * dx + dy * dy);
+                final float distance = (float) Math.sqrt(dx * dx + dy * dy);
                 if (pinchDistance > touchModeZoomHysteresis) {
                     final float newScale = distance / pinchDistance * scaleSave;
                     setScale(newScale);
