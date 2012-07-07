@@ -30,6 +30,10 @@ import org.movsim.input.ProjectMetaData;
 import org.movsim.simulator.SimulationRun;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
+import org.movsim.simulator.roadnetwork.RoadNetwork;
+import org.movsim.simulator.roadnetwork.RoadSegment;
+import org.movsim.simulator.roadnetwork.VariableMessageSignBase;
+import org.movsim.simulator.roadnetwork.VariableMessageSignDiversion;
 
 import android.content.Context;
 import android.content.Intent;
@@ -67,9 +71,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private ProjectMetaData projectMetaData;
     private Simulator simulator;
     private SimulationRunnable simulationRunnable;
-    
+
+    private VariableMessageSignBase variableMessageSign = new VariableMessageSignDiversion();
+
     private MovSimView movSimView;
     private Menu menu;
+    private RoadNetwork roadNetwork;
+    private boolean diversionOn;
 
     /** Called when the activity is first created. */
     @Override
@@ -105,6 +113,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.setCompletionCallback(this);
 
         simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
+        roadNetwork = simulator.getRoadNetwork();
     }
 
     private void initActionBar() {
@@ -126,6 +135,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         menu.add("Start").setIcon(R.drawable.ic_action_start)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         menu.add("Restart").setIcon(R.drawable.ic_action_restart)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add("Action").setIcon(R.drawable.ic_action_trafficlight)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         SubMenu subMenu1 = menu.addSubMenu("Menu");
@@ -157,29 +168,51 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             item.setIcon(R.drawable.ic_action_start);
             item.setTitle("Start");
             simulationRunnable.pause();
-        } else if (item.getTitle().equals("Restart")) {
-            simulator.getRoadNetwork().clear();
-            simulator.initialize();
-        } else if (item.getTitle().equals("Faster")) {
-            int sleepTime = simulationRunnable.sleepTime();
-            sleepTime -= sleepTime <= 5 ? 1 : 5;
-            if (sleepTime < 0) {
-                sleepTime = 0;
+        } else {
+            if (item.getTitle().equals("Restart")) {
+                roadNetwork.clear();
+                simulator.initialize();
+                reset();
+            } else if (item.getTitle().equals("Faster")) {
+                int sleepTime = simulationRunnable.sleepTime();
+                sleepTime -= sleepTime <= 5 ? 1 : 5;
+                if (sleepTime < 0) {
+                    sleepTime = 0;
+                }
+                simulationRunnable.setSleepTime(sleepTime);
+            } else if (item.getTitle().equals("Slower")) {
+                int sleepTime = simulationRunnable.sleepTime();
+                sleepTime += sleepTime < 5 ? 1 : 5;
+                if (sleepTime > 400) {
+                    sleepTime = 400;
+                }
+                simulationRunnable.setSleepTime(sleepTime);
+            } else if (item.getTitle().equals("Info")) {
+                Intent intent = new Intent();
+                intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
+                startActivity(intent);
+            } else if (item.getTitle().equals("Action")) {
+
+                for (RoadSegment roadSegment : roadNetwork) {
+                    if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
+
+                        if (diversionOn == false) {
+                            diversionOn = true;
+                            roadSegment.addVariableMessageSign(variableMessageSign);
+                        } else {
+                            diversionOn = false;
+                            roadSegment.removeVariableMessageSign(variableMessageSign);
+                        }
+                    }
+                }
+
             }
-            simulationRunnable.setSleepTime(sleepTime);
-        } else if (item.getTitle().equals("Slower")) {
-            int sleepTime = simulationRunnable.sleepTime();
-            sleepTime += sleepTime < 5 ? 1 : 5;
-            if (sleepTime > 400) {
-                sleepTime = 400;
-            }
-            simulationRunnable.setSleepTime(sleepTime);
-        } else if (item.getTitle().equals("Info")) {
-            Intent intent = new Intent();
-            intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
-            startActivity(intent);
         }
         return true;
+    }
+
+    private void reset() {
+        diversionOn = false;
     }
 
     @Override
