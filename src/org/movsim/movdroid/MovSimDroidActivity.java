@@ -220,13 +220,15 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         // project selection
         Toast.makeText(this, "Got click: " + itemPosition, Toast.LENGTH_SHORT).show();
         if (itemPosition == 1) {
-            simulator.loadScenarioFromXml("routing", "/sim/games/");
+            simulator.loadScenarioFromXml("ramp_metering", "/sim/buildingBlocks/");
         } else if (itemPosition == 2) {
             simulator.loadScenarioFromXml("ringroad_1lane", "/sim/buildingBlocks/");
         } else if (itemPosition == 3) {
             simulator.loadScenarioFromXml("cloverleaf", "/sim/buildingBlocks/");
-        } else {
+        } else if (itemPosition == 4) {
             simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
+        } else {
+            simulator.loadScenarioFromXml("routing", "/sim/games/");
         }
         simulationRunnable.pause();
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
