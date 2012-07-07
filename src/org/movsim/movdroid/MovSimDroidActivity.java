@@ -111,6 +111,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setCompletionCallback(this);
+        simulationRunnable.addUpdateStatusCallback(this);
 
         simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
         roadNetwork = simulator.getRoadNetwork();
@@ -254,9 +255,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
     
     @Override
-    public void updateStatus(double arg0) {
-        // TODO Auto-generated method stub
-
+    public void updateStatus(double simulationTime) {
+        if (simulator.isFinished()) {
+            // hack to call simulationComplete
+            simulationRunnable.setDuration(simulationTime);
+        }
     }
 
     @Override
