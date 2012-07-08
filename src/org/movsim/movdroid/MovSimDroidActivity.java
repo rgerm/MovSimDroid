@@ -115,21 +115,23 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void initActionBar() {
-        getSupportActionBar().setBackgroundDrawable(
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(
                 getResources().getDrawable(R.drawable.abs__ab_transparent_dark_holo));
 
-        Context context = getSupportActionBar().getThemedContext();
+        Context context = actionBar.getThemedContext();
         ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.project,
                 R.layout.sherlock_spinner_item);
         list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
 
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        getSupportActionBar().setListNavigationCallbacks(list, this);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setListNavigationCallbacks(list, this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
+        menu.clear();
         menu.add("Start").setIcon(R.drawable.ic_action_start)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         menu.add("Restart").setIcon(R.drawable.ic_action_restart)
@@ -257,6 +259,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        onCreateOptionsMenu(menu);
     }
 
     @Override
