@@ -111,7 +111,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.setCompletionCallback(this);
         simulationRunnable.addUpdateStatusCallback(this);
 
-        // simulator.loadScenarioFromXml("routing", "/sim/buildingBlocks/");
         roadNetwork = simulator.getRoadNetwork();
     }
 
@@ -152,8 +151,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Got click: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-
         // ActionBar Buttons
         if (item.getTitle().equals("Start")) {
             item.setIcon(R.drawable.ic_action_pause);
@@ -239,7 +236,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         // project selection
-        Toast.makeText(this, "Got click: " + itemPosition, Toast.LENGTH_SHORT).show();
         if (itemPosition == 1) {
             simulator.loadScenarioFromXml("ramp_metering", "/sim/games/");
         } else if (itemPosition == 2) {
@@ -268,15 +264,15 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void simulationComplete(final double simulationTime) {
         final double totalVehicleTravelTime = roadNetwork.totalVehicleTravelTime();
         final double totalVehicleTravelDistance = roadNetwork.totalVehicleTravelDistance() / 1000.0;
-        // final double totalVehicleFuelUsedLiters = roadNetwork.totalVehicleFuelUsedLiters();
+         final double totalVehicleFuelUsedLiters = roadNetwork.totalVehicleFuelUsedLiters();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final StringBuilder message = new StringBuilder("Simulation finished in ");
                 message.append(FormatUtil.getFormatedTime(simulationTime));
                 message.append("\ntotal travel time: ").append(FormatUtil.getFormatedTime(totalVehicleTravelTime));
-                message.append("\ntotal travel distance [km]: ").append(
-                        FormatUtil.getFormatedTime(totalVehicleTravelDistance));
+                message.append("\ntotal travel distance [km]: ").append(totalVehicleTravelDistance);
+                message.append("\ntotal fuel used [l]: ").append(totalVehicleFuelUsedLiters);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
