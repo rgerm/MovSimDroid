@@ -254,7 +254,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         return true;
     }
 
-    // this is called on rotation instead in onCreate. TODO Does not work with ICS anymore
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
