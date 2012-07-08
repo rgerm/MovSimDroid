@@ -155,7 +155,7 @@ public abstract class ViewBase extends View {
         } else {
             width = height;
         }
-        mDrawable.setBounds(x, y, width, height);
+        mDrawable.setBounds(x, y, width+50, height);
     }
 
     protected void reset() {

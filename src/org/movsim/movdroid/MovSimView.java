@@ -33,7 +33,6 @@ import java.util.Properties;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.SimulationRunnable.UpdateDrawingCallback;
 import org.movsim.simulator.Simulator;
-import org.movsim.simulator.roadnetwork.Lane;
 import org.movsim.simulator.roadnetwork.RoadMapping;
 import org.movsim.simulator.roadnetwork.RoadNetwork;
 import org.movsim.simulator.roadnetwork.RoadSegment;
