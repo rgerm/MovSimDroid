@@ -263,7 +263,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void simulationComplete(final double simulationTime) {
         final double totalVehicleTravelTime = roadNetwork.totalVehicleTravelTime();
         final double totalVehicleTravelDistance = roadNetwork.totalVehicleTravelDistance() / 1000.0;
-         final double totalVehicleFuelUsedLiters = roadNetwork.totalVehicleFuelUsedLiters();
+        final double totalVehicleFuelUsedLiters = roadNetwork.totalVehicleFuelUsedLiters();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

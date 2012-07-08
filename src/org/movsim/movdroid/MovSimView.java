@@ -301,13 +301,13 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             paint.reset();
             paint.setStrokeWidth((float) roadMapping.roadWidth());
             paint.setColor(roadColor);
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
             canvas.drawPath(roadPath, paint);
         } else {
             paint.reset();
             paint.setStrokeWidth((float) roadMapping.roadWidth());
             paint.setColor(roadColor);
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
             canvas.drawPath(roadPath, paint);
         }
     }
