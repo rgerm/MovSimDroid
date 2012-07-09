@@ -185,7 +185,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
         synchronized (simulationRunnable.dataLock) {
 
-//            drawTrafficLights(canvas); //TODO draw traffic lights
+            // drawTrafficLights(canvas); //TODO draw traffic lights
 
             final double simulationTime = this.simulationTime();
 
@@ -297,18 +297,15 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 posTheta = roadMapping.map(roadPos);
                 roadPath.lineTo((float) posTheta.x, (float) posTheta.y);
             }
-            paint.reset();
-            paint.setStrokeWidth((float) roadMapping.roadWidth());
-            paint.setColor(roadColor);
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
-            canvas.drawPath(roadPath, paint);
-        } else {
-            paint.reset();
-            paint.setStrokeWidth((float) roadMapping.roadWidth());
-            paint.setColor(roadColor);
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
-            canvas.drawPath(roadPath, paint);
         }
+
+        paint.reset();
+        paint.setStrokeWidth((float) roadMapping.roadWidth());
+        paint.setColor(roadColor);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPath(roadPath, paint);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawPath(roadPath, paint);
     }
 
     /**
@@ -364,7 +361,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final int offset = -(int) ((roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth());
         final int size = (int) (2 * roadMapping.laneWidth());
         final int radius = (int) (1.8 * roadMapping.laneWidth());
-        for (final TrafficLight trafficLight : roadSegment.trafficLights()) {            canvas.drawColor(Color.DKGRAY);
+        for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
+            canvas.drawColor(Color.DKGRAY);
             paint.setColor(Color.DKGRAY);
             final RoadMapping.PosTheta posTheta = roadMapping.map(trafficLight.position(), offset);
             canvas.drawRect((int) posTheta.x - size / 2, (int) posTheta.y - size / 2, size, size, paint);
