@@ -131,17 +131,17 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         menu.clear();
-        menu.add("Start").setIcon(R.drawable.ic_action_start)
+        menu.add(R.string.start).setIcon(R.drawable.ic_action_start)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-        menu.add("Restart").setIcon(R.drawable.ic_action_restart)
+        menu.add(R.string.restart).setIcon(R.drawable.ic_action_restart)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-        menu.add("Action").setIcon(R.drawable.ic_action_trafficlight)
+        menu.add(R.string.action).setIcon(R.drawable.ic_action_trafficlight)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-        SubMenu subMenu1 = menu.addSubMenu("Menu");
-        subMenu1.add("Faster");
-        subMenu1.add("Slower");
-        subMenu1.add("Info");
+        SubMenu subMenu1 = menu.addSubMenu(R.string.menu);
+        subMenu1.add(R.string.faster);
+        subMenu1.add(R.string.slower);
+        subMenu1.add(R.string.info);
 
         MenuItem subMenu1Item = subMenu1.getItem();
         subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_holo_dark);
@@ -153,19 +153,19 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // ActionBar Buttons
-        if (item.getTitle().equals("Start")) {
+        if (item.getTitle().equals(R.string.start)) {
             actionStart(item);
-        } else if (item.getTitle().equals("Pause")) {
+        } else if (item.getTitle().equals(R.string.pause)) {
             actonPause(item);
-        } else if (item.getTitle().equals("Restart")) {
+        } else if (item.getTitle().equals(R.string.restart)) {
             actionRestart();
-        } else if (item.getTitle().equals("Faster")) {
+        } else if (item.getTitle().equals(R.string.faster)) {
             actionFaster();
-        } else if (item.getTitle().equals("Slower")) {
+        } else if (item.getTitle().equals(R.string.slower)) {
             actionSlower();
-        } else if (item.getTitle().equals("Info")) {
+        } else if (item.getTitle().equals(R.string.info)) {
             actionInfo();
-        } else if (item.getTitle().equals("Action")) {
+        } else if (item.getTitle().equals(R.string.action)) {
             actionInteraction();
         }
 
@@ -240,13 +240,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void actonPause(MenuItem item) {
         item.setIcon(R.drawable.ic_action_start);
-        item.setTitle("Start");
+        item.setTitle(R.string.start);
         simulationRunnable.pause();
     }
 
     private void actionStart(MenuItem item) {
         item.setIcon(R.drawable.ic_action_pause);
-        item.setTitle("Pause");
+        item.setTitle(R.string.pause);
         if (!simulationRunnable.isPaused()) {
             simulationRunnable.start();
         } else {
@@ -256,7 +256,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void reset() {
         diversionOn = false;
-        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
     }
 
     @Override
@@ -274,7 +274,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             simulator.loadScenarioFromXml("routing", "/sim/games/");
         }
         simulationRunnable.pause();
-        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         movSimView.resetGraphicproperties();
         movSimView.forceRepaintBackground();
         return true;
@@ -294,11 +294,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final StringBuilder message = new StringBuilder("Simulation finished in ");
+                final StringBuilder message = new StringBuilder(R.string.simulation_finished_in_);
                 message.append(FormatUtil.getFormatedTime(simulationTime));
-                message.append("\ntotal travel time: ").append(FormatUtil.getFormatedTime(totalVehicleTravelTime));
-                message.append("\ntotal travel distance [km]: ").append(totalVehicleTravelDistance);
-                message.append("\ntotal fuel used [l]: ").append(totalVehicleFuelUsedLiters);
+                message.append(R.string.total_travel_time_).append(FormatUtil.getFormatedTime(totalVehicleTravelTime));
+                message.append(R.string.total_travel_distance).append(totalVehicleTravelDistance);
+                message.append(R.string.total_fuel_used).append(totalVehicleFuelUsedLiters);
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
@@ -315,7 +315,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     protected void onPause() {
         simulationRunnable.pause();
-        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle("Start");
+        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         super.onPause();
     }
 

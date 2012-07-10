@@ -4,5 +4,17 @@
     <string name="app_name">MovSim</string>
     <string name="dialog">MovSim Info</string>
     <string name="dialog_content">Multi-model open-source vehicular-traffic Simulator</string>
+    <string name="start">Start</string>
+    <string name="restart">Restart</string>
+    <string name="action">Action</string>
+    <string name="menu">Menu</string>
+    <string name="faster">Faster</string>
+    <string name="slower">Slower</string>
+    <string name="info">Info</string>
+    <string name="pause">Pause</string>
+    <string name="simulation_finished_in_">"Simulation finished in "</string>
+    <string name="total_travel_time_">"\ntotal travel time: "</string>
+    <string name="total_travel_distance">"\ntotal travel distance [km]: "</string>
+    <string name="total_fuel_used">"\ntotal fuel used [l]: "</string>
 
 </resources>
