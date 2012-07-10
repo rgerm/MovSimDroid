@@ -30,7 +30,6 @@ import org.movsim.input.ProjectMetaData;
 import org.movsim.simulator.SimulationRun;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
-import org.movsim.simulator.roadnetwork.RoadMapping;
 import org.movsim.simulator.roadnetwork.RoadNetwork;
 import org.movsim.simulator.roadnetwork.RoadSegment;
 import org.movsim.simulator.roadnetwork.TrafficLight;
@@ -291,11 +290,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final StringBuilder message = new StringBuilder(R.string.simulation_finished_in);
-                message.append(FormatUtil.getFormatedTime(simulationTime));
-                message.append(R.string.total_travel_time_).append(FormatUtil.getFormatedTime(totalVehicleTravelTime));
-                message.append(R.string.total_travel_distance).append(totalVehicleTravelDistance);
-                message.append(R.string.total_fuel_used).append(totalVehicleFuelUsedLiters);
+                
+                final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
+                .append(FormatUtil.getFormatedTime(simulationTime))
+                .append(res.getString(R.string.total_travel_time)).append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
+                .append(res.getString(R.string.total_travel_distance)).append(String.format("%.3f", totalVehicleTravelDistance))
+                .append(res.getString(R.string.total_fuel_used)).append(String.format("%.1f",totalVehicleFuelUsedLiters));
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
