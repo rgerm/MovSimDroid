@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MovSim</string>
+    <string name="dialog">MovSim Info</string>
+    <string name="dialog_content">Multi-model open-source vehicular-traffic Simulator</string>
+    <string name="start">Start</string>
+    <string name="restart">Neu starten</string>
+    <string name="action">Bang</string>
+    <string name="menu">MenÜ</string>
+    <string name="faster">schneller</string>
+    <string name="slower">langsamer</string>
+    <string name="info">Info</string>
+    <string name="pause">Pause</string>
+    <string name="simulation_finished_in_">"Simulation beendet nach: "</string>
+    <string name="total_travel_time_">"\nabsolute Reisezeit: "</string>
+    <string name="total_travel_distance">"\ngesamte gefahrene Distanz [km]: "</string>
+    <string name="total_fuel_used">"\ngesamter Benzinverbrauch [l]: "</string>
+
+</resources>

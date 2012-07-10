@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="project">
+        <item>Routen-Spiel</item>
+        <item>Zuflußregelung-Spiel</item>
+        <item>Ringstrße</item>
+        <item>Autobahnkreuz</item>
+        <item>Autobahnabfahrt</item>
+    </string-array>
+
+</resources>
