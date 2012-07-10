@@ -12,7 +12,7 @@
     <string name="slower">Slower</string>
     <string name="info">Info</string>
     <string name="pause">Pause</string>
-    <string name="simulation_finished_in_">"Simulation finished in "</string>
+    <string name="simulation_finished_in">"Simulation finished in "</string>
     <string name="total_travel_time_">"\ntotal travel time: "</string>
     <string name="total_travel_distance">"\ntotal travel distance [km]: "</string>
     <string name="total_fuel_used">"\ntotal fuel used [l]: "</string>
