@@ -40,6 +40,7 @@ import org.movsim.simulator.roadnetwork.VariableMessageSignDiversion;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -80,6 +81,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private Menu menu;
     private RoadNetwork roadNetwork;
     private boolean diversionOn;
+    private Resources res;
 
     /** Called when the activity is first created. */
     @Override
@@ -90,6 +92,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
+        res = getResources();
+        
         initActionBar();
 
         setupSimulator();
@@ -263,17 +267,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         // project selection
-        if (itemPosition == 1) {
-            simulator.loadScenarioFromXml("ramp_metering", "/sim/games/");
-        } else if (itemPosition == 2) {
-            simulator.loadScenarioFromXml("ringroad_1lane", "/sim/buildingBlocks/");
-        } else if (itemPosition == 3) {
-            simulator.loadScenarioFromXml("cloverleaf", "/sim/buildingBlocks/");
-        } else if (itemPosition == 4) {
-            simulator.loadScenarioFromXml("offramp", "/sim/buildingBlocks/");
-        } else {
-            simulator.loadScenarioFromXml("routing", "/sim/games/");
-        }
+        String projectName = res.getStringArray(R.array.projectName)[itemPosition];
+        String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
+        simulator.loadScenarioFromXml(projectName, projectPath);
         simulationRunnable.pause();
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         movSimView.resetGraphicproperties();

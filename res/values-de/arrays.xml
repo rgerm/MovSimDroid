@@ -3,8 +3,8 @@
 
     <string-array name="project">
         <item>Routen-Spiel</item>
-        <item>Zuflußregelung-Spiel</item>
-        <item>Ringstrße</item>
+        <item>Zuflußregelungs-Spiel</item>
+        <item>Ringstraße</item>
         <item>Autobahnkreuz</item>
         <item>Autobahnabfahrt</item>
     </string-array>
