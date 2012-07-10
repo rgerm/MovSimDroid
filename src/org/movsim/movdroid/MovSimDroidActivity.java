@@ -153,19 +153,20 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // ActionBar Buttons
-        if (item.getTitle().equals(R.string.start)) {
+        final CharSequence title = item.getTitle();
+        if (title.equals(R.string.start)) {
             actionStart(item);
-        } else if (item.getTitle().equals(R.string.pause)) {
+        } else if (title.equals(R.string.pause)) {
             actonPause(item);
-        } else if (item.getTitle().equals(R.string.restart)) {
+        } else if (title.equals(R.string.restart)) {
             actionRestart();
-        } else if (item.getTitle().equals(R.string.faster)) {
+        } else if (title.equals(R.string.faster)) {
             actionFaster();
-        } else if (item.getTitle().equals(R.string.slower)) {
+        } else if (title.equals(R.string.slower)) {
             actionSlower();
-        } else if (item.getTitle().equals(R.string.info)) {
+        } else if (title.equals(R.string.info)) {
             actionInfo();
-        } else if (item.getTitle().equals(R.string.action)) {
+        } else if (title.equals(R.string.action)) {
             actionInteraction();
         }
 
