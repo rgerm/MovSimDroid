@@ -116,8 +116,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void initActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.abs__ab_transparent_dark_holo));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.abs__ab_transparent_dark_holo));
 
         Context context = actionBar.getThemedContext();
         ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.project,
@@ -155,79 +154,104 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public boolean onOptionsItemSelected(MenuItem item) {
         // ActionBar Buttons
         if (item.getTitle().equals("Start")) {
-            item.setIcon(R.drawable.ic_action_pause);
-            item.setTitle("Pause");
-            if (!simulationRunnable.isPaused()) {
-                simulationRunnable.start();
-            } else {
-                simulationRunnable.resume();
-            }
+            actionStart(item);
         } else if (item.getTitle().equals("Pause")) {
-            item.setIcon(R.drawable.ic_action_start);
-            item.setTitle("Start");
-            simulationRunnable.pause();
-        } else {
-            if (item.getTitle().equals("Restart")) {
-                roadNetwork.clear();
-                simulator.initialize();
-                reset();
-            } else if (item.getTitle().equals("Faster")) {
-                int sleepTime = simulationRunnable.sleepTime();
-                sleepTime -= sleepTime <= 5 ? 1 : 5;
-                if (sleepTime < 0) {
-                    sleepTime = 0;
-                }
-                simulationRunnable.setSleepTime(sleepTime);
-            } else if (item.getTitle().equals("Slower")) {
-                int sleepTime = simulationRunnable.sleepTime();
-                sleepTime += sleepTime < 5 ? 1 : 5;
-                if (sleepTime > 400) {
-                    sleepTime = 400;
-                }
-                simulationRunnable.setSleepTime(sleepTime);
-            } else if (item.getTitle().equals("Info")) {
-                Intent intent = new Intent();
-                intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
-                startActivity(intent);
-            } else if (item.getTitle().equals("Action")) {
+            actonPause(item);
+        } else if (item.getTitle().equals("Restart")) {
+            actionRestart();
+        } else if (item.getTitle().equals("Faster")) {
+            actionFaster();
+        } else if (item.getTitle().equals("Slower")) {
+            actionSlower();
+        } else if (item.getTitle().equals("Info")) {
+            actionInfo();
+        } else if (item.getTitle().equals("Action")) {
+            actionInteraction();
+        }
 
-                for (RoadSegment roadSegment : roadNetwork) {
-                    if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
-                        if (diversionOn == false) {
-                            diversionOn = true;
-                            roadSegment.addVariableMessageSign(variableMessageSign);
-                        } else {
-                            diversionOn = false;
-                            roadSegment.removeVariableMessageSign(variableMessageSign);
-                        }
-                    }
-                    if (roadSegment.trafficLights() != null) {
-                        // final RoadMapping roadMapping = roadSegment.roadMapping();
-                        for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-                            // final Rectangle2D trafficLightRect = TrafficCanvas.trafficLightRect(roadMapping, trafficLight);
-                            // // check if the user has clicked on a traffic light, if they have then change the
-                            // // traffic light to the next color
-                            // final Point point = e.getPoint();
-                            // final Point2D transformedPoint = new Point2D.Float();
-                            // final GeneralPath path = new GeneralPath();
-                            // try {
-                            // // convert from mouse coordinates to canvas coordinates
-                            // trafficCanvas.transform.inverseTransform(new Point2D.Float(point.x, point.y), transformedPoint);
-                            // } catch (final NoninvertibleTransformException e1) {
-                            // e1.printStackTrace();
-                            // return;
-                            // }
-                            // if (trafficLightRect.contains(transformedPoint)) {
-                            trafficLight.nextState();
-                            movSimView.forceRepaintBackground();
-                            // }
-                        }
-                    }
-                }
+        return true;
+    }
 
+    private void actionInteraction() {
+        for (RoadSegment roadSegment : roadNetwork) {
+            if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
+                if (diversionOn == false) {
+                    diversionOn = true;
+                    roadSegment.addVariableMessageSign(variableMessageSign);
+                } else {
+                    diversionOn = false;
+                    roadSegment.removeVariableMessageSign(variableMessageSign);
+                }
+            }
+            if (roadSegment.trafficLights() != null) {
+                // final RoadMapping roadMapping = roadSegment.roadMapping();
+                for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
+                    // final Rectangle2D trafficLightRect = TrafficCanvas.trafficLightRect(roadMapping, trafficLight);
+                    // // check if the user has clicked on a traffic light, if they have then change the
+                    // // traffic light to the next color
+                    // final Point point = e.getPoint();
+                    // final Point2D transformedPoint = new Point2D.Float();
+                    // final GeneralPath path = new GeneralPath();
+                    // try {
+                    // // convert from mouse coordinates to canvas coordinates
+                    // trafficCanvas.transform.inverseTransform(new Point2D.Float(point.x, point.y), transformedPoint);
+                    // } catch (final NoninvertibleTransformException e1) {
+                    // e1.printStackTrace();
+                    // return;
+                    // }
+                    // if (trafficLightRect.contains(transformedPoint)) {
+                    trafficLight.nextState();
+                    movSimView.forceRepaintBackground();
+                    // }
+                }
             }
         }
-        return true;
+    }
+
+    private void actionInfo() {
+        Intent intent = new Intent();
+        intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
+        startActivity(intent);
+    }
+
+    private void actionSlower() {
+        int sleepTime = simulationRunnable.sleepTime();
+        sleepTime += sleepTime < 5 ? 1 : 5;
+        if (sleepTime > 400) {
+            sleepTime = 400;
+        }
+        simulationRunnable.setSleepTime(sleepTime);
+    }
+
+    private void actionFaster() {
+        int sleepTime = simulationRunnable.sleepTime();
+        sleepTime -= sleepTime <= 5 ? 1 : 5;
+        if (sleepTime < 0) {
+            sleepTime = 0;
+        }
+        simulationRunnable.setSleepTime(sleepTime);
+    }
+
+    private void actionRestart() {
+        roadNetwork.clear();
+        simulator.initialize();
+        reset();
+    }
+
+    private void actonPause(MenuItem item) {
+        item.setIcon(R.drawable.ic_action_start);
+        item.setTitle("Start");
+        simulationRunnable.pause();
+    }
+
+    private void actionStart(MenuItem item) {
+        item.setIcon(R.drawable.ic_action_pause);
+        item.setTitle("Pause");
+        if (!simulationRunnable.isPaused()) {
+            simulationRunnable.start();
+        } else {
+            simulationRunnable.resume();
+        }
     }
 
     private void reset() {
