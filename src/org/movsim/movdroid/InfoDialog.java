@@ -10,6 +10,15 @@ public class InfoDialog extends SherlockActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.text);
-        ((TextView)findViewById(R.id.text)).setText(R.string.dialog_content);
+
+        // Resources res = getResources();
+        Bundle bundle = this.getIntent().getExtras();
+        String message = bundle.getString("message");
+
+        if (message != null) {
+            ((TextView) findViewById(R.id.text)).setText(message);
+        } else {
+            ((TextView) findViewById(R.id.text)).setText(R.string.dialog_content);
+        }
     }
 }

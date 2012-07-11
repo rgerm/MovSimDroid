@@ -92,7 +92,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
         res = getResources();
-        
+
         initActionBar();
 
         setupSimulator();
@@ -213,7 +213,16 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void actionInfo() {
+        showInfo(res.getString(R.string.info));
+    }
+
+    /**
+     * @param message
+     *            string
+     */
+    private void showInfo(String info) {
         Intent intent = new Intent();
+        intent.putExtra("message", info);
         intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
         startActivity(intent);
     }
@@ -290,13 +299,16 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                
                 final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
-                .append(FormatUtil.getFormatedTime(simulationTime))
-                .append(res.getString(R.string.total_travel_time)).append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
-                .append(res.getString(R.string.total_travel_distance)).append(String.format("%.3f", totalVehicleTravelDistance))
-                .append(res.getString(R.string.total_fuel_used)).append(String.format("%.1f",totalVehicleFuelUsedLiters));
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        .append(FormatUtil.getFormatedTime(simulationTime))
+                        .append(res.getString(R.string.total_travel_time))
+                        .append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
+                        .append(res.getString(R.string.total_travel_distance))
+                        .append(String.format("%.3f", totalVehicleTravelDistance))
+                        .append(res.getString(R.string.total_fuel_used))
+                        .append(String.format("%.1f", totalVehicleFuelUsedLiters));
+                // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                showInfo(message.toString());
             }
         });
     }
