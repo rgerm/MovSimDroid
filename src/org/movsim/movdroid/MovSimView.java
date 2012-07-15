@@ -25,11 +25,9 @@
  */
 package org.movsim.movdroid;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
+import org.movsim.input.ProjectMetaData;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.SimulationRunnable.UpdateDrawingCallback;
 import org.movsim.simulator.Simulator;
@@ -45,8 +43,6 @@ import org.movsim.simulator.vehicles.Vehicle;
 import org.movsim.utilities.ConversionUtilities;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -61,7 +57,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
     private Simulator simulator;
     private SimulationRunnable simulationRunnable;
-    private Properties properties;
     protected final RoadNetwork roadNetwork;
 
     // pre-allocate Path and Paint objects
@@ -110,6 +105,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     protected long lastVehicleViewed = -1;
     protected long vehicleToHighlightId = -1;
 
+    private ProjectMetaData projectMetaData;
+
     /**
      * Callbacks from this TrafficCanvas to the application UI.
      * 
@@ -126,22 +123,21 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         public void stateChanged();
     }
 
-    public MovSimView(Context context, Simulator simulator) {
+    public MovSimView(Context context, Simulator simulator, ProjectMetaData projectMetaData) {
         super(context, simulator.getSimulationRunnable());
         this.simulator = simulator;
+        this.projectMetaData = projectMetaData;
         this.roadNetwork = simulator.getRoadNetwork();
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setUpdateDrawingCallback(this);
-
+        
         resetGraphicproperties();
     }
 
     public void resetGraphicproperties() {
-        if (getProperties() == null) {
-            setProperties(loadProperties());
-        }
-
-        initGraphicConfigFieldsFromProperties();
+        Properties properties = ViewProperties.loadProperties(projectMetaData.getProjectName(),
+                projectMetaData.getPathToProjectXmlFile());
+        initGraphicConfigFieldsFromProperties(properties);
     }
 
     @Override
@@ -647,7 +643,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         return null;
     }
 
-    protected void initGraphicConfigFieldsFromProperties() {
+    protected void initGraphicConfigFieldsFromProperties(Properties properties) {
         setDrawRoadId(Boolean.parseBoolean(properties.getProperty("drawRoadId", "true")));
         setDrawSinks(Boolean.parseBoolean(properties.getProperty("drawSinks", "true")));
         setDrawSources(Boolean.parseBoolean(properties.getProperty("drawSources", "true")));
@@ -671,41 +667,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         setSleepTime(Integer.parseInt(properties.getProperty("initial_sleep_time", "20")));
     }
 
-    protected Properties loadProperties() {
-        Properties applicationProps = null;
-        try {
-            // create and load default properties
-            Resources resources = this.getResources();
-            AssetManager assetManager = resources.getAssets();
-            Properties defaultProperties = new Properties();
-            final InputStream is = assetManager.open("defaultviewerconfig.properties");
-            defaultProperties.load(is);
-            is.close();
-
-            // create application properties with default
-            applicationProps = new Properties(defaultProperties);
-
-            // now load specific project properties //TODO project specific viewer properties
-            // String path = ProjectMetaData.getInstance().getPathToProjectXmlFile();
-            // String projectName = ProjectMetaData.getInstance().getProjectName();
-            // if (ProjectMetaData.getInstance().isXmlFromResources()) {
-            // final InputStream inputStream = TrafficCanvas.class.getResourceAsStream(path + projectName
-            // + ".properties");
-            // defaultProperties.load(inputStream);
-            // inputStream.close();
-            // } else {
-            // InputStream in = new FileInputStream(path + projectName + ".properties");
-            // applicationProps.load(in);
-            // in.close();
-            // }
-
-        } catch (FileNotFoundException e) {
-            // ignore exception.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return applicationProps;
-    }
 
     public void setStatusControlCallbacks(StatusControlCallbacks statusCallbacks) {
         this.statusControlCallbacks = statusCallbacks;
@@ -779,13 +740,5 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     public void setDrawSlopes(boolean b) {
         this.drawSlopes = b;
         postInvalidate();
-    }
-
-    public Properties getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Properties properties) {
-        this.properties = properties;
     }
 }

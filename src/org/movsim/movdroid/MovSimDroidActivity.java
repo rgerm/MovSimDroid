@@ -96,9 +96,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
         setupSimulator();
 
-        movSimView = new MovSimView(this, simulator);
-        setContentView(movSimView);
+        movSimView = new MovSimView(this, simulator, projectMetaData);
 
+        setContentView(movSimView);
     }
 
     private void setupSimulator() {
@@ -306,7 +306,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         .append(String.format("%.3f", totalVehicleTravelDistance))
                         .append(res.getString(R.string.total_fuel_used))
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
-                // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 showInfo(message.toString());
             }
         });
