@@ -418,13 +418,13 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             //TODO draw speedlimit
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
-                paint.setColor(Color.RED);
-                RectF rectf= new RectF((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-                canvas.drawOval(rectf, paint);
-                paint.setColor(Color.WHITE);
-                rectf = new RectF((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-                        2 * whiteRadius2);
-                canvas.drawOval(rectf, paint);
+//                paint.setColor(Color.RED);
+//                RectF rectf= new RectF((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
+//                canvas.drawOval(rectf, paint);
+//                paint.setColor(Color.WHITE);
+//                rectf = new RectF((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
+//                        2 * whiteRadius2);
+//                canvas.drawOval(rectf, paint);
                 final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
