@@ -41,6 +41,7 @@ import org.movsim.simulator.roadnetwork.TrafficLight.TrafficLightStatus;
 import org.movsim.simulator.roadnetwork.TrafficSink;
 import org.movsim.simulator.roadnetwork.TrafficSource;
 import org.movsim.simulator.vehicles.Vehicle;
+import org.movsim.utilities.ConversionUtilities;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -528,6 +529,23 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setColor(Color.WHITE);
                 posTheta = roadMapping.startPos();
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
+                
+                // inflow text
+                paint.setColor(Color.BLACK);
+                paint.setAntiAlias(true);
+                paint.setTextSize(20);
+                StringBuilder inflowStringBuilder = new StringBuilder();
+                inflowStringBuilder.append("set/target inflow: ");
+                inflowStringBuilder.append((int) (ConversionUtilities.INVS_TO_INVH * trafficSource
+                        .getTotalInflow(simulationTime())));
+                inflowStringBuilder.append("/");
+                inflowStringBuilder.append((int) (ConversionUtilities.INVS_TO_INVH * trafficSource.measuredInflow()));
+                inflowStringBuilder.append(" veh/h");
+                inflowStringBuilder.append(" (");
+                inflowStringBuilder.append(trafficSource.getQueueLength());
+                inflowStringBuilder.append(")");
+                canvas.drawText(inflowStringBuilder.toString(), (int) (posTheta.x) + radius, (int) (posTheta.y)
+                        + radius, paint);
             }
         }
     }
@@ -547,6 +565,12 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setColor(Color.BLACK);
                 posTheta = roadMapping.endPos();
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
+                String outflowString = "outflow: " + (int) (ConversionUtilities.INVS_TO_INVH * sink.measuredOutflow())
+                        + " veh/h";
+                //outflow text
+                paint.setAntiAlias(true);
+                paint.setTextSize(20);
+                canvas.drawText(outflowString, (int) (posTheta.x) + radius, (int) (posTheta.y) + radius, paint);
             }
         }
     }
