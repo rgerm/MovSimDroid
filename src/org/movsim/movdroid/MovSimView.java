@@ -36,6 +36,7 @@ import org.movsim.simulator.Simulator;
 import org.movsim.simulator.roadnetwork.RoadMapping;
 import org.movsim.simulator.roadnetwork.RoadNetwork;
 import org.movsim.simulator.roadnetwork.RoadSegment;
+import org.movsim.simulator.roadnetwork.SpeedLimit;
 import org.movsim.simulator.roadnetwork.TrafficLight;
 import org.movsim.simulator.roadnetwork.TrafficLight.TrafficLightStatus;
 import org.movsim.simulator.roadnetwork.TrafficSink;
@@ -358,7 +359,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         }
         final RoadMapping roadMapping = roadSegment.roadMapping();
         assert roadMapping != null;
-
+        paint.reset();
+        paint.setStyle(Paint.Style.FILL);
         final int offset = -(int) ((roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth());
         final int size = (int) (2 * roadMapping.laneWidth());
         final int radius = (int) (1.8 * roadMapping.laneWidth());
@@ -394,11 +396,13 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         }
     }
 
-    private void drawSpeedLimitsOnRoad(Canvas g, RoadSegment roadSegment) {
+    private void drawSpeedLimitsOnRoad(Canvas canvas, RoadSegment roadSegment) {
         if (roadSegment.speedLimits() == null) {
             return;
         }
-
+        paint.reset();
+        paint.setStyle(Paint.Style.FILL);
+        
         final RoadMapping roadMapping = roadSegment.roadMapping();
         assert roadMapping != null;
         final double offset = -(roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth();
@@ -406,43 +410,44 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final int whiteRadius2 = (int) (2.0 * roadMapping.laneWidth()) / 2;
         final int fontHeight = whiteRadius2;
         final int offsetY = (int) (0.4 * fontHeight);
-        //        final Font font = new Font("SansSerif", Font.BOLD, fontHeight); //$NON-NLS-1$
-        // final FontMetrics fontMetrics = getFontMetrics(font);
-        //
-        // for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
-        //
-        // g.setFont(font);
-        // final RoadMapping.PosTheta posTheta = roadMapping.map(speedLimit.getPosition(), offset);
-        //
-        // final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
-        // if (speedLimitValueKmh < 150) {
-        // g.setColor(Color.RED);
-        // g.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-        // g.setColor(Color.WHITE);
-        // g.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-        // 2 * whiteRadius2);
-        // g.setColor(Color.BLACK);
-        // final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
-        // final int textWidth = fontMetrics.stringWidth(text);
-        // g.drawString(text, (int) (posTheta.x - textWidth / 2.0), (int) (posTheta.y + offsetY));
-        // } else {
-        // // Draw a line between points (x1,y1) and (x2,y2)
-        // // draw speed limit clearing
-        // g.setColor(Color.BLACK);
-        // g.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-        // g.setColor(Color.WHITE);
-        // g.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-        // 2 * whiteRadius2);
-        // g.setColor(Color.BLACK);
-        // final int xOnCircle = (int) (whiteRadius2 * Math.cos(Math.toRadians(45.)));
-        // final int yOnCircle = (int) (whiteRadius2 * Math.sin(Math.toRadians(45.)));
-        // final Graphics2D g2 = g;
-        // final Line2D line = new Line2D.Double((int) posTheta.x - xOnCircle, (int) posTheta.y + yOnCircle,
-        // (int) posTheta.x + xOnCircle, (int) posTheta.y - yOnCircle);
-        // g2.setStroke(new BasicStroke(2)); // thicker than just one pixel when calling g.drawLine
-        // g2.draw(line);
-        // }
-        // }
+
+        for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
+
+            final RoadMapping.PosTheta posTheta = roadMapping.map(speedLimit.getPosition(), offset);
+            
+            //TODO draw speedlimit
+            final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
+            if (speedLimitValueKmh < 150) {
+                paint.setColor(Color.RED);
+                RectF rectf= new RectF((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
+                canvas.drawOval(rectf, paint);
+                paint.setColor(Color.WHITE);
+                rectf = new RectF((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
+                        2 * whiteRadius2);
+                canvas.drawOval(rectf, paint);
+                final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
+                paint.setColor(Color.BLACK);
+                paint.setAntiAlias(true);
+                paint.setTextSize(20);
+                canvas.drawText(text, (int) (posTheta.x), (int) (posTheta.y + offsetY+60), paint);
+            } else {
+                // Draw a line between points (x1,y1) and (x2,y2)
+                // draw speed limit clearing
+//                canvas.setColor(Color.BLACK);
+//                canvas.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
+//                canvas.setColor(Color.WHITE);
+//                canvas.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
+//                        2 * whiteRadius2);
+//                canvas.setColor(Color.BLACK);
+//                final int xOnCircle = (int) (whiteRadius2 * Math.cos(Math.toRadians(45.)));
+//                final int yOnCircle = (int) (whiteRadius2 * Math.sin(Math.toRadians(45.)));
+//                final Graphics2D g2 = canvas;
+//                final Line2D line = new Line2D.Double((int) posTheta.x - xOnCircle, (int) posTheta.y + yOnCircle,
+//                        (int) posTheta.x + xOnCircle, (int) posTheta.y - yOnCircle);
+//                g2.setStroke(new BasicStroke(2)); // thicker than just one pixel when calling g.drawLine
+//                g2.draw(line);
+            }
+        }
     }
 
     private void drawSlopesOnRoad(Canvas g, RoadSegment roadSegment) {
@@ -529,7 +534,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setColor(Color.WHITE);
                 posTheta = roadMapping.startPos();
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
-                
+
                 // inflow text
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
@@ -567,7 +572,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
                 String outflowString = "outflow: " + (int) (ConversionUtilities.INVS_TO_INVH * sink.measuredOutflow())
                         + " veh/h";
-                //outflow text
+                // outflow text
                 paint.setAntiAlias(true);
                 paint.setTextSize(20);
                 canvas.drawText(outflowString, (int) (posTheta.x) + radius, (int) (posTheta.y) + radius, paint);
