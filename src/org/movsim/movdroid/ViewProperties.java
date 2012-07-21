@@ -33,6 +33,7 @@ public class ViewProperties {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
         }
         return defaultProperties;
     }

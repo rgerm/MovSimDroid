@@ -281,6 +281,7 @@ public abstract class ViewBase extends View {
         final Canvas bitmapCanvas = new Canvas(backgroundBitmap);
         // must clear the background before transforms
         bitmapCanvas.drawColor(backgroundColor);
+        mDrawable.getPaint().setColor(backgroundColor);
         mDrawable.draw(bitmapCanvas);
         bitmapCanvas.scale(scale, scale);
         bitmapCanvas.translate(xOffset, yOffset);

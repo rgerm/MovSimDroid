@@ -650,6 +650,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         setDrawSlopes(Boolean.parseBoolean(properties.getProperty("drawSlopes", "true")));
         setDrawSpeedLimits(Boolean.parseBoolean(properties.getProperty("drawSpeedLimits", "true")));
 
+        backgroundColor = Color.parseColor("#" + properties.getProperty("backgroundColor", "303030"));
         roadColor = Color.parseColor("#" + properties.getProperty("roadColor", "808080"));
         roadEdgeColor = Color.parseColor("#" + properties.getProperty("roadEdgeColor", "222222"));
         roadLineColor = Color.parseColor("#" + properties.getProperty("roadLineColor", "DDDDDD"));
