@@ -288,6 +288,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         onCreateOptionsMenu(menu);
+        
+        if (!simulationRunnable.isPaused()) {
+            MenuItem item = menu.getItem(0);
+            item.setIcon(R.drawable.ic_action_pause);
+            item.setTitle(R.string.pause);
+        }
     }
 
     @Override
