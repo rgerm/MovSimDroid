@@ -5,16 +5,20 @@
         <item>routing  game</item>
         <item>ramp metering game</item>
         <item>ring road</item>
+        <item>ring road two lanes</item>
         <item>clover leaf</item>
         <item>offramp</item>
+        <item>Vasaloppet</item>
     </string-array>
     
     <string-array name="projectName">
         <item>routing</item>
         <item>ramp_metering</item>
         <item>ringroad_1lane</item>
+        <item>ringroad_2lanes</item>
         <item>cloverleaf</item>
         <item>offramp</item>
+        <item>vasa_CCS</item>
     </string-array>
     
     <string-array name="projectPath">
@@ -23,6 +27,8 @@
         <item>/sim/buildingBlocks/</item>
         <item>/sim/buildingBlocks/</item>
         <item>/sim/buildingBlocks/</item>
+        <item>/sim/buildingBlocks/</item>
+        <item>/sim/vasa/</item>
     </string-array>
 
 </resources>

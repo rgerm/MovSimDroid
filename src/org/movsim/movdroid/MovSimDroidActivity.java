@@ -86,6 +86,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
+        
+        org.movsim.movdroid.OnFirstBoot.show(this);
 
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");

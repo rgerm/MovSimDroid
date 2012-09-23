@@ -5,8 +5,10 @@
         <item>Routen-Spiel</item>
         <item>Zuflußregelungs-Spiel</item>
         <item>Ringstraße</item>
+        <item>Ringstraße 2 Spuren</item>
         <item>Autobahnkreuz</item>
         <item>Autobahnabfahrt</item>
+        <item>Vasa Lauf</item>
     </string-array>
 
 </resources>

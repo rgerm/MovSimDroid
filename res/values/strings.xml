@@ -2,6 +2,13 @@
 <resources>
 
     <string name="app_name">MovSim</string>
+    <string name="onFirstBoot_title">Tutorial</string>
+    <string name="onFirstBoot_accept">Start</string>
+    <string name="introduction_text">\"MovSim\"
+        \n\n
+        MovSim is a scientific traffic simulator, used to study traffic phenomena as traffic jams.
+    </string>
+    
     <string name="dialog">MovSim Info</string>
     <string name="dialog_content">Multi-model open-source vehicular-traffic Simulator</string>
     <string name="start">Start</string>
