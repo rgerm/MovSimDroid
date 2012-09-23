@@ -89,10 +89,10 @@ public class DrawRoadMapping {
             }
             final double radius = arc.radius();
             final RectF rect = new RectF();
-            rect.top = (float) (arc.centerY() - radius);
-            rect.bottom = (float) (arc.centerY() + radius);
-            rect.left = (float) (arc.centerX() - radius);
-            rect.right = (float) (arc.centerX() + radius);
+            rect.top = (float) (arc.centerY() - radius - lateralOffset);
+            rect.bottom = (float) (arc.centerY() + radius + lateralOffset);
+            rect.left = (float) (arc.centerX() - radius - lateralOffset);
+            rect.right = (float) (arc.centerX() + radius + lateralOffset);
             roadPath.addArc(rect, (float) Math.toDegrees(arcStart), (float) Math.toDegrees(arcSweep));
             return roadPath;
         } else if (roadMappingClass == RoadMappingPolyLine.class) {
