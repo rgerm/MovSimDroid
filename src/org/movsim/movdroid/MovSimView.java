@@ -130,7 +130,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         this.roadNetwork = simulator.getRoadNetwork();
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setUpdateDrawingCallback(this);
-        
+
         resetGraphicproperties();
     }
 
@@ -398,50 +398,49 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         }
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
-        
+
         final RoadMapping roadMapping = roadSegment.roadMapping();
         assert roadMapping != null;
         final double offset = -(roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth();
-        final int redRadius2 = (int) (2.5 * roadMapping.laneWidth()) / 2;
-        final int whiteRadius2 = (int) (2.0 * roadMapping.laneWidth()) / 2;
-        final int fontHeight = whiteRadius2;
-        final int offsetY = (int) (0.4 * fontHeight);
+        final int redRadius = (int) (6 * roadMapping.laneWidth()) / 2;
+        final int whiteRadius = (int) (5 * roadMapping.laneWidth()) / 2;
+        final int offsetY = 50;
 
         for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
 
             final RoadMapping.PosTheta posTheta = roadMapping.map(speedLimit.getPosition(), offset);
-            
-            //TODO draw speedlimit
+
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
-//                paint.setColor(Color.RED);
-//                RectF rectf= new RectF((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-//                canvas.drawOval(rectf, paint);
-//                paint.setColor(Color.WHITE);
-//                rectf = new RectF((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-//                        2 * whiteRadius2);
-//                canvas.drawOval(rectf, paint);
+                paint.setColor(Color.RED);
+                canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, redRadius,
+                        paint);
+                paint.setColor(Color.WHITE);
+                canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, whiteRadius,
+                        paint);
+
                 final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
                 paint.setTextSize(20);
-                canvas.drawText(text, (int) (posTheta.x), (int) (posTheta.y + offsetY+60), paint);
+                canvas.drawText(text, (int) (posTheta.x + redRadius) - 10,
+                        (int) (posTheta.y + redRadius + 10 + offsetY), paint);
             } else {
                 // Draw a line between points (x1,y1) and (x2,y2)
                 // draw speed limit clearing
-//                canvas.setColor(Color.BLACK);
-//                canvas.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-//                canvas.setColor(Color.WHITE);
-//                canvas.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-//                        2 * whiteRadius2);
-//                canvas.setColor(Color.BLACK);
-//                final int xOnCircle = (int) (whiteRadius2 * Math.cos(Math.toRadians(45.)));
-//                final int yOnCircle = (int) (whiteRadius2 * Math.sin(Math.toRadians(45.)));
-//                final Graphics2D g2 = canvas;
-//                final Line2D line = new Line2D.Double((int) posTheta.x - xOnCircle, (int) posTheta.y + yOnCircle,
-//                        (int) posTheta.x + xOnCircle, (int) posTheta.y - yOnCircle);
-//                g2.setStroke(new BasicStroke(2)); // thicker than just one pixel when calling g.drawLine
-//                g2.draw(line);
+                // canvas.setColor(Color.BLACK);
+                // canvas.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
+                // canvas.setColor(Color.WHITE);
+                // canvas.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
+                // 2 * whiteRadius2);
+                // canvas.setColor(Color.BLACK);
+                // final int xOnCircle = (int) (whiteRadius2 * Math.cos(Math.toRadians(45.)));
+                // final int yOnCircle = (int) (whiteRadius2 * Math.sin(Math.toRadians(45.)));
+                // final Graphics2D g2 = canvas;
+                // final Line2D line = new Line2D.Double((int) posTheta.x - xOnCircle, (int) posTheta.y + yOnCircle,
+                // (int) posTheta.x + xOnCircle, (int) posTheta.y - yOnCircle);
+                // g2.setStroke(new BasicStroke(2)); // thicker than just one pixel when calling g.drawLine
+                // g2.draw(line);
             }
         }
     }
@@ -667,7 +666,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         scale = Float.parseFloat(properties.getProperty("initialScale", "0.707106781"));
         setSleepTime(Integer.parseInt(properties.getProperty("initial_sleep_time", "20")));
     }
-
 
     public void setStatusControlCallbacks(StatusControlCallbacks statusCallbacks) {
         this.statusControlCallbacks = statusCallbacks;
