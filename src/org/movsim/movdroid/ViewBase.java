@@ -65,7 +65,7 @@ import android.view.WindowManager;
  */
 public abstract class ViewBase extends View {
 
-    //private static final String TAG = "TrafficViewBase";//$NON-NLS-1$
+    protected Integer androidVersion;
 
     protected final SimulationRunnable simulationRunnable;
     protected long totalAnimationTime;
@@ -81,24 +81,9 @@ public abstract class ViewBase extends View {
     // scale factor pixels/m, smaller value means smaller looking roads
     protected float scale = 1.0f;
     // canvas offset to support dragging etc
-    private float xOffset;
-    private float yOffset;
+    protected float xOffset;
+    protected float yOffset;
     private Matrix transform = new Matrix();
-
-    // touch event handling
-    private static final int TOUCH_MODE_NONE = 0;
-    private static final int TOUCH_MODE_DRAG = 1;
-    private static final int TOUCH_MODE_ZOOM = 2;
-    private int touchMode = TOUCH_MODE_NONE;
-    private float startDragX;
-    private float startDragY;
-    private float xOffsetSave;
-    private float yOffsetSave;
-    private float scaleSave;
-    // pinch zoom handling
-    private static float touchModeZoomHysteresis = 10.0f;
-    private float pinchDistance;
-    protected Integer androidVersion;
 
     /**
      * <p>
@@ -400,87 +385,4 @@ public abstract class ViewBase extends View {
         simulationRunnable.resume();
     }
 
-    // ============================================================================================
-    // Motion event handling
-    // ============================================================================================
-
-    /**
-     * <p>
-     * Touch events are used to drag and resize the view.
-     * </p>
-     */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float dx;
-        float dy;
-        // define constants to allow building for android-3 target
-        // final int MASK = 0x000000ff;
-        // final int POINTER_UP = 0x00000006;
-        final int ACTION_MASK = MotionEvent.ACTION_MASK;
-        final int ACTION_POINTER_UP = MotionEvent.ACTION_POINTER_UP;
-        switch (event.getAction() & ACTION_MASK) {
-        case MotionEvent.ACTION_DOWN:
-            touchMode = TOUCH_MODE_DRAG;
-            // pause();
-            startDragX = event.getX();
-            startDragY = event.getY();
-            xOffsetSave = xOffset;
-            yOffsetSave = yOffset;
-            break;
-        case MotionEvent.ACTION_UP:
-        case ACTION_POINTER_UP:
-            touchMode = TOUCH_MODE_NONE;
-            // resume();
-            break;
-        case MotionEvent.ACTION_POINTER_DOWN:
-            dx = event.getX(0) - event.getX(1);
-            dy = event.getY(0) - event.getY(1);
-            pinchDistance = (float) Math.sqrt(dx * dx + dy * dy);
-            if (pinchDistance > touchModeZoomHysteresis) {
-                // pinchMidpointX = (event.getX(0) + event.getX(1)) / 2;
-                // pinchMidpointY = (event.getY(0) + event.getY(1)) / 2;
-                touchMode = TOUCH_MODE_ZOOM;
-                scaleSave = scale();
-            }
-            break;
-        case MotionEvent.ACTION_MOVE:
-            if (touchMode == TOUCH_MODE_DRAG) {
-                final float xOffsetNew = xOffsetSave + (event.getX() - startDragX) / scale;
-                final float yOffsetNew = yOffsetSave + (event.getY() - startDragY) / scale;
-                if (xOffsetNew != xOffset || yOffsetNew != yOffset) {
-                    // the user has dragged the view, so we need to redraw the background bitmap
-                    xOffset = xOffsetNew;
-                    yOffset = yOffsetNew;
-                    // xOffsetSave = xOffset;
-                    // yOffsetSave = yOffset;
-                    setTransform();
-                    forceRepaintBackground();
-                }
-            } else if (touchMode == TOUCH_MODE_ZOOM) {
-                dx = event.getX(0) - event.getX(1);
-                dy = event.getY(0) - event.getY(1);
-                final float distance = (float) Math.sqrt(dx * dx + dy * dy);
-                if (pinchDistance > touchModeZoomHysteresis) {
-                    final float newScale = distance / pinchDistance * scaleSave;
-                    setScale(newScale);
-                    // xOffset += (pinchMidpointX - getWidth() / 2) / scale;
-                    // yOffset += (pinchMidpointY - getHeight() / 2) / scale;
-                    // the user has zoomed the view, so we need to redraw the background bitmap
-                    forceRepaintBackground();
-                }
-            }
-            break;
-        }
-        return true;
-    }
-
-    /**
-     * <p>
-     * Standard onTrackballEvent override, just ignore these events.
-     * </p>
-     */
-    @Override
-    public boolean onTrackballEvent(MotionEvent event) {
-        return false;
-    }
 }

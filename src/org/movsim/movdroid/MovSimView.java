@@ -48,8 +48,10 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
+import android.graphics.Rect;
+import android.graphics.Region;
 import android.util.FloatMath;
+import android.view.MotionEvent;
 
 public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
@@ -106,7 +108,22 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     protected long vehicleToHighlightId = -1;
 
     private ProjectMetaData projectMetaData;
+    
+    // touch event handling
+    private static final int TOUCH_MODE_NONE = 0;
+    private static final int TOUCH_MODE_DRAG = 1;
+    private static final int TOUCH_MODE_ZOOM = 2;
+    private int touchMode = TOUCH_MODE_NONE;
+    private float startDragX;
+    private float startDragY;
+    private float xOffsetSave;
+    private float yOffsetSave;
+    private float scaleSave;
+    // pinch zoom handling
+    private static float touchModeZoomHysteresis = 10.0f;
+    private float pinchDistance;
 
+    private Region trafficLightRegion = new Region();
     /**
      * Callbacks from this TrafficCanvas to the application UI.
      * 
@@ -183,8 +200,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
         synchronized (simulationRunnable.dataLock) {
 
-            // drawTrafficLights(canvas); //TODO draw traffic lights
-
             final double simulationTime = this.simulationTime();
 
             for (final RoadSegment roadSegment : roadNetwork) {
@@ -240,6 +255,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
      */
     @Override
     protected void drawBackground(Canvas canvas) {
+        drawTrafficLights(canvas);
+
         if (drawSources) {
             drawSources(canvas);
         }
@@ -357,26 +374,26 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         assert roadMapping != null;
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
-        final int offset = -(int) ((roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth());
+        final int offset = (int) ((roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth());
         final int size = (int) (2 * roadMapping.laneWidth());
         final int radius = (int) (1.8 * roadMapping.laneWidth());
         for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-            canvas.drawColor(Color.DKGRAY);
             paint.setColor(Color.DKGRAY);
             final RoadMapping.PosTheta posTheta = roadMapping.map(trafficLight.position(), offset);
-            canvas.drawRect((int) posTheta.x - size / 2, (int) posTheta.y - size / 2, size, size, paint);
+            Rect rect = new Rect((int) posTheta.x + offset - radius, (int) posTheta.y + offset - radius, (int) posTheta.x + offset + radius, (int) posTheta.y + offset + radius);
+//            trafficLightRegion = new Region(new Rect((int) posTheta.x + offset - radius-(int)trafficLight.position(), (int) posTheta.y + offset - radius, (int) posTheta.x + offset + radius-(int)trafficLight.position(), (int) posTheta.y + offset + radius));
+            canvas.drawRect(rect, paint);
             final TrafficLightStatus status = trafficLight.status();
             if (status == TrafficLightStatus.GREEN) {
-                canvas.drawColor(Color.GREEN);
+                paint.setColor(Color.GREEN);
             } else if (status == TrafficLightStatus.RED) {
-                canvas.drawColor(Color.RED);
+                paint.setColor(Color.RED);
             } else if (status == TrafficLightStatus.RED_GREEN) {
-                canvas.drawColor(Color.MAGENTA);
+                paint.setColor(Color.MAGENTA);
             } else {
-                canvas.drawColor(Color.YELLOW);
+                paint.setColor(Color.YELLOW);
             }
-            RectF rectf = new RectF((int) posTheta.x - radius / 2, (int) posTheta.y - radius / 2, radius, radius);
-            canvas.drawOval(rectf, paint);
+            canvas.drawCircle((int) posTheta.x + offset, (int) posTheta.y + offset, radius, paint);
         }
     }
 
@@ -739,5 +756,90 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     public void setDrawSlopes(boolean b) {
         this.drawSlopes = b;
         postInvalidate();
+    }
+    
+
+    // ============================================================================================
+    // Motion event handling
+    // ============================================================================================
+
+    /**
+     * <p>
+     * Touch events are used to drag and resize the view.
+     * </p>
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float dx;
+        float dy;
+        // define constants to allow building for android-3 target
+        // final int MASK = 0x000000ff;
+        // final int POINTER_UP = 0x00000006;
+        final int ACTION_MASK = MotionEvent.ACTION_MASK;
+        final int ACTION_POINTER_UP = MotionEvent.ACTION_POINTER_UP;
+        switch (event.getAction() & ACTION_MASK) {
+        case MotionEvent.ACTION_DOWN:
+            touchMode = TOUCH_MODE_DRAG;
+            // pause();
+            startDragX = event.getX();
+            startDragY = event.getY();
+            xOffsetSave = xOffset;
+            yOffsetSave = yOffset;
+            break;
+        case MotionEvent.ACTION_UP:
+        case ACTION_POINTER_UP:
+            touchMode = TOUCH_MODE_NONE;
+            // resume();
+            break;
+        case MotionEvent.ACTION_POINTER_DOWN:
+            dx = event.getX(0) - event.getX(1);
+            dy = event.getY(0) - event.getY(1);
+            pinchDistance = (float) Math.sqrt(dx * dx + dy * dy);
+            if (pinchDistance > touchModeZoomHysteresis) {
+                // pinchMidpointX = (event.getX(0) + event.getX(1)) / 2;
+                // pinchMidpointY = (event.getY(0) + event.getY(1)) / 2;
+                touchMode = TOUCH_MODE_ZOOM;
+                scaleSave = scale();
+            }
+            break;
+        case MotionEvent.ACTION_MOVE:
+            if (touchMode == TOUCH_MODE_DRAG) {
+                final float xOffsetNew = xOffsetSave + (event.getX() - startDragX) / scale;
+                final float yOffsetNew = yOffsetSave + (event.getY() - startDragY) / scale;
+                if (xOffsetNew != xOffset || yOffsetNew != yOffset) {
+                    // the user has dragged the view, so we need to redraw the background bitmap
+                    xOffset = xOffsetNew;
+                    yOffset = yOffsetNew;
+                    // xOffsetSave = xOffset;
+                    // yOffsetSave = yOffset;
+                    setTransform();
+                    forceRepaintBackground();
+                }
+            } else if (touchMode == TOUCH_MODE_ZOOM) {
+                dx = event.getX(0) - event.getX(1);
+                dy = event.getY(0) - event.getY(1);
+                final float distance = (float) Math.sqrt(dx * dx + dy * dy);
+                if (pinchDistance > touchModeZoomHysteresis) {
+                    final float newScale = distance / pinchDistance * scaleSave;
+                    setScale(newScale);
+                    // xOffset += (pinchMidpointX - getWidth() / 2) / scale;
+                    // yOffset += (pinchMidpointY - getHeight() / 2) / scale;
+                    // the user has zoomed the view, so we need to redraw the background bitmap
+                    forceRepaintBackground();
+                }
+            }
+            break;
+        }
+        return true;
+    }
+
+    /**
+     * <p>
+     * Standard onTrackballEvent override, just ignore these events.
+     * </p>
+     */
+    @Override
+    public boolean onTrackballEvent(MotionEvent event) {
+        return false;
     }
 }
