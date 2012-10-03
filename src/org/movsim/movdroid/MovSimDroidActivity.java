@@ -120,7 +120,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void initActionBar() {
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.abs__ab_transparent_dark_holo));
+        actionBar.setBackgroundDrawable(res.getDrawable(R.drawable.abs__ab_transparent_dark_holo));
 
         Context context = actionBar.getThemedContext();
         ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.project,

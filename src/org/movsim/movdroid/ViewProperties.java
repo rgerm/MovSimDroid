@@ -15,7 +15,7 @@ public class ViewProperties {
     private static Properties defaultProperties;
 
     /**
-     * Load default properties from the {code /config/defaultviewerconfig.properties} path. Needed for applet initialization.
+     * Load default properties from the {code /config/defaultviewerconfig.properties} path. Needed for initialization.
      * 
      * @return the properties
      */
