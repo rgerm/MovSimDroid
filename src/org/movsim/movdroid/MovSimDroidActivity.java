@@ -199,12 +199,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void actionInfo() {
-        showInfo(res.getString(R.string.info));
+        showInfo(res.getString(R.string.info), "");
     }
 
-    private void showInfo(String info) {
+    private void showInfo(String info, String highscore) {
         Intent intent = new Intent();
         intent.putExtra("message", info);
+        intent.putExtra("highscore", highscore);
         intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
         startActivity(intent);
     }
@@ -299,18 +300,22 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
                 
                 //TODO highscore
-                if (projectName == "routing") {
-                        message.append("");
-                    if (simulationTime < 310) {
-                        message.append("Extraordinary time!");
-                    } else if (simulationTime < 330) {
-                        message.append("Pretty good time!"); 
+                StringBuilder highscore = new StringBuilder();
+                if (projectName.equals("routing")) {
+                    if (simulationTime < 270) {
+                        highscore.append("Wow, King of the road!");
+                    } else if (simulationTime < 290) {
+                        highscore.append("Fantastic time!");
+                    } else if (simulationTime < 320) {
+                        highscore.append("Pretty good, for a human. Much better then any navigation system you can buy");
+                    } else if (simulationTime < 360) {
+                        highscore.append("You are as bad as an expensive navigation system."); 
                     } else {
-                        message.append("Your as bad as standard navigation system."); 
+                        highscore.append("You are as bad as a standard navigation system."); 
                     }
                 }
                 
-                showInfo(message.toString());
+                showInfo(message.toString(), highscore.toString());
             }
         });
     }

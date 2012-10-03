@@ -421,9 +421,9 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final RoadMapping roadMapping = roadSegment.roadMapping();
         assert roadMapping != null;
         final double offset = -(roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth();
-        final int redRadius = (int) (6 * roadMapping.laneWidth()) / 2;
-        final int whiteRadius = (int) (5 * roadMapping.laneWidth()) / 2;
-        final int offsetY = 50;
+        final int redRadius = (int) (4 * roadMapping.laneWidth()) / 2;
+        final int whiteRadius = (int) (3 * roadMapping.laneWidth()) / 2;
+        final int offsetY = 60;
 
         for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
 
@@ -443,7 +443,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setAntiAlias(true);
                 paint.setTextSize(20);
                 canvas.drawText(text, (int) (posTheta.x + redRadius) - 10,
-                        (int) (posTheta.y + redRadius + 10 + offsetY), paint);
+                        (int) (posTheta.y + redRadius + 7 + offsetY), paint);
             } else {
                 // TODO clearing sign
             }

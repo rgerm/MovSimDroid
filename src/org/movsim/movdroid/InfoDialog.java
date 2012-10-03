@@ -14,11 +14,11 @@ public class InfoDialog extends SherlockActivity {
         // Resources res = getResources();
         Bundle bundle = this.getIntent().getExtras();
         String message = bundle.getString("message");
+        String highscore = bundle.getString("highscore");
 
-        if (message != null) {
-            ((TextView) findViewById(R.id.text)).setText(message);
-        } else {
-            ((TextView) findViewById(R.id.text)).setText(R.string.dialog_content);
+        ((TextView) findViewById(R.id.text)).setText(message);
+        if (highscore != null) {
+            ((TextView) findViewById(R.id.highscore)).setText(highscore);
         }
     }
 }
