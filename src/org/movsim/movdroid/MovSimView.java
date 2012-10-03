@@ -108,7 +108,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     protected long vehicleToHighlightId = -1;
 
     private ProjectMetaData projectMetaData;
-    
+
     // touch event handling
     private static final int TOUCH_MODE_NONE = 0;
     private static final int TOUCH_MODE_DRAG = 1;
@@ -124,6 +124,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     private float pinchDistance;
 
     private Region trafficLightRegion = new Region();
+
     /**
      * Callbacks from this TrafficCanvas to the application UI.
      * 
@@ -378,8 +379,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
             paint.setColor(Color.DKGRAY);
             final RoadMapping.PosTheta posTheta = roadMapping.map(trafficLight.position(), offset);
-            Rect rect = new Rect((int) posTheta.x + offset - radius, (int) posTheta.y + offset - radius, (int) posTheta.x + offset + radius, (int) posTheta.y + offset + radius);
-//            trafficLightRegion = new Region(new Rect((int) posTheta.x + offset - radius-(int)trafficLight.position(), (int) posTheta.y + offset - radius, (int) posTheta.x + offset + radius-(int)trafficLight.position(), (int) posTheta.y + offset + radius));
+            Rect rect = new Rect((int) posTheta.x + offset - radius, (int) posTheta.y + offset - radius,
+                    (int) posTheta.x + offset + radius, (int) posTheta.y + offset + radius);
+            // trafficLightRegion = new Region(new Rect((int) posTheta.x + offset - radius-(int)trafficLight.position(), (int) posTheta.y +
+            // offset - radius, (int) posTheta.x + offset + radius-(int)trafficLight.position(), (int) posTheta.y + offset + radius));
             canvas.drawRect(rect, paint);
             final TrafficLightStatus status = trafficLight.status();
             if (status == TrafficLightStatus.GREEN) {
@@ -441,30 +444,16 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 canvas.drawText(text, (int) (posTheta.x + redRadius) - 10,
                         (int) (posTheta.y + redRadius + 10 + offsetY), paint);
             } else {
-                // Draw a line between points (x1,y1) and (x2,y2)
-                // draw speed limit clearing
-                // canvas.setColor(Color.BLACK);
-                // canvas.fillOval((int) posTheta.x - redRadius2, (int) posTheta.y - redRadius2, 2 * redRadius2, 2 * redRadius2);
-                // canvas.setColor(Color.WHITE);
-                // canvas.fillOval((int) posTheta.x - whiteRadius2, (int) posTheta.y - whiteRadius2, 2 * whiteRadius2,
-                // 2 * whiteRadius2);
-                // canvas.setColor(Color.BLACK);
-                // final int xOnCircle = (int) (whiteRadius2 * Math.cos(Math.toRadians(45.)));
-                // final int yOnCircle = (int) (whiteRadius2 * Math.sin(Math.toRadians(45.)));
-                // final Graphics2D g2 = canvas;
-                // final Line2D line = new Line2D.Double((int) posTheta.x - xOnCircle, (int) posTheta.y + yOnCircle,
-                // (int) posTheta.x + xOnCircle, (int) posTheta.y - yOnCircle);
-                // g2.setStroke(new BasicStroke(2)); // thicker than just one pixel when calling g.drawLine
-                // g2.draw(line);
+                // TODO clearing sign
             }
         }
     }
 
     private void drawSlopesOnRoad(Canvas g, RoadSegment roadSegment) {
-        // if (roadSegment.slopes() == null) {
-        // return;
-        // }
-        //
+        if (roadSegment.slopes() == null) {
+            return;
+        }
+
         // final RoadMapping roadMapping = roadSegment.roadMapping();
         // assert roadMapping != null;
         // final double laneWidth = 10; // ;
@@ -513,20 +502,18 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
      * @param g
      */
     private void drawRoadSectionIds(Canvas g) {
-        //
-        // for (final RoadSegment roadSegment : roadNetwork) {
-        // final RoadMapping roadMapping = roadSegment.roadMapping();
-        // assert roadMapping != null;
-        // final int radius = (int) ((roadMapping.laneCount() + 2) * roadMapping.laneWidth());
-        // final RoadMapping.PosTheta posTheta = roadMapping.map(0.0);
-        //
-        // // draw the road segment's id
-        // final int fontHeight = 12;
-        //            final Font font = new Font("SansSerif", Font.PLAIN, fontHeight); //$NON-NLS-1$
-        // g.setFont(font);
-        // g.setColor(Color.BLACK);
-        //            g.drawString("R" + roadSegment.userId(), (int) (posTheta.x), (int) (posTheta.y)); //$NON-NLS-1$
-        // }
+         for (final RoadSegment roadSegment : roadNetwork) {
+         final RoadMapping roadMapping = roadSegment.roadMapping();
+         assert roadMapping != null;
+         final int radius = (int) ((roadMapping.laneCount() + 2) * roadMapping.laneWidth());
+         final RoadMapping.PosTheta posTheta = roadMapping.map(0.0);
+        
+         // draw the road segment's id
+         paint.setColor(Color.BLACK);
+         paint.setAntiAlias(true);
+         paint.setTextSize(12);
+         g.drawText("R" + roadSegment.userId(), (int) (posTheta.x + 14), (int) (posTheta.y+ 14), paint);
+         }
     }
 
     private void drawSources(Canvas canvas) {
@@ -755,7 +742,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         this.drawSlopes = b;
         postInvalidate();
     }
-    
 
     // ============================================================================================
     // Motion event handling
