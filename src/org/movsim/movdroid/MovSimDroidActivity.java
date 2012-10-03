@@ -80,6 +80,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private RoadNetwork roadNetwork;
     private boolean diversionOn;
     private Resources res;
+    private String projectName;
 
     /** Called when the activity is first created. */
     @Override
@@ -189,25 +190,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 }
             }
             if (roadSegment.trafficLights() != null) {
-                // final RoadMapping roadMapping = roadSegment.roadMapping();
                 for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-                    // final Rectangle2D trafficLightRect = TrafficCanvas.trafficLightRect(roadMapping, trafficLight);
-                    // // check if the user has clicked on a traffic light, if they have then change the
-                    // // traffic light to the next color
-                    // final Point point = e.getPoint();
-                    // final Point2D transformedPoint = new Point2D.Float();
-                    // final GeneralPath path = new GeneralPath();
-                    // try {
-                    // // convert from mouse coordinates to canvas coordinates
-                    // trafficCanvas.transform.inverseTransform(new Point2D.Float(point.x, point.y), transformedPoint);
-                    // } catch (final NoninvertibleTransformException e1) {
-                    // e1.printStackTrace();
-                    // return;
-                    // }
-                    // if (trafficLightRect.contains(transformedPoint)) {
                     trafficLight.nextState();
                     movSimView.forceRepaintBackground();
-                    // }
                 }
             }
         }
@@ -217,10 +202,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         showInfo(res.getString(R.string.info));
     }
 
-    /**
-     * @param message
-     *            string
-     */
     private void showInfo(String info) {
         Intent intent = new Intent();
         intent.putExtra("message", info);
@@ -276,7 +257,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         // project selection
-        String projectName = res.getStringArray(R.array.projectName)[itemPosition];
+        projectName = res.getStringArray(R.array.projectName)[itemPosition];
         String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
         simulator.loadScenarioFromXml(projectName, projectPath);
         simulationRunnable.pause();
@@ -303,17 +284,32 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         final double totalVehicleTravelTime = roadNetwork.totalVehicleTravelTime();
         final double totalVehicleTravelDistance = roadNetwork.totalVehicleTravelDistance() / 1000.0;
         final double totalVehicleFuelUsedLiters = roadNetwork.totalVehicleFuelUsedLiters();
+        final String formatedSimulationDuration = FormatUtil.getFormatedTime(simulationTime);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                
                 final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
-                        .append(FormatUtil.getFormatedTime(simulationTime))
+                        .append(formatedSimulationDuration)
                         .append(res.getString(R.string.total_travel_time))
                         .append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
                         .append(res.getString(R.string.total_travel_distance))
                         .append(String.format("%.3f", totalVehicleTravelDistance))
                         .append(res.getString(R.string.total_fuel_used))
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
+                
+                //TODO highscore
+                if (projectName == "routing") {
+                        message.append("");
+                    if (simulationTime < 310) {
+                        message.append("Extraordinary time!");
+                    } else if (simulationTime < 330) {
+                        message.append("Pretty good time!"); 
+                    } else {
+                        message.append("Your as bad as standard navigation system."); 
+                    }
+                }
+                
                 showInfo(message.toString());
             }
         });
