@@ -33,7 +33,6 @@ import android.preference.PreferenceManager;
 
 public class OnFirstBoot {
     private static String accepted;
-    private static String start;
 
     static interface OnAgreedTo {
         void onAgreedTo();
@@ -41,7 +40,6 @@ public class OnFirstBoot {
 
     public static boolean show(final Activity activity, String accepted, String start, String text, String title) {
         OnFirstBoot.accepted = accepted;
-        OnFirstBoot.start = start;
         final SharedPreferences preferences = activity.getSharedPreferences(start, Activity.MODE_PRIVATE);
 
         if (!preferences.getBoolean(accepted, false)) {
