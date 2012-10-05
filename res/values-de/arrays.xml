@@ -5,8 +5,16 @@
         <item>Routen-Spiel</item>
         <item>Zuflußregelungs-Spiel</item>
         <item>Ringstraße</item>
-        <item>Ringstraße 2 Spuren</item>
+        <item>Ringstraße mit 2 Spuren</item>
         <item>Autobahnkreuz</item>
     </string-array>
 
+     <string-array name="infoScenario">
+        <item>Umleitungsproblem</item>
+        <item>Zuflußreglung auf Autobahnen</item>
+        <item>Stau</item>
+        <item>Spurwechsel als Stauursache</item>
+        <item>Straßennetzwerk</item>
+    </string-array>
+    
 </resources>
