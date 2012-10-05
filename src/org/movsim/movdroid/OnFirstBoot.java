@@ -7,33 +7,34 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class OnFirstBoot {
-    private static final String PREFERENCE_ACCEPTED = "start.accepted";
-    private static final String PREFERENCES = "start";
+    private static String accepted;
+    private static String start;
 
     static interface OnAgreedTo {
         void onAgreedTo();
     }
 
-    public static boolean show(final Activity activity) {
-        final SharedPreferences preferences = activity.getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
+    public static boolean show(final Activity activity, String accepted, String start, String text, String title) {
+        OnFirstBoot.accepted = accepted;
+        OnFirstBoot.start = start;
+        final SharedPreferences preferences = activity.getSharedPreferences(start, Activity.MODE_PRIVATE);
 
-        if (!preferences.getBoolean(PREFERENCE_ACCEPTED, false)) {
-             alertDialog(activity, preferences);
+        if (!preferences.getBoolean(accepted, false)) {
+            alertDialog(activity, preferences, text, title);
             return false;
         }
         return true;
     }
-
 
     public static SharedPreferences.Editor getPrefs(final Activity activity) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = settings.edit();
         return editor;
     }
-    
-    public static void alertDialog(final Activity activity, final SharedPreferences preferences) {
+
+    public static void alertDialog(final Activity activity, final SharedPreferences preferences, String text, String title) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(R.string.onFirstBoot_title);
+        builder.setTitle(title);
         builder.setCancelable(true);
         builder.setPositiveButton(R.string.onFirstBoot_accept, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -43,12 +44,12 @@ public class OnFirstBoot {
                 }
             }
         });
-        builder.setMessage(R.string.introduction_text);
+        builder.setMessage(text);
         builder.create().show();
     }
 
     private static void accept(SharedPreferences preferences) {
-        preferences.edit().putBoolean(PREFERENCE_ACCEPTED, true).commit();
+        preferences.edit().putBoolean(accepted, true).commit();
     }
 
 }

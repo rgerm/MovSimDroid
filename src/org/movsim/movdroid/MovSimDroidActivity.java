@@ -88,13 +88,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        
-        org.movsim.movdroid.OnFirstBoot.show(this);
+        res = getResources();
+
+        OnFirstBoot.show(this, "start.accepted", "start", res.getString(R.string.introduction_text),
+                res.getString(R.string.onFirstBoot_title));
 
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
-
-        res = getResources();
 
         initActionBar();
 
@@ -205,7 +205,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         String infoText = res.getString(R.string.movsimInfo);
         showInfo(infoText, "");
     }
-    
+
     private void actionScenarioInfo() {
         String infoText = res.getStringArray(R.array.infoScenario)[projectPosition];
         showInfo(infoText, "");
@@ -266,6 +266,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        OnFirstBoot.show(this, itemPosition + "start.accepted", itemPosition + "start",
+                res.getStringArray(R.array.infoScenario)[itemPosition], res.getString(R.string.onFirstBoot_title));
         // project selection
         projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
@@ -282,7 +284,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         onCreateOptionsMenu(menu);
-        
+
         if (!simulationRunnable.isPaused()) {
             MenuItem item = menu.getItem(0);
             item.setIcon(R.drawable.ic_action_pause);
@@ -299,17 +301,16 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                
+
                 final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
-                        .append(formatedSimulationDuration)
-                        .append(res.getString(R.string.total_travel_time))
+                        .append(formatedSimulationDuration).append(res.getString(R.string.total_travel_time))
                         .append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
                         .append(res.getString(R.string.total_travel_distance))
                         .append(String.format("%.3f", totalVehicleTravelDistance))
                         .append(res.getString(R.string.total_fuel_used))
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
-                
-                //TODO highscore
+
+                // TODO highscore
                 StringBuilder highscore = new StringBuilder();
                 if (projectName.equals("routing")) {
                     if (simulationTime < 260) {
@@ -317,14 +318,15 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                     } else if (simulationTime < 285) {
                         highscore.append("Fantastic time!");
                     } else if (simulationTime < 315) {
-                        highscore.append("Pretty good, for a human. Much better then any navigation system you can buy");
+                        highscore
+                                .append("Pretty good, for a human. Much better then any navigation system you can buy");
                     } else if (simulationTime < 360) {
-                        highscore.append("You are as bad as an expensive navigation system."); 
+                        highscore.append("You are as bad as an expensive navigation system.");
                     } else {
-                        highscore.append("You are as bad as a standard navigation system."); 
+                        highscore.append("You are as bad as a standard navigation system.");
                     }
                 }
-                
+
                 showInfo(message.toString(), highscore.toString());
             }
         });
