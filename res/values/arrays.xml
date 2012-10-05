@@ -7,8 +7,6 @@
         <item>ring road</item>
         <item>ring road two lanes</item>
         <item>clover leaf</item>
-        <item>offramp</item>
-        <item>Vasaloppet</item>
     </string-array>
     
     <string-array name="projectName">
@@ -17,8 +15,6 @@
         <item>ringroad_1lane</item>
         <item>ringroad_2lanes</item>
         <item>cloverleaf</item>
-        <item>offramp</item>
-        <item>vasa_CCS</item>
     </string-array>
     
     <string-array name="projectPath">
@@ -27,8 +23,14 @@
         <item>/sim/buildingBlocks/</item>
         <item>/sim/buildingBlocks/</item>
         <item>/sim/buildingBlocks/</item>
-        <item>/sim/buildingBlocks/</item>
-        <item>/sim/vasa/</item>
+    </string-array>
+    
+    <string-array name="infoScenario">
+        <item>Problem routing</item>
+        <item>ramp metering</item>
+        <item>traffic jam. IDM with noise</item>
+        <item>traffic jam with lane change</item>
+        <item>Complex road network</item>
     </string-array>
 
 </resources>

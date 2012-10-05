@@ -81,6 +81,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private boolean diversionOn;
     private Resources res;
     private String projectName;
+    private int projectPosition = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -147,6 +148,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         subMenu1.add(res.getString(R.string.faster));
         subMenu1.add(res.getString(R.string.slower));
         subMenu1.add(res.getString(R.string.info));
+        subMenu1.add(res.getString(R.string.movsimInfo));
 
         MenuItem subMenu1Item = subMenu1.getItem();
         subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_holo_dark);
@@ -170,11 +172,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         } else if (title.equals(res.getString(R.string.slower))) {
             actionSlower();
         } else if (title.equals(res.getString(R.string.info))) {
+            actionScenarioInfo();
+        } else if (title.equals(res.getString(R.string.movsimInfo))) {
             actionInfo();
         } else if (title.equals(res.getString(R.string.action))) {
             actionInteraction();
         }
-
         return true;
     }
 
@@ -199,7 +202,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void actionInfo() {
-        showInfo(res.getString(R.string.info), "");
+        String infoText = res.getString(R.string.movsimInfo);
+        showInfo(infoText, "");
+    }
+    
+    private void actionScenarioInfo() {
+        String infoText = res.getStringArray(R.array.infoScenario)[projectPosition];
+        showInfo(infoText, "");
     }
 
     private void showInfo(String info, String highscore) {
@@ -258,6 +267,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         // project selection
+        projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
         String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
         simulator.loadScenarioFromXml(projectName, projectPath);
@@ -302,11 +312,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 //TODO highscore
                 StringBuilder highscore = new StringBuilder();
                 if (projectName.equals("routing")) {
-                    if (simulationTime < 270) {
+                    if (simulationTime < 260) {
                         highscore.append("Wow, King of the road!");
-                    } else if (simulationTime < 290) {
+                    } else if (simulationTime < 285) {
                         highscore.append("Fantastic time!");
-                    } else if (simulationTime < 320) {
+                    } else if (simulationTime < 315) {
                         highscore.append("Pretty good, for a human. Much better then any navigation system you can buy");
                     } else if (simulationTime < 360) {
                         highscore.append("You are as bad as an expensive navigation system."); 

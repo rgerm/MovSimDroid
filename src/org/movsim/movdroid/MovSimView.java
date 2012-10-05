@@ -157,8 +157,11 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         Properties properties = ViewProperties.loadProperties(projectMetaData.getProjectName(),
                 projectMetaData.getPathToProjectXmlFile());
         initGraphicConfigFieldsFromProperties(properties);
+        scale = Float.parseFloat(properties.getProperty("initialScale"));
+        xOffset = Integer.parseInt(properties.getProperty("xOffset"));
+        yOffset = Integer.parseInt(properties.getProperty("yOffset"));
     }
-
+    
     @Override
     public void updateDrawing(double arg0) {
         postInvalidate();
@@ -431,10 +434,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
 
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
-                paint.setColor(Color.RED);
+                paint.setColor(0xffee1111);
                 canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, redRadius,
                         paint);
-                paint.setColor(Color.WHITE);
+                paint.setColor(0xffeeeeee);
                 canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, whiteRadius,
                         paint);
 
