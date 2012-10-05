@@ -626,7 +626,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         roadLineColor = Color.parseColor("#" + properties.getProperty("roadLineColor", "DDDDDD"));
         sourceColor = Color.parseColor("#" + properties.getProperty("sourceColor", "FFFFFF"));
         sinkColor = Color.parseColor("#" + properties.getProperty("sinkColor", "000000"));
-
+        setVehicleColorMode(vehicleColorMode.valueOf(properties.getProperty("vehicleColorMode", "VELOCITY_COLOR")));
         setVmaxForColorSpectrum(Double.parseDouble(properties.getProperty("vmaxForColorSpectrum", "140")));
 
         lineWidth = Float.parseFloat(properties.getProperty("lineWidth", "1.0"));
@@ -711,6 +711,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         this.drawSlopes = b;
         postInvalidate();
     }
+    
+    public void setVehicleColorMode(VehicleColorMode vehicleColorMode) {
+        this.vehicleColorMode = vehicleColorMode;
+    }
 
     // ============================================================================================
     // Motion event handling
@@ -733,7 +737,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         switch (event.getAction() & ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             touchMode = TOUCH_MODE_DRAG;
-            // pause();
             startDragX = event.getX();
             startDragY = event.getY();
             xOffsetSave = xOffset;
@@ -742,15 +745,12 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         case MotionEvent.ACTION_UP:
         case ACTION_POINTER_UP:
             touchMode = TOUCH_MODE_NONE;
-            // resume();
             break;
         case MotionEvent.ACTION_POINTER_DOWN:
             dx = event.getX(0) - event.getX(1);
             dy = event.getY(0) - event.getY(1);
             pinchDistance = (float) Math.sqrt(dx * dx + dy * dy);
             if (pinchDistance > touchModeZoomHysteresis) {
-                // pinchMidpointX = (event.getX(0) + event.getX(1)) / 2;
-                // pinchMidpointY = (event.getY(0) + event.getY(1)) / 2;
                 touchMode = TOUCH_MODE_ZOOM;
                 scaleSave = scale();
             }
@@ -763,8 +763,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                     // the user has dragged the view, so we need to redraw the background bitmap
                     xOffset = xOffsetNew;
                     yOffset = yOffsetNew;
-                    // xOffsetSave = xOffset;
-                    // yOffsetSave = yOffset;
                     setTransform();
                     forceRepaintBackground();
                 }
@@ -775,8 +773,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 if (pinchDistance > touchModeZoomHysteresis) {
                     final float newScale = distance / pinchDistance * scaleSave;
                     setScale(newScale);
-                    // xOffset += (pinchMidpointX - getWidth() / 2) / scale;
-                    // yOffset += (pinchMidpointY - getHeight() / 2) / scale;
                     // the user has zoomed the view, so we need to redraw the background bitmap
                     forceRepaintBackground();
                 }
