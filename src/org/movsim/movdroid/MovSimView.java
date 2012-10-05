@@ -769,7 +769,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             } else if (touchMode == TOUCH_MODE_ZOOM) {
                 dx = event.getX(0) - event.getX(1);
                 dy = event.getY(0) - event.getY(1);
-                final float distance = (float) Math.sqrt(dx * dx + dy * dy);
+                final float distance = FloatMath.sqrt(dx * dx + dy * dy);
                 if (pinchDistance > touchModeZoomHysteresis) {
                     final float newScale = distance / pinchDistance * scaleSave;
                     setScale(newScale);
