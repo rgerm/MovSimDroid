@@ -38,9 +38,9 @@ public class OnFirstBoot {
         void onAgreedTo();
     }
 
-    public static boolean show(final Activity activity, String accepted, String start, String text, String title) {
+    public static boolean show(final Activity activity, String sharedPreferencesName, String accepted, String text, String title) {
         OnFirstBoot.accepted = accepted;
-        final SharedPreferences preferences = activity.getSharedPreferences(start, Activity.MODE_PRIVATE);
+        final SharedPreferences preferences = activity.getSharedPreferences(sharedPreferencesName, Activity.MODE_PRIVATE);
 
         if (!preferences.getBoolean(accepted, false)) {
             alertDialog(activity, preferences, text, title);
