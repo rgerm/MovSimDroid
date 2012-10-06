@@ -30,7 +30,7 @@
         <item>ramp metering</item>
         <item>traffic jam. IDM with noise</item>
         <item>traffic jam with lane change</item>
-        <item>Complex road network</item>
+        <item>Complex road network. Just a perfamance test for your Android device.</item>
     </string-array>
     
     <string-array name="highscoreRouting">

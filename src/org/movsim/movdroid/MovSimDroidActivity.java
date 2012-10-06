@@ -219,8 +219,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private void actionSlower() {
         int sleepTime = simulationRunnable.sleepTime();
         sleepTime += sleepTime < 5 ? 1 : 5;
-        if (sleepTime > 400) {
-            sleepTime = 400;
+        if (sleepTime > 500) {
+            sleepTime = 500;
         }
         simulationRunnable.setSleepTime(sleepTime);
     }
@@ -270,6 +270,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
         String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
         simulator.loadScenarioFromXml(projectName, projectPath);
+        simulationRunnable.start();
         simulationRunnable.pause();
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         movSimView.resetGraphicproperties();
@@ -321,7 +322,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                     } else {
                         highscore.append(res.getStringArray(R.array.highscoreRouting)[4]);
                     }
-                } else if (projectName.equals("rampmetering")) {
+                } else if (projectName.equals("ramp_metering")) {
                     if (simulationTime < 300) {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[0]);
                     } else if (simulationTime < 325) {
