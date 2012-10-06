@@ -12,7 +12,6 @@
     <string name="menu">MenÜ</string>
     <string name="faster">schneller</string>
     <string name="slower">langsamer</string>
-    <string name="info">Info</string>
     <string name="pause">Pause</string>
     <string name="simulation_finished_in">"Simulation beendet nach: "</string>
     <string name="total_travel_time">"\nabsolute Reisezeit: "</string>
