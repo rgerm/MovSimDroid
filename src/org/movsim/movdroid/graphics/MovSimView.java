@@ -42,7 +42,7 @@ import org.movsim.simulator.roadnetwork.TrafficLight.TrafficLightStatus;
 import org.movsim.simulator.roadnetwork.TrafficSink;
 import org.movsim.simulator.roadnetwork.TrafficSource;
 import org.movsim.simulator.vehicles.Vehicle;
-import org.movsim.utilities.ConversionUtilities;
+import org.movsim.utilities.Units;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -425,9 +425,9 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final RoadMapping roadMapping = roadSegment.roadMapping();
         assert roadMapping != null;
         final double offset = -(roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth();
-        final int redRadius = (int) (4 * roadMapping.laneWidth()) / 2;
-        final int whiteRadius = (int) (3 * roadMapping.laneWidth()) / 2;
-        final int offsetY = 60;
+        final int redRadius = (int) (3 * roadMapping.laneWidth()) / 2;
+        final int whiteRadius = (int) (2 * roadMapping.laneWidth()) / 2;
+        final int offsetY = 28;
 
         for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
 
@@ -436,18 +436,18 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
                 paint.setColor(0xffee1111);
-                canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, redRadius,
+                canvas.drawCircle((int) posTheta.x + redRadius/2, (int) posTheta.y + redRadius - offsetY, redRadius,
                         paint);
                 paint.setColor(0xffeeeeee);
-                canvas.drawCircle((int) posTheta.x + redRadius, (int) posTheta.y + redRadius + offsetY, whiteRadius,
+                canvas.drawCircle((int) posTheta.x + redRadius/2, (int) posTheta.y + redRadius - offsetY, whiteRadius,
                         paint);
 
                 final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
-                paint.setTextSize(20);
-                canvas.drawText(text, (int) (posTheta.x + redRadius) - 10,
-                        (int) (posTheta.y + redRadius + 7 + offsetY), paint);
+                paint.setTextSize(14);
+                canvas.drawText(text, (int) (posTheta.x + redRadius/2) - 7,
+                        (int) (posTheta.y + redRadius + 4 - offsetY), paint);
             } else {
                 // TODO clearing sign
             }
@@ -508,10 +508,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setTextSize(20);
                 StringBuilder inflowStringBuilder = new StringBuilder();
                 inflowStringBuilder.append("set/target inflow: ");
-                inflowStringBuilder.append((int) (ConversionUtilities.INVS_TO_INVH * trafficSource
+                inflowStringBuilder.append((int) (Units.INVS_TO_INVH * trafficSource
                         .getTotalInflow(simulationTime())));
                 inflowStringBuilder.append("/");
-                inflowStringBuilder.append((int) (ConversionUtilities.INVS_TO_INVH * trafficSource.measuredInflow()));
+                inflowStringBuilder.append((int) (Units.INVS_TO_INVH * trafficSource.measuredInflow()));
                 inflowStringBuilder.append(" veh/h");
                 inflowStringBuilder.append(" (");
                 inflowStringBuilder.append(trafficSource.getQueueLength());
@@ -537,7 +537,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 paint.setColor(Color.BLACK);
                 posTheta = roadMapping.endPos();
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
-                String outflowString = "outflow: " + (int) (ConversionUtilities.INVS_TO_INVH * sink.measuredOutflow())
+                String outflowString = "outflow: " + (int) (Units.INVS_TO_INVH * sink.measuredOutflow())
                         + " veh/h";
                 // outflow text
                 paint.setAntiAlias(true);

@@ -82,9 +82,14 @@ public class ViewProperties {
                     inputStream.close();
                 }
             } else {
-                final InputStream in = new FileInputStream(file);
-                applicationProps.load(in);
-                in.close();
+                final InputStream in = ProjectMetaData.getInstance().getProjectProperties();
+                if (in == null) {
+                    System.out.println("   InputStream  ist null");
+                } else {
+                    applicationProps.load(in);
+                    in.close();
+                }
+                
             }
 
         } catch (FileNotFoundException e) {

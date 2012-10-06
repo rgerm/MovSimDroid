@@ -25,6 +25,10 @@
  */
 package org.movsim.movdroid;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.log4j.Level;
 import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.graphics.MovSimView;
@@ -44,6 +48,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -85,6 +90,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private Resources res;
     private String projectName;
     private int projectPosition = 0;
+    private String dataPath;
 
     /** Called when the activity is first created. */
     @Override
@@ -97,7 +103,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
         initActionBar();
-
+        
         setupSimulator();
 
         movSimView = new MovSimView(this, simulator, projectMetaData);
@@ -108,7 +114,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private void setupSimulator() {
         projectMetaData = ProjectMetaData.getInstance();
 
-        projectMetaData.setXmlFromResources(true);
+        projectMetaData.setParseFromInputstream(true);
         projectMetaData.setInstantaneousFileOutput(false);
 
         simulator = new Simulator(projectMetaData);
@@ -183,15 +189,28 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private void actionInteraction() {
         for (RoadSegment roadSegment : roadNetwork) {
-            if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
-                if (diversionOn == false) {
-                    diversionOn = true;
-                    roadSegment.addVariableMessageSign(variableMessageSign);
-                } else {
-                    diversionOn = false;
-                    roadSegment.removeVariableMessageSign(variableMessageSign);
+            if (projectName.equals("routing")) {
+                if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
+                    if (diversionOn == false) {
+                        diversionOn = true;
+                        roadSegment.addVariableMessageSign(variableMessageSign);
+                    } else {
+                        diversionOn = false;
+                        roadSegment.removeVariableMessageSign(variableMessageSign);
+                    }
+                }
+            } else if (projectName.equals("cloverleaf")) {
+                if (roadNetwork.hasVariableMessageSign() && (roadSegment.userId().equals("2"))) {
+                    if (diversionOn == false) {
+                        diversionOn = true;
+                        roadSegment.addVariableMessageSign(variableMessageSign);
+                    } else {
+                        diversionOn = false;
+                        roadSegment.removeVariableMessageSign(variableMessageSign);
+                    }
                 }
             }
+            
             if (roadSegment.trafficLights() != null) {
                 for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
                     trafficLight.nextState();
@@ -272,13 +291,31 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
         String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
+        createInputStreams(projectName, projectPath);
         simulator.loadScenarioFromXml(projectName, projectPath);
         simulationRunnable.start();
         simulationRunnable.pause();
+        if(projectName.equals("cloverleaf")) {
+            roadNetwork.setHasVariableMessageSign(true);
+        }
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         movSimView.resetGraphicproperties();
         movSimView.forceRepaintBackground();
         return true;
+    }
+    
+    private void createInputStreams(String name, String path) {
+        try {
+            String full = path + name;
+            InputStream movsimXml = getAssets().open(full+".xml");
+            projectMetaData.setMovsimXml(movsimXml);
+            InputStream is = getAssets().open(full+".xodr");
+            projectMetaData.setNetworkXml(is);
+            InputStream isProp = getAssets().open(full+".properties");
+            projectMetaData.setProjectProperties(isProp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -326,13 +363,13 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         highscore.append(res.getStringArray(R.array.highscoreRouting)[4]);
                     }
                 } else if (projectName.equals("ramp_metering")) {
-                    if (simulationTime < 300) {
+                    if (simulationTime < 280) {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[0]);
-                    } else if (simulationTime < 325) {
+                    } else if (simulationTime < 290) {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[1]);
-                    } else if (simulationTime < 345) {
+                    } else if (simulationTime < 300) {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[2]);
-                    } else if (simulationTime < 390) {
+                    } else if (simulationTime < 310) {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[3]);
                     } else {
                         highscore.append(res.getStringArray(R.array.highscoreRampMetring)[4]);
