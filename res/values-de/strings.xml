@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">MovSim</string>
+    <string name="movsimInfo">Über MovSim</string>
+    <string name="info">Szenario Info</string>
     <string name="dialog">MovSim Info</string>
     <string name="dialog_content">Multi-model open-source vehicular-traffic Simulator</string>
     <string name="start">Start</string>

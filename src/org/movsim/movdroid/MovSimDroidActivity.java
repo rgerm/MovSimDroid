@@ -90,9 +90,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         super.onCreate(savedInstanceState);
         res = getResources();
 
-        OnFirstBoot.show(this, "start.accepted", "start", res.getString(R.string.introduction_text),
-                res.getString(R.string.onFirstBoot_title));
-
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
@@ -266,7 +263,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        OnFirstBoot.show(this, itemPosition + "start.accepted", itemPosition + "start",
+        OnFirstBoot.show(this, "start", itemPosition + "start.accepted",
                 res.getStringArray(R.array.infoScenario)[itemPosition], res.getString(R.string.onFirstBoot_title));
         // project selection
         projectPosition = itemPosition;
@@ -314,16 +311,27 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 StringBuilder highscore = new StringBuilder();
                 if (projectName.equals("routing")) {
                     if (simulationTime < 260) {
-                        highscore.append("Wow, King of the road!");
+                        highscore.append(res.getStringArray(R.array.highscoreRouting)[0]);
                     } else if (simulationTime < 285) {
-                        highscore.append("Fantastic time!");
+                        highscore.append(res.getStringArray(R.array.highscoreRouting)[1]);
                     } else if (simulationTime < 315) {
-                        highscore
-                                .append("Pretty good, for a human. Much better then any navigation system you can buy");
+                        highscore.append(res.getStringArray(R.array.highscoreRouting)[2]);
                     } else if (simulationTime < 360) {
-                        highscore.append("You are as bad as an expensive navigation system.");
+                        highscore.append(res.getStringArray(R.array.highscoreRouting)[3]);
                     } else {
-                        highscore.append("You are as bad as a standard navigation system.");
+                        highscore.append(res.getStringArray(R.array.highscoreRouting)[4]);
+                    }
+                } else if (projectName.equals("rampmetering")) {
+                    if (simulationTime < 300) {
+                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[0]);
+                    } else if (simulationTime < 325) {
+                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[1]);
+                    } else if (simulationTime < 345) {
+                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[2]);
+                    } else if (simulationTime < 390) {
+                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[3]);
+                    } else {
+                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[4]);
                     }
                 }
 

@@ -32,5 +32,21 @@
         <item>traffic jam with lane change</item>
         <item>Complex road network</item>
     </string-array>
+    
+    <string-array name="highscoreRouting">
+        <item>Wow, King of the road! You really have figured this out.</item>
+        <item>Fantastic time! But still improvable.</item>
+        <item>Pretty good. Much better then any navigation system you can buy. But not much to be proud of.</item>
+        <item>You are as bad as an expensive navigation system. Trx again.</item>
+        <item>You are as bad as a standard navigation system.</item>
+    </string-array>
+    
+    <string-array name="highscoreRampMetring">
+        <item>Wow, King of the road! You really have figured this out.</item>
+        <item>Fantastic time! But still improvable.</item>
+        <item>Pretty good.</item>
+        <item>Not too bad. But not that good either. Try again.</item>
+        <item>Give it a thought.</item>
+    </string-array>
 
 </resources>
