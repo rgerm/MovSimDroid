@@ -23,11 +23,12 @@
  * 
  * -----------------------------------------------------------------------------------------
  */
-package org.movsim.movdroid;
+package org.movsim.movdroid.graphics;
 
 import java.util.Properties;
 
 import org.movsim.input.ProjectMetaData;
+import org.movsim.movdroid.util.ViewProperties;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.SimulationRunnable.UpdateDrawingCallback;
 import org.movsim.simulator.Simulator;

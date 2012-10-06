@@ -23,7 +23,7 @@
  * 
  * -----------------------------------------------------------------------------------------
  */
-package org.movsim.movdroid;
+package org.movsim.movdroid.graphics;
 
 import org.movsim.simulator.SimulationRunnable;
 
@@ -225,7 +225,7 @@ public abstract class ViewBase extends View {
         setTransform();
     }
 
-    protected void forceRepaintBackground() {
+    public void forceRepaintBackground() {
         drawBackgroundBitmap();
         invalidate();
     }

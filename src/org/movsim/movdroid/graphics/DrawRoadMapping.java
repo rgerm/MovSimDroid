@@ -23,7 +23,7 @@
  * 
  * -----------------------------------------------------------------------------------------
  */
-package org.movsim.movdroid;
+package org.movsim.movdroid.graphics;
 
 import java.util.Iterator;
 

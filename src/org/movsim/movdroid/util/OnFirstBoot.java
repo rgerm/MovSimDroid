@@ -23,7 +23,10 @@
  * 
  * -----------------------------------------------------------------------------------------
  */
-package org.movsim.movdroid;
+package org.movsim.movdroid.util;
+
+import org.movsim.movdroid.R;
+import org.movsim.movdroid.R.string;
 
 import android.app.Activity;
 import android.app.AlertDialog;

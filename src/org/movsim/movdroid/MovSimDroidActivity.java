@@ -27,6 +27,9 @@ package org.movsim.movdroid;
 
 import org.apache.log4j.Level;
 import org.movsim.input.ProjectMetaData;
+import org.movsim.movdroid.graphics.MovSimView;
+import org.movsim.movdroid.util.FormatUtil;
+import org.movsim.movdroid.util.OnFirstBoot;
 import org.movsim.simulator.SimulationRun;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
