@@ -149,8 +149,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         this.roadNetwork = simulator.getRoadNetwork();
         simulationRunnable = simulator.getSimulationRunnable();
         simulationRunnable.setUpdateDrawingCallback(this);
-
-        resetGraphicproperties();
     }
 
     public void resetGraphicproperties() {
