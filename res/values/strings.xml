@@ -5,7 +5,9 @@
     <string name="onFirstBoot_title">MovSim</string>
     <string name="onFirstBoot_accept">Start</string>
     <string name="introduction_text">\n\n
-        MovSim is a scientific traffic simulator, used to study traffic phenomena as traffic jams.
+        MovSim is a microscopic road traffic simulator. The simulator implements different car-following models of different model categories like time-continuous models, iterated maps and cellular automata. Recently, we added a microscopic model for cross-country skiing. Lane changes are modeled with the general MOBIL strategy based on accelerations.
+        \n\n
+        MovSim is intended as a research tool for model investigation and comparison. Our goal is to model and simulate all basic traffic situations and discrete decision makings like lane changes, reacting to a traffic light, yielding, overtaking on rural roads etc. in a generic way and therefore applicable to the implemented models.
     </string>
     
     <string name="dialog">MovSim Info</string>

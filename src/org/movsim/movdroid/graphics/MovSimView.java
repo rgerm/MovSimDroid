@@ -100,8 +100,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     float gapLength;
     float gapLengthExit;
 
-    /** vehicle mouse-over support */
-    // TODO vehicle information
     String popupString;
     String popupStringExitEndRoad;
     protected Vehicle vehiclePopup;
@@ -427,7 +425,8 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final double offset = -(roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth();
         final int redRadius = (int) (3 * roadMapping.laneWidth()) / 2;
         final int whiteRadius = (int) (2 * roadMapping.laneWidth()) / 2;
-        final int offsetY = 28;
+        final int offsetY = -40;
+        final int xOffset = -14;
 
         for (final SpeedLimit speedLimit : roadSegment.speedLimits()) {
 
@@ -436,17 +435,17 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
                 paint.setColor(0xffee1111);
-                canvas.drawCircle((int) posTheta.x + redRadius/2, (int) posTheta.y + redRadius - offsetY, redRadius,
+                canvas.drawCircle((int) posTheta.x + xOffset, (int) posTheta.y + redRadius - offsetY, redRadius,
                         paint);
                 paint.setColor(0xffeeeeee);
-                canvas.drawCircle((int) posTheta.x + redRadius/2, (int) posTheta.y + redRadius - offsetY, whiteRadius,
+                canvas.drawCircle((int) posTheta.x + xOffset, (int) posTheta.y + redRadius - offsetY, whiteRadius,
                         paint);
 
                 final String text = String.valueOf((int) (speedLimit.getSpeedLimitKmh()));
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
                 paint.setTextSize(14);
-                canvas.drawText(text, (int) (posTheta.x + redRadius/2) - 7,
+                canvas.drawText(text, (int) (posTheta.x + xOffset - 7),
                         (int) (posTheta.y + redRadius + 4 - offsetY), paint);
             } else {
                 // TODO clearing sign
@@ -495,7 +494,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             final int radius = (int) ((roadMapping.laneCount() + 2) * roadMapping.laneWidth());
             RoadMapping.PosTheta posTheta;
 
-            // draw the road segment source, if there is one
             final TrafficSource trafficSource = roadSegment.getTrafficSource();
             if (trafficSource != null) {
                 paint.setColor(Color.WHITE);
@@ -566,6 +564,12 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                     return accelerationColors[i];
             }
             return accelerationColors[accelerationColors.length - 1];
+        case EXIT_COLOR:
+            color = Color.BLACK;
+            if (vehicle.exitRoadSegmentId() != Vehicle.ROAD_SEGMENT_ID_NOT_SET) {
+                color = Color.WHITE;
+            }
+            break;
         default:
             final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
             color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
@@ -730,9 +734,6 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
     public boolean onTouchEvent(MotionEvent event) {
         float dx;
         float dy;
-        // define constants to allow building for android-3 target
-        // final int MASK = 0x000000ff;
-        // final int POINTER_UP = 0x00000006;
         final int ACTION_MASK = MotionEvent.ACTION_MASK;
         final int ACTION_POINTER_UP = MotionEvent.ACTION_POINTER_UP;
         switch (event.getAction() & ACTION_MASK) {

@@ -25,7 +25,6 @@
  */
 package org.movsim.movdroid;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -48,7 +47,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -90,7 +88,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private Resources res;
     private String projectName;
     private int projectPosition = 0;
-    private String dataPath;
+    private String projectPath;
 
     /** Called when the activity is first created. */
     @Override
@@ -221,7 +219,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void actionInfo() {
-        String infoText = res.getString(R.string.movsimInfo);
+        String infoText = res.getString(R.string.introduction_text);
         showInfo(infoText, "");
     }
 
@@ -257,8 +255,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     }
 
     private void actionRestart() {
+        createInputStreams(projectName, projectPath);
         roadNetwork.clear();
         simulator.initialize();
+        simulationRunnable.start();
+        simulationRunnable.pause();
+        movSimView.forceRepaintBackground();
         reset();
     }
 
@@ -290,12 +292,12 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         // project selection
         projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
-        String projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
+        projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
         createInputStreams(projectName, projectPath);
         simulator.loadScenarioFromXml(projectName, projectPath);
         simulationRunnable.start();
         simulationRunnable.pause();
-        if(projectName.equals("cloverleaf")) {
+        if (projectName.equals("cloverleaf")) {
             roadNetwork.setHasVariableMessageSign(true);
         }
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
@@ -315,7 +317,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
             projectMetaData.setProjectProperties(isProp);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
     }
 
     @Override

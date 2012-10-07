@@ -7,16 +7,9 @@
         <item>Ringstraße</item>
         <item>Ringstraße mit 2 Spuren</item>
         <item>Autobahnkreuz</item>
+        <item>zelluläre Automaten</item>
     </string-array>
 
-     <string-array name="infoScenario">
-        <item>Umleitungsproblem</item>
-        <item>Zuflußreglung auf Autobahnen</item>
-        <item>Stau</item>
-        <item>Spurwechsel als Stauursache</item>
-        <item>Straßennetzwerk. Leistungstest.</item>
-    </string-array>
-    
     <string-array name="highscoreRouting">
         <item>dt. Wow, King of the road! You really have figured this out.</item>
         <item>dt.Fantastic time! But still improvable.</item>
