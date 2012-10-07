@@ -570,7 +570,11 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             }
             return accelerationColors[accelerationColors.length - 1];
         case EXIT_COLOR:
-            color = Color.BLACK;
+            color = vehicle.color();
+            if (color == 0) {
+                color = Colors.randomColor();
+                vehicle.setColor(color);
+            }
             if (vehicle.exitRoadSegmentId() != Vehicle.ROAD_SEGMENT_ID_NOT_SET) {
                 color = Color.WHITE;
             }
