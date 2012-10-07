@@ -1,18 +1,18 @@
 /*
- * Copyright (C) 2010, 2011, 2012 by Arne Kesting, Martin Treiber, Ralph Germ, Martin Budden
- *                                   <movsim.org@gmail.com>
+ * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ *                       <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
  * This file is part of
  * 
- * MovSim - the multi-model open-source vehicular-traffic simulator.
+ * MovSimDroid.
  * 
- * MovSim is free software: you can redistribute it and/or modify
+ * MovSimDroid is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * MovSim is distributed in the hope that it will be useful,
+ * MovSimDroid is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -38,6 +38,14 @@ public class ViewProperties {
 
     final static String defaultPropertyName = "/config/defaultviewerconfig.properties";
     private static Properties defaultProperties;
+    private static Properties applicationProps;
+
+    /**
+     * @return the applicationProps
+     */
+    public static Properties getApplicationProps() {
+        return applicationProps;
+    }
 
     /**
      * Load default properties from the {code /config/defaultviewerconfig.properties} path. Needed for initialization.
@@ -71,7 +79,7 @@ public class ViewProperties {
      * @return properties
      */
     public static Properties loadProperties(String projectName, String path) {
-        Properties applicationProps = loadDefaultProperties();
+        applicationProps = loadDefaultProperties();
         try {
             final File file = new File(path + projectName + ".properties");
             System.out.println("try to read from file=" + file.getName() + ", path=" + file.getAbsolutePath());

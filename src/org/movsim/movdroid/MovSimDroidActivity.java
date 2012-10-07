@@ -1,18 +1,18 @@
 /*
- * Copyright (C) 2010, 2011, 2012 by Arne Kesting, Martin Treiber, Ralph Germ, Martin Budden
- *                                   <movsim.org@gmail.com>
+ * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ *                       <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
  * This file is part of
  * 
- * MovSim - the multi-model open-source vehicular-traffic simulator.
+ * MovSimDroid.
  * 
- * MovSim is free software: you can redistribute it and/or modify
+ * MovSimDroid is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * MovSim is distributed in the hope that it will be useful,
+ * MovSimDroid is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -33,6 +33,7 @@ import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.graphics.MovSimView;
 import org.movsim.movdroid.util.FormatUtil;
 import org.movsim.movdroid.util.OnFirstBoot;
+import org.movsim.movdroid.util.ViewProperties;
 import org.movsim.simulator.SimulationRun;
 import org.movsim.simulator.SimulationRunnable;
 import org.movsim.simulator.Simulator;
@@ -350,35 +351,38 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         .append(res.getString(R.string.total_fuel_used))
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
 
-                // TODO highscore
-                StringBuilder highscore = new StringBuilder();
-                if (projectName.equals("routing")) {
-                    if (simulationTime < 260) {
-                        highscore.append(res.getStringArray(R.array.highscoreRouting)[0]);
-                    } else if (simulationTime < 285) {
-                        highscore.append(res.getStringArray(R.array.highscoreRouting)[1]);
-                    } else if (simulationTime < 315) {
-                        highscore.append(res.getStringArray(R.array.highscoreRouting)[2]);
-                    } else if (simulationTime < 360) {
-                        highscore.append(res.getStringArray(R.array.highscoreRouting)[3]);
-                    } else {
-                        highscore.append(res.getStringArray(R.array.highscoreRouting)[4]);
+                StringBuilder gamePerformanceMessage = new StringBuilder("");
+                
+                if (isGame()) {
+                    if (projectName.equals("routing")) {
+                        if (simulationTime < 260) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRouting)[0]);
+                        } else if (simulationTime < 285) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRouting)[1]);
+                        } else if (simulationTime < 315) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRouting)[2]);
+                        } else if (simulationTime < 360) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRouting)[3]);
+                        } else {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRouting)[4]);
+                        }
+                    } else if (projectName.equals("ramp_metering")) {
+                        if (simulationTime < 280) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[0]);
+                        } else if (simulationTime < 290) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[1]);
+                        } else if (simulationTime < 300) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[2]);
+                        } else if (simulationTime < 310) {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[3]);
+                        } else {
+                            gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[4]);
+                        }
                     }
-                } else if (projectName.equals("ramp_metering")) {
-                    if (simulationTime < 280) {
-                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[0]);
-                    } else if (simulationTime < 290) {
-                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[1]);
-                    } else if (simulationTime < 300) {
-                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[2]);
-                    } else if (simulationTime < 310) {
-                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[3]);
-                    } else {
-                        highscore.append(res.getStringArray(R.array.highscoreRampMetring)[4]);
-                    }
+                    //TODO highscore table?!
                 }
 
-                showInfo(message.toString(), highscore.toString());
+                showInfo(message.toString(), gamePerformanceMessage.toString());
             }
         });
     }
@@ -396,6 +400,10 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.pause();
         menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         super.onPause();
+    }
+
+    public boolean isGame() {
+        return Boolean.parseBoolean(ViewProperties.getApplicationProps().getProperty("isGame"));
     }
 
 }
