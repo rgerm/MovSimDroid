@@ -481,7 +481,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
             paint.setColor(Color.BLACK);
             paint.setAntiAlias(true);
             paint.setTextSize(12);
-            canvas.drawText("R" + roadSegment.userId(), (int) (posTheta.x + 14), (int) (posTheta.y + 14), paint);
+            canvas.drawText("Info: " + roadSegment.userId(), (int) (posTheta.x + 16), (int) (posTheta.y + 16), paint);
         }
     }
 

@@ -45,7 +45,7 @@
             <VEHICLE_TYPE label="ObstacleNSM" fraction="0" relative_v0_randomization="0.0" route_label="" />
             <VEHICLE_TYPE label="ObstacleKKW" fraction="0" relative_v0_randomization="0.0" route_label="" />
         </TRAFFIC_COMPOSITION>
-        <ROAD id="NSM" logging="false">
+        <ROAD id="Nagel Schreckenberg Model. Cell length: 7.5 m" logging="false">
             <INITIAL_CONDITIONS>
                 <!-- in physical quantities (meter and m/s) -->
                 <IC_MICRO x="7.5" v="0" label="NSM1" lane="1" />
@@ -77,7 +77,7 @@
                 <IC_MICRO x="1000" v="0" label="ObstacleNSM" lane="1" />
             </INITIAL_CONDITIONS>
         </ROAD>
-        <ROAD id="BARL" logging="false">
+        <ROAD id="Barlovic Model. Cell length: 7.5m" logging="false">
             <INITIAL_CONDITIONS>
                 <!-- in physical quantities (meter and m/s) -->
                 <IC_MICRO x="7.5" v="0" label="BARL1" lane="1" />
@@ -109,7 +109,7 @@
                 <IC_MICRO x="1000" v="0" label="ObstacleNSM" lane="1" />
             </INITIAL_CONDITIONS>
         </ROAD>
-        <ROAD id="KKW" logging="false">
+        <ROAD id="Kerner Klenov Wolf Model. Cell length: 0.5m" logging="false">
             <INITIAL_CONDITIONS>
                 <!-- in physical quantities (meter and m/s) -->
                 <IC_MICRO x="10" v="0" label="KKW1" lane="1" />
