@@ -42,6 +42,7 @@ import org.movsim.simulator.roadnetwork.TrafficLight.TrafficLightStatus;
 import org.movsim.simulator.roadnetwork.TrafficSink;
 import org.movsim.simulator.roadnetwork.TrafficSource;
 import org.movsim.simulator.vehicles.Vehicle;
+import org.movsim.utilities.Colors;
 import org.movsim.utilities.Units;
 
 import android.content.Context;
@@ -556,6 +557,10 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         final int count;
 
         switch (vehicleColorMode) {
+        case VELOCITY_COLOR:
+            final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
+            color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
+            break;
         case ACCELERATION_COLOR:
             final double a = vehicle.physicalQuantities().getAcc();
             count = accelerations.length;
@@ -570,9 +575,15 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
                 color = Color.WHITE;
             }
             break;
+        case VEHICLE_COLOR:
+            color = vehicle.color();
+            if (color == 0) {
+                color = Colors.randomColor();
+                vehicle.setColor(color);
+            }
+            break;
         default:
-            final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
-            color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
+            color = Color.BLACK;
         }
         return color;
     }
