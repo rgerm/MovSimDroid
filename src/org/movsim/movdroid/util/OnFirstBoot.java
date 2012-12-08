@@ -26,7 +26,6 @@
 package org.movsim.movdroid.util;
 
 import org.movsim.movdroid.R;
-import org.movsim.movdroid.R.string;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -58,6 +57,7 @@ public class OnFirstBoot {
         return editor;
     }
 
+    // TODO use ABS Dialog instead -> UI consistency 
     public static void alertDialog(final Activity activity, final SharedPreferences preferences, String text, String title) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(title);

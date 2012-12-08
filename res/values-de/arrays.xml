@@ -10,20 +10,20 @@
         <item>zelluläre Automaten</item>
     </string-array>
 
-    <string-array name="highscoreRouting">
-        <item>dt. Wow, King of the road! You really have figured this out.</item>
-        <item>dt.Fantastic time! But still improvable.</item>
-        <item>dt.Pretty good. Much better then any navigation system you can buy. But not much to be proud of.</item>
-        <item>dt.You are as bad as an expensive navigation system. Trx again.</item>
-        <item>dt. You are as bad as a standard navigation system.</item>
+<!--   <string-array name="highscoreRouting">
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
     </string-array>
     
     <string-array name="highscoreRampMetring">
-        <item>dt.Wow, King of the road! You really have figured this out.</item>
-        <item>dt.Fantastic time! But still improvable.</item>
-        <item>dt.Pretty good.</item>
-        <item>dt.Not too bad. But not that good either. Try again.</item>
-        <item>dt.Give it a thought.</item>
-    </string-array>
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
+        <item>dt.</item>
+    </string-array> -->
     
 </resources>

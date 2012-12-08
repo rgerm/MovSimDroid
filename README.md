@@ -1,7 +1,7 @@
 MovSimDroid
 ===========
 
-MovSimDroid = **M**ulti-model **o**pen-source **v**ehicular-traffic **Sim**ulator Droid.
+MovSimDroid = **M**ulti-model **o**pen-source **v**ehicular-traffic **Sim**ulator An**Droid** client.
 
 [movsim.org](http://www.movsim.org)
 
@@ -37,7 +37,7 @@ MovSimDroid uses [ActionbarSherlock](http://). To build from within eclipse Acti
 Commercial use
 --------------
 
-For commercial use, please contact the copyright holders at ralphgerm@gmail.com.
+For commercial use, please contact the copyright holders at ralph.germ@gmail.com.
 
 
 Copyright

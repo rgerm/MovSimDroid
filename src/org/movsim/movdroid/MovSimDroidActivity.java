@@ -25,13 +25,20 @@
  */
 package org.movsim.movdroid;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeSet;
 
 import org.apache.log4j.Level;
 import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.graphics.MovSimView;
 import org.movsim.movdroid.util.FormatUtil;
+import org.movsim.movdroid.util.HighscoreEntry;
 import org.movsim.movdroid.util.OnFirstBoot;
 import org.movsim.movdroid.util.ViewProperties;
 import org.movsim.simulator.SimulationRun;
@@ -42,6 +49,7 @@ import org.movsim.simulator.roadnetwork.RoadSegment;
 import org.movsim.simulator.roadnetwork.TrafficLight;
 import org.movsim.simulator.roadnetwork.VariableMessageSignBase;
 import org.movsim.simulator.roadnetwork.VariableMessageSignDiversion;
+import org.movsim.utilities.Units;
 
 import android.content.Context;
 import android.content.Intent;
@@ -62,6 +70,8 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class MovSimDroidActivity extends SherlockActivity implements OnNavigationListener,
         SimulationRun.CompletionCallback, SimulationRunnable.UpdateStatusCallback {
+
+    protected static final int MAX_RANK_FOR_HIGHSCORE = 50;
 
     // MovSim core uses slf4j as a logging facade for log4j.
     static {
@@ -102,7 +112,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
         initActionBar();
-        
+
         setupSimulator();
 
         movSimView = new MovSimView(this, simulator, projectMetaData);
@@ -198,18 +208,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         roadSegment.removeVariableMessageSign(variableMessageSign);
                     }
                 }
-            } else if (projectName.equals("cloverleaf")) {
-                if (roadNetwork.hasVariableMessageSign() && (roadSegment.userId().equals("2"))) {
-                    if (diversionOn == false) {
-                        diversionOn = true;
-                        roadSegment.addVariableMessageSign(variableMessageSign);
-                    } else {
-                        diversionOn = false;
-                        roadSegment.removeVariableMessageSign(variableMessageSign);
-                    }
-                }
             }
-            
             if (roadSegment.trafficLights() != null) {
                 for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
                     trafficLight.nextState();
@@ -301,24 +300,26 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         if (projectName.equals("cloverleaf")) {
             roadNetwork.setHasVariableMessageSign(true);
         }
-        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
         movSimView.resetGraphicproperties();
         movSimView.forceRepaintBackground();
+        if (menu != null) {
+            menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
+        }
         return true;
     }
-    
+
     private void createInputStreams(String name, String path) {
         try {
             String full = path + name;
-            InputStream movsimXml = getAssets().open(full+".xml");
+            InputStream movsimXml = getAssets().open(full + ".xml");
             projectMetaData.setMovsimXml(movsimXml);
-            InputStream is = getAssets().open(full+".xodr");
+            InputStream is = getAssets().open(full + ".xodr");
             projectMetaData.setNetworkXml(is);
-            InputStream isProp = getAssets().open(full+".properties");
+            InputStream isProp = getAssets().open(full + ".properties");
             projectMetaData.setProjectProperties(isProp);
         } catch (IOException e) {
             e.printStackTrace();
-        } 
+        }
     }
 
     @Override
@@ -352,7 +353,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                         .append(String.format("%.1f", totalVehicleFuelUsedLiters));
 
                 StringBuilder gamePerformanceMessage = new StringBuilder("");
-                
+
                 if (isGame()) {
                     if (projectName.equals("routing")) {
                         if (simulationTime < 260) {
@@ -379,11 +380,109 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                             gamePerformanceMessage.append(res.getStringArray(R.array.highscoreRampMetring)[4]);
                         }
                     }
-                    //TODO highscore table?!
+
+                    HighscoreEntry highscoreEntry = new HighscoreEntry();
+                    highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalSimulationTime, simulationTime);
+                    highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalTravelTime,
+                            roadNetwork.totalVehicleTravelTime());
+                    highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalTravelDistance,
+                            roadNetwork.totalVehicleTravelDistance() * Units.M_TO_KM);
+                    highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalFuelUsedLiters,
+                            roadNetwork.totalVehicleFuelUsedLiters());
+
+//                    highscoreForGames(highscoreEntry);
                 }
 
                 showInfo(message.toString(), gamePerformanceMessage.toString());
             }
+
+            private void highscoreForGames(final HighscoreEntry highscoreEntry) {
+                String highscoreFilename = ProjectMetaData.getInstance().getProjectName() + "_highscore.txt";
+                TreeSet<HighscoreEntry> sortedResults = new TreeSet<HighscoreEntry>(new Comparator<HighscoreEntry>() {
+                    @Override
+                    public int compare(HighscoreEntry o1, HighscoreEntry o2) {
+                        Double d1 = new Double(o1.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
+                        Double d2 = new Double(o2.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
+                        return d1.compareTo(d2);
+                    }
+                });
+                sortedResults.addAll(readHighscore(highscoreFilename));
+
+                int rank = determineRanking(highscoreEntry, sortedResults);
+//                JOptionPane.showMessageDialog(null, getDialogMessage(highscoreEntry, sortedResults.size(), rank));
+
+                if (rank <= MAX_RANK_FOR_HIGHSCORE) {
+                    highscoreEntry.setPlayerName("Me");
+                }
+
+                sortedResults.add(highscoreEntry);
+
+                writeFile(highscoreFilename, sortedResults);
+
+                displayHighscore(sortedResults);
+            }
+
+            private int determineRanking(HighscoreEntry resultEntry, TreeSet<HighscoreEntry> sortedResults) {
+                int ranking = 1;
+                for (HighscoreEntry entry : sortedResults) {
+                    if (sortedResults.comparator().compare(resultEntry, entry) < 0) {
+                        return ranking;
+                    }
+                    ++ranking;
+
+                }
+                return ranking;
+            }
+
+//            private String getDialogMessage(HighscoreEntry entry, int highscoreSize, int rank) {
+//                return String.format(simulationFinished,
+//                        (int) highscoreEntry.getQuantity(Quantity.totalSimulationTime),
+//                        (int) highscoreEntry.getQuantity(Quantity.totalTravelTime),
+//                        (int) highscoreEntry.getQuantity(Quantity.totalTravelDistance),
+//                        highscoreEntry.getQuantity(Quantity.totalFuelUsedLiters), highscoreSize + 1, rank);
+//           }
+
+            private void writeFile(String highscoreFilename, Iterable<HighscoreEntry> highscores) {
+//                PrintWriter hswriter = FileUtils.getWriter(highscoreFilename);
+//                for (HighscoreEntry entry : highscores) {
+//                    hswriter.println(entry.toString());
+//                }
+//                hswriter.close();
+            }
+
+            private void displayHighscore(TreeSet<HighscoreEntry> results) {
+                // TODO Auto-generated method stub
+                for (HighscoreEntry entry: results) {
+                    int row = 0;
+                    if (row  > MAX_RANK_FOR_HIGHSCORE) {
+                        break;
+                    }
+                    for (HighscoreEntry.Quantity quantity : HighscoreEntry.Quantity.values()) {
+                        System.out.println(String.format("%d", row+1));
+                        System.out.println(String.format("%s", entry.getPlayerName()));
+                        System.out.println(String.format("%.1f", entry.getQuantity(quantity)));
+                    }
+                    ++row;
+                }
+            }
+
+            private List<HighscoreEntry> readHighscore(String filename) {
+                List<HighscoreEntry> highscore = new LinkedList<HighscoreEntry>();
+
+                try {
+                    InputStream score = getAssets().open(filename);
+                    BufferedReader hsreader = new BufferedReader(new InputStreamReader(score));
+                    String line;
+                    while ((line = hsreader.readLine()) != null) {
+                        highscore.add(new HighscoreEntry(line));
+                    }
+                } catch (IOException e1) {
+                    return new LinkedList<HighscoreEntry>();
+                }
+
+                return highscore;
+            }
+
         });
     }
 
