@@ -92,14 +92,26 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     private VariableMessageSignBase variableMessageSign = new VariableMessageSignDiversion();
 
-    private MovSimView movSimView;
-    private Menu menu;
-    private RoadNetwork roadNetwork;
-    private boolean diversionOn;
-    private Resources res;
+    public VariableMessageSignBase getVariableMessageSign() {
+		return variableMessageSign;
+	}
+
+	private MovSimView movSimView;
+    public MovSimView getMovSimView() {
+		return movSimView;
+	}
+
+	private Menu menu;
+    public Menu getMenu() {
+		return menu;
+	}
+
+	private RoadNetwork roadNetwork;
+	private Resources res;
     private String projectName;
     private int projectPosition = 0;
     private String projectPath;
+	private MovSimActionBar movsimActionBar;
 
     /** Called when the activity is first created. */
     @Override
@@ -111,9 +123,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         // Replace parser from MovSim. -> Default values from DTD are not set. -> update xml files from MovSim before!
         System.setProperty("org.xml.sax.driver", "org.xmlpull.v1.sax2.Driver");
 
-        initActionBar();
-
         setupSimulator();
+        
+        movsimActionBar = new MovSimActionBar(this, simulator);
 
         movSimView = new MovSimView(this, simulator, projectMetaData);
 
@@ -133,19 +145,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         simulationRunnable.addUpdateStatusCallback(this);
 
         roadNetwork = simulator.getRoadNetwork();
-    }
-
-    private void initActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(res.getDrawable(R.drawable.abs__ab_transparent_dark_holo));
-
-        Context context = actionBar.getThemedContext();
-        ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.project,
-                R.layout.sherlock_spinner_item);
-        list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setListNavigationCallbacks(list, this);
     }
 
     @Override
@@ -174,115 +173,8 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // ActionBar Buttons
-        final CharSequence title = item.getTitle();
-        if (title.equals(res.getString(R.string.start))) {
-            actionStart(item);
-        } else if (title.equals(res.getString(R.string.pause))) {
-            actonPause(item);
-        } else if (title.equals(res.getString(R.string.restart))) {
-            actionRestart();
-        } else if (title.equals(res.getString(R.string.faster))) {
-            actionFaster();
-        } else if (title.equals(res.getString(R.string.slower))) {
-            actionSlower();
-        } else if (title.equals(res.getString(R.string.info))) {
-            actionScenarioInfo();
-        } else if (title.equals(res.getString(R.string.movsimInfo))) {
-            actionInfo();
-        } else if (title.equals(res.getString(R.string.action))) {
-            actionInteraction();
-        }
+        movsimActionBar.selectAction(item);
         return true;
-    }
-
-    private void actionInteraction() {
-        for (RoadSegment roadSegment : roadNetwork) {
-            if (projectName.equals("routing")) {
-                if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
-                    if (diversionOn == false) {
-                        diversionOn = true;
-                        roadSegment.addVariableMessageSign(variableMessageSign);
-                    } else {
-                        diversionOn = false;
-                        roadSegment.removeVariableMessageSign(variableMessageSign);
-                    }
-                }
-            }
-            if (roadSegment.trafficLights() != null) {
-                for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-                    trafficLight.nextState();
-                    movSimView.forceRepaintBackground();
-                }
-            }
-        }
-    }
-
-    private void actionInfo() {
-        String infoText = res.getString(R.string.introduction_text);
-        showInfo(infoText, "");
-    }
-
-    private void actionScenarioInfo() {
-        String infoText = res.getStringArray(R.array.infoScenario)[projectPosition];
-        showInfo(infoText, "");
-    }
-
-    private void showInfo(String info, String highscore) {
-        Intent intent = new Intent();
-        intent.putExtra("message", info);
-        intent.putExtra("highscore", highscore);
-        intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
-        startActivity(intent);
-    }
-
-    private void actionSlower() {
-        int sleepTime = simulationRunnable.sleepTime();
-        sleepTime += sleepTime < 5 ? 1 : 5;
-        if (sleepTime > 500) {
-            sleepTime = 500;
-        }
-        simulationRunnable.setSleepTime(sleepTime);
-    }
-
-    private void actionFaster() {
-        int sleepTime = simulationRunnable.sleepTime();
-        sleepTime -= sleepTime <= 5 ? 1 : 5;
-        if (sleepTime < 0) {
-            sleepTime = 0;
-        }
-        simulationRunnable.setSleepTime(sleepTime);
-    }
-
-    private void actionRestart() {
-        createInputStreams(projectName, projectPath);
-        roadNetwork.clear();
-        simulator.initialize();
-        simulationRunnable.start();
-        simulationRunnable.pause();
-        movSimView.forceRepaintBackground();
-        reset();
-    }
-
-    private void actonPause(MenuItem item) {
-        item.setIcon(R.drawable.ic_action_start);
-        item.setTitle(R.string.start);
-        simulationRunnable.pause();
-    }
-
-    private void actionStart(MenuItem item) {
-        item.setIcon(R.drawable.ic_action_pause);
-        item.setTitle(R.string.pause);
-        if (!simulationRunnable.isPaused()) {
-            simulationRunnable.start();
-        } else {
-            simulationRunnable.resume();
-        }
-    }
-
-    private void reset() {
-        diversionOn = false;
-        menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
     }
 
     @Override
@@ -293,11 +185,11 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
         projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
-        createInputStreams(projectName, projectPath);
+        createInputStreams();
         simulator.loadScenarioFromXml(projectName, projectPath);
         simulationRunnable.start();
         simulationRunnable.pause();
-        if (projectName.equals("cloverleaf")) {
+        if (projectName.equals("routing")) {
             roadNetwork.setHasVariableMessageSign(true);
         }
         movSimView.resetGraphicproperties();
@@ -308,9 +200,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         return true;
     }
 
-    private void createInputStreams(String name, String path) {
+    void createInputStreams() {
         try {
-            String full = path + name;
+            String full = projectPath + projectName;
             InputStream movsimXml = getAssets().open(full + ".xml");
             projectMetaData.setMovsimXml(movsimXml);
             InputStream is = getAssets().open(full + ".xodr");
@@ -393,7 +285,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 //                    highscoreForGames(highscoreEntry);
                 }
 
-                showInfo(message.toString(), gamePerformanceMessage.toString());
+                movsimActionBar.showInfo(message.toString(), gamePerformanceMessage.toString());
             }
 
             private void highscoreForGames(final HighscoreEntry highscoreEntry) {
