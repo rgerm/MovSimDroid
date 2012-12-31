@@ -25,10 +25,17 @@
  */
 package org.movsim.movdroid;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -282,7 +289,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                     highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalFuelUsedLiters,
                             roadNetwork.totalVehicleFuelUsedLiters());
 
-//                    highscoreForGames(highscoreEntry);
+                    highscoreForGames(highscoreEntry);
                 }
 
                 movsimActionBar.showInfo(message.toString(), gamePerformanceMessage.toString());
@@ -304,7 +311,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 //                JOptionPane.showMessageDialog(null, getDialogMessage(highscoreEntry, sortedResults.size(), rank));
 
                 if (rank <= MAX_RANK_FOR_HIGHSCORE) {
-                    highscoreEntry.setPlayerName("Me");
+                    highscoreEntry.setPlayerName("Ralph");
                 }
 
                 sortedResults.add(highscoreEntry);
@@ -335,15 +342,19 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 //           }
 
             private void writeFile(String highscoreFilename, Iterable<HighscoreEntry> highscores) {
-//                PrintWriter hswriter = FileUtils.getWriter(highscoreFilename);
-//                for (HighscoreEntry entry : highscores) {
-//                    hswriter.println(entry.toString());
-//                }
-//                hswriter.close();
+            	try {
+            		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(openFileOutput(highscoreFilename, Context.MODE_PRIVATE)));
+					for (HighscoreEntry entry : highscores) {
+						writer.write(entry.toString());
+						writer.newLine();
+					}
+					writer.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
             }
 
             private void displayHighscore(TreeSet<HighscoreEntry> results) {
-                // TODO Auto-generated method stub
                 for (HighscoreEntry entry: results) {
                     int row = 0;
                     if (row  > MAX_RANK_FOR_HIGHSCORE) {
@@ -362,10 +373,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 List<HighscoreEntry> highscore = new LinkedList<HighscoreEntry>();
 
                 try {
-                    InputStream score = getAssets().open(filename);
-                    BufferedReader hsreader = new BufferedReader(new InputStreamReader(score));
+                	BufferedReader reader = new BufferedReader(new InputStreamReader(openFileInput(filename)));
                     String line;
-                    while ((line = hsreader.readLine()) != null) {
+                    while ((line = reader.readLine()) != null) {
                         highscore.add(new HighscoreEntry(line));
                     }
                 } catch (IOException e1) {
