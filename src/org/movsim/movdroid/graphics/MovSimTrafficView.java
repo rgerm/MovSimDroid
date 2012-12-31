@@ -56,7 +56,7 @@ import android.graphics.Region;
 import android.util.FloatMath;
 import android.view.MotionEvent;
 
-public class MovSimView extends ViewBase implements UpdateDrawingCallback {
+public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback {
 
     protected StatusControlCallbacks statusControlCallbacks;
 
@@ -142,7 +142,7 @@ public class MovSimView extends ViewBase implements UpdateDrawingCallback {
         public void stateChanged();
     }
 
-    public MovSimView(Context context, Simulator simulator, ProjectMetaData projectMetaData) {
+    public MovSimTrafficView(Context context, Simulator simulator, ProjectMetaData projectMetaData) {
         super(context, simulator.getSimulationRunnable());
         this.simulator = simulator;
         this.projectMetaData = projectMetaData;

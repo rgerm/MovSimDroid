@@ -1,3 +1,28 @@
+/*
+ * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ * <ralph.germ@gmail.com>
+ * -----------------------------------------------------------------------------------------
+ * 
+ * This file is part of
+ * 
+ * MovSimDroid.
+ * 
+ * MovSimDroid is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * MovSimDroid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with MovSim. If not, see <http://www.gnu.org/licenses/>
+ * or <http://www.movsim.org>.
+ * 
+ * -----------------------------------------------------------------------------------------
+ */
 package org.movsim.movdroid;
 
 import org.movsim.input.ProjectMetaData;
@@ -9,7 +34,6 @@ import org.movsim.simulator.roadnetwork.TrafficLight;
 import org.movsim.simulator.roadnetwork.VariableMessageSignBase;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.widget.ArrayAdapter;
 
@@ -23,7 +47,6 @@ public class MovSimActionBar {
     private RoadNetwork roadNetwork;
     private SimulationRunnable simulationRunnable;
     private ProjectMetaData projectMetaData;
-    private String projectName;
     private boolean diversionOn = false;
     private MovSimDroidActivity movSimDroidActivity;
 
@@ -34,7 +57,6 @@ public class MovSimActionBar {
         roadNetwork = simulator.getRoadNetwork();
         simulationRunnable = simulator.getSimulationRunnable();
         projectMetaData = ProjectMetaData.getInstance();
-        projectName = projectMetaData.getProjectName();
 
         initActiomBar(movSimDroidActivity);
     }
@@ -75,24 +97,22 @@ public class MovSimActionBar {
 
     private void actionInteraction() {
         for (RoadSegment roadSegment : roadNetwork) {
-            if (projectName.equals("routing")) {
+            if (projectMetaData.getProjectName().equals("routing")) {
                 if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
                     VariableMessageSignBase variableMessageSign = movSimDroidActivity.getVariableMessageSign();
                     if (diversionOn == false) {
                         diversionOn = true;
                         roadSegment.addVariableMessageSign(variableMessageSign);
-                        System.out.println("diversion on");
                     } else {
                         diversionOn = false;
                         roadSegment.removeVariableMessageSign(variableMessageSign);
-                        System.out.println("diversion off");
                     }
                 }
             }
             if (roadSegment.trafficLights() != null) {
                 for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
                     trafficLight.nextState();
-                    movSimDroidActivity.getMovSimView().forceRepaintBackground();
+                    movSimDroidActivity.getMovSimTrafficView().forceRepaintBackground();
                 }
             }
         }
@@ -122,7 +142,7 @@ public class MovSimActionBar {
         simulator.initialize();
         simulationRunnable.start();
         simulationRunnable.pause();
-        movSimDroidActivity.getMovSimView().forceRepaintBackground();
+        movSimDroidActivity.getMovSimTrafficView().forceRepaintBackground();
         reset();
     }
 
@@ -133,12 +153,12 @@ public class MovSimActionBar {
 
     private void actionInfo() {
         String infoText = res.getString(R.string.introduction_text);
-        showInfo(infoText, "");
+        movSimDroidActivity.showInfo(infoText, "");
     }
 
     private void actionScenarioInfo(int projectPosition) {
         String infoText = res.getStringArray(R.array.infoScenario)[projectPosition];
-        showInfo(infoText, "");
+        movSimDroidActivity.showInfo(infoText, "");
     }
 
     private void actonPause(MenuItem item) {
@@ -155,14 +175,6 @@ public class MovSimActionBar {
         } else {
             simulationRunnable.resume();
         }
-    }
-
-    public void showInfo(String info, String highscore) {
-        Intent intent = new Intent();
-        intent.putExtra("message", info);
-        intent.putExtra("highscore", highscore);
-        intent.setClass(movSimDroidActivity, InfoDialog.class);
-        movSimDroidActivity.startActivity(intent);
     }
 
 }
