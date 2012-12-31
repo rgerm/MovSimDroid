@@ -32,9 +32,9 @@ import org.movsim.movdroid.util.ViewProperties;
 
 import android.content.res.Resources;
 
-public class SimulationFinised {
+public class SimulationFinished {
 
-    public SimulationFinised(Resources res, double totalVehicleTravelTime, double totalVehicleTravelDistance,
+    public SimulationFinished(Resources res, double totalVehicleTravelTime, double totalVehicleTravelDistance,
             double totalVehicleFuelUsedLiters, String formatedSimulationDuration, double simulationTime, MovSimDroidActivity movSimDroidActivity) {
 
         final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
@@ -80,7 +80,7 @@ public class SimulationFinised {
             highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalTravelDistance, totalVehicleTravelDistance);
             highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalFuelUsedLiters, totalVehicleFuelUsedLiters);
 
-            HighScoreForGame hs = new HighScoreForGame(movSimDroidActivity, highscoreEntry);
+            new HighScoreForGame(movSimDroidActivity, highscoreEntry);
         }
         movSimDroidActivity.showInfo(message.toString(), gamePerformanceMessage.toString());
     }

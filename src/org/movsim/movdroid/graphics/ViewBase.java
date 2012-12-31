@@ -37,7 +37,6 @@ import android.graphics.Point;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -107,6 +106,7 @@ public abstract class ViewBase extends View {
      * @param context
      * @param simulationRunnable
      */
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     public ViewBase(Context context, SimulationRunnable simulationRunnable) {
         super(context);
@@ -186,7 +186,7 @@ public abstract class ViewBase extends View {
         setTransform();
     }
 
-    protected float scale() {
+    protected float getScale() {
         return scale;
     }
 
@@ -196,11 +196,11 @@ public abstract class ViewBase extends View {
         setTransform();
     }
 
-    protected float xOffset() {
+    protected float getXOffset() {
         return xOffset;
     }
 
-    protected float yOffset() {
+    protected float getYOffset() {
         return yOffset;
     }
 
@@ -285,8 +285,8 @@ public abstract class ViewBase extends View {
 
     // ============================================================================================
     // SimulationRunnable related functions
-    // ============================================================================================
-
+    //
+    
     /**
      * <p>
      * Set the thread sleep time, this controls the animation speed.
@@ -307,7 +307,7 @@ public abstract class ViewBase extends View {
      * 
      * @return the sleep time in milliseconds
      */
-    public int sleepTime() {
+    public int getSleepTime() {
         return simulationRunnable.sleepTime();
     }
 
@@ -322,7 +322,7 @@ public abstract class ViewBase extends View {
      * 
      * @return the simulation time
      */
-    public double simulationTime() {
+    public double getSimulationTime() {
         return simulationRunnable.simulationTime();
     }
 

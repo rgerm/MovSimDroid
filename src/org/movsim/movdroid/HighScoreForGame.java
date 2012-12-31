@@ -50,8 +50,8 @@ public class HighScoreForGame {
         TreeSet<HighscoreEntry> sortedResults = new TreeSet<HighscoreEntry>(new Comparator<HighscoreEntry>() {
             @Override
             public int compare(HighscoreEntry o1, HighscoreEntry o2) {
-                Double d1 = new Double(o1.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
-                Double d2 = new Double(o2.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
+                Double d1 = Double.valueOf(o1.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
+                Double d2 = Double.valueOf(o2.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
                 return d1.compareTo(d2);
             }
         });

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
- *                       <ralph.germ@gmail.com>
+ * <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
  * This file is part of
@@ -52,7 +52,6 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.util.FloatMath;
 import android.view.MotionEvent;
 
@@ -124,7 +123,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
     private static float touchModeZoomHysteresis = 10.0f;
     private float pinchDistance;
 
-    private Region trafficLightRegion = new Region();
+//    private Region trafficLightRegion = new Region();
 
     /**
      * Callbacks from this TrafficCanvas to the application UI.
@@ -159,7 +158,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         xOffset = Integer.parseInt(properties.getProperty("xOffset"));
         yOffset = Integer.parseInt(properties.getProperty("yOffset"));
     }
-    
+
     @Override
     public void updateDrawing(double arg0) {
         postInvalidate();
@@ -203,7 +202,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
 
         synchronized (simulationRunnable.dataLock) {
 
-            final double simulationTime = this.simulationTime();
+            final double simulationTime = this.getSimulationTime();
 
             for (final RoadSegment roadSegment : roadNetwork) {
                 final RoadMapping roadMapping = roadSegment.roadMapping();
@@ -376,7 +375,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         paint.reset();
         paint.setStyle(Paint.Style.FILL);
         final int offset = (int) ((roadMapping.laneCount() / 2.0 + 1.5) * roadMapping.laneWidth());
-        final int size = (int) (2 * roadMapping.laneWidth());
+        // final int size = (int) (2 * roadMapping.laneWidth());
         final int radius = (int) (1.8 * roadMapping.laneWidth());
         for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
             paint.setColor(Color.DKGRAY);
@@ -387,16 +386,20 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
             // offset - radius, (int) posTheta.x + offset + radius-(int)trafficLight.position(), (int) posTheta.y + offset + radius));
             canvas.drawRect(rect, paint);
             final TrafficLightStatus status = trafficLight.status();
-            if (status == TrafficLightStatus.GREEN) {
-                paint.setColor(Color.GREEN);
-            } else if (status == TrafficLightStatus.RED) {
-                paint.setColor(Color.RED);
-            } else if (status == TrafficLightStatus.RED_GREEN) {
-                paint.setColor(Color.MAGENTA);
-            } else {
-                paint.setColor(Color.YELLOW);
-            }
+            setTrafficlightPaint(status);
             canvas.drawCircle((int) posTheta.x + offset, (int) posTheta.y + offset, radius, paint);
+        }
+    }
+
+    private void setTrafficlightPaint(final TrafficLightStatus status) {
+        if (status == TrafficLightStatus.GREEN) {
+            paint.setColor(Color.GREEN);
+        } else if (status == TrafficLightStatus.RED) {
+            paint.setColor(Color.RED);
+        } else if (status == TrafficLightStatus.RED_GREEN) {
+            paint.setColor(Color.MAGENTA);
+        } else {
+            paint.setColor(Color.YELLOW);
         }
     }
 
@@ -434,8 +437,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
             final double speedLimitValueKmh = speedLimit.getSpeedLimitKmh();
             if (speedLimitValueKmh < 150) {
                 paint.setColor(0xffee1111);
-                canvas.drawCircle((int) posTheta.x + xOffset, (int) posTheta.y + redRadius - offsetY, redRadius,
-                        paint);
+                canvas.drawCircle((int) posTheta.x + xOffset, (int) posTheta.y + redRadius - offsetY, redRadius, paint);
                 paint.setColor(0xffeeeeee);
                 canvas.drawCircle((int) posTheta.x + xOffset, (int) posTheta.y + redRadius - offsetY, whiteRadius,
                         paint);
@@ -444,8 +446,8 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
                 paint.setColor(Color.BLACK);
                 paint.setAntiAlias(true);
                 paint.setTextSize(14);
-                canvas.drawText(text, (int) (posTheta.x + xOffset - 7),
-                        (int) (posTheta.y + redRadius + 4 - offsetY), paint);
+                canvas.drawText(text, (int) (posTheta.x + xOffset - 7), (int) (posTheta.y + redRadius + 4 - offsetY),
+                        paint);
             } else {
                 // TODO clearing sign
             }
@@ -473,7 +475,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         for (final RoadSegment roadSegment : roadNetwork) {
             final RoadMapping roadMapping = roadSegment.roadMapping();
             assert roadMapping != null;
-            final int radius = (int) ((roadMapping.laneCount() + 2) * roadMapping.laneWidth());
+            // final int radius = (int) ((roadMapping.laneCount() + 2) * roadMapping.laneWidth());
             final RoadMapping.PosTheta posTheta = roadMapping.map(0.0);
 
             // draw the road segment's id
@@ -506,7 +508,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
                 StringBuilder inflowStringBuilder = new StringBuilder();
                 inflowStringBuilder.append("set/target inflow: ");
                 inflowStringBuilder.append((int) (Units.INVS_TO_INVH * trafficSource
-                        .getTotalInflow(simulationTime())));
+                        .getTotalInflow(getSimulationTime())));
                 inflowStringBuilder.append("/");
                 inflowStringBuilder.append((int) (Units.INVS_TO_INVH * trafficSource.measuredInflow()));
                 inflowStringBuilder.append(" veh/h");
@@ -534,8 +536,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
                 paint.setColor(Color.BLACK);
                 posTheta = roadMapping.endPos();
                 canvas.drawCircle((int) posTheta.x, (int) posTheta.y, radius, paint);
-                String outflowString = "outflow: " + (int) (Units.INVS_TO_INVH * sink.measuredOutflow())
-                        + " veh/h";
+                String outflowString = "outflow: " + (int) (Units.INVS_TO_INVH * sink.measuredOutflow()) + " veh/h";
                 // outflow text
                 paint.setAntiAlias(true);
                 paint.setTextSize(20);
@@ -644,7 +645,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         roadLineColor = Color.parseColor("#" + properties.getProperty("roadLineColor", "DDDDDD"));
         sourceColor = Color.parseColor("#" + properties.getProperty("sourceColor", "FFFFFF"));
         sinkColor = Color.parseColor("#" + properties.getProperty("sinkColor", "000000"));
-        setVehicleColorMode(vehicleColorMode.valueOf(properties.getProperty("vehicleColorMode", "VELOCITY_COLOR")));
+        setVehicleColorMode(VehicleColorMode.valueOf(properties.getProperty("vehicleColorMode", "VELOCITY_COLOR")));
         setVmaxForColorSpectrum(Double.parseDouble(properties.getProperty("vmaxForColorSpectrum", "140")));
 
         lineWidth = Float.parseFloat(properties.getProperty("lineWidth", "1.0"));
@@ -729,14 +730,14 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         this.drawSlopes = b;
         postInvalidate();
     }
-    
+
     public void setVehicleColorMode(VehicleColorMode vehicleColorMode) {
         this.vehicleColorMode = vehicleColorMode;
     }
 
     // ============================================================================================
     // Motion event handling
-    // ============================================================================================
+    //
 
     /**
      * <p>
@@ -767,7 +768,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
             pinchDistance = (float) Math.sqrt(dx * dx + dy * dy);
             if (pinchDistance > touchModeZoomHysteresis) {
                 touchMode = TOUCH_MODE_ZOOM;
-                scaleSave = scale();
+                scaleSave = getScale();
             }
             break;
         case MotionEvent.ACTION_MOVE:

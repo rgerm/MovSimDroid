@@ -207,7 +207,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                SimulationFinised finished = new SimulationFinised(res, totalVehicleTravelTime,
+                SimulationFinished finished = new SimulationFinished(res, totalVehicleTravelTime,
                         totalVehicleTravelDistance, totalVehicleFuelUsedLiters, formatedSimulationDuration,
                         simulationTime, MovSimDroidActivity.this);
             }
