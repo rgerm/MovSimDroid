@@ -43,7 +43,7 @@ For commercial use, please contact the copyright holders at ralph.germ@gmail.com
 Copyright
 ---------
 
-MovSimDroid is Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber.
+MovSimDroid is Copyright (C) 2012, 2013 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber.
 
 MovSimDroid is licensed under GPL version 3.
 
