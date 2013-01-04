@@ -32,6 +32,7 @@ import org.movsim.movdroid.util.HighscoreEntry;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -78,7 +79,7 @@ public class HighScoreView extends SherlockActivity {
     
     private class ResultsAdapter extends ArrayAdapter<HighscoreEntry> {
 
-        private Object items;
+        private List<HighscoreEntry>  items;
 
         public ResultsAdapter(Context context, int textViewResourceId, List<HighscoreEntry> items) {
             super(context, textViewResourceId, items);
@@ -87,8 +88,41 @@ public class HighScoreView extends SherlockActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            return super.getView(position, convertView, parent);
+            
+            Viewholder viewholder; // Google i/o 2010 ListView
+            if (convertView == null) {
+                LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = vi.inflate(R.layout.row, null);
+                viewholder = new Viewholder();
+                viewholder.textTop = (TextView) convertView.findViewById(R.id.toptext);
+                viewholder.textBottom = (TextView) convertView.findViewById(R.id.bottomtext);
+                viewholder.textTopValue = (TextView) convertView.findViewById(R.id.topvaluetext);
+                viewholder.textBottomValue = (TextView) convertView.findViewById(R.id.bottomvaluetext);
+
+                // storing the viewholder in the convertview
+                convertView.setTag(viewholder);
+            } else {
+                viewholder = (Viewholder) convertView.getTag();
+            }
+            
+            HighscoreEntry entry = items.get(position);
+            
+            if (entry != null) {
+                if (viewholder.textTop != null) {
+                    viewholder.textTop.setText(entry.getPlayerName());
+                }
+                if (viewholder.textBottom != null) {
+                    viewholder.textBottom.setText("");
+                }
+                if (viewholder.textTopValue != null) {
+                    viewholder.textTopValue.setText("");
+                }
+                if (viewholder.textBottomValue != null) {
+                    viewholder.textBottomValue.setText("");
+                }
+            }
+
+            return convertView;
         }
         
         
