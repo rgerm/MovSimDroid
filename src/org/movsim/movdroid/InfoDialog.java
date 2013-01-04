@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
- *                       <ralph.germ@gmail.com>
+ * Copyright (C) 2012, 2013 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ * <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
  * This file is part of

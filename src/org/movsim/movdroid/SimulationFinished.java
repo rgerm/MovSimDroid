@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ * Copyright (C) 2012, 2013 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
  * <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
@@ -30,6 +30,7 @@ import org.movsim.movdroid.util.FormatUtil;
 import org.movsim.movdroid.util.HighscoreEntry;
 import org.movsim.movdroid.util.ViewProperties;
 
+import android.content.Intent;
 import android.content.res.Resources;
 
 public class SimulationFinished {
@@ -80,9 +81,18 @@ public class SimulationFinished {
             highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalTravelDistance, totalVehicleTravelDistance);
             highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalFuelUsedLiters, totalVehicleFuelUsedLiters);
 
-            new HighScoreForGame(movSimDroidActivity, highscoreEntry);
+            HighScoreForGame highScoreForGame = new HighScoreForGame(movSimDroidActivity, highscoreEntry);
+            
+            Intent intent = new Intent();
+            intent.putExtra("message", message.toString());
+            intent.putExtra("highscore", gamePerformanceMessage.toString());
+            intent.putExtra("highscorelist", highScoreForGame.getSortedResults());
+            intent.setClass(movSimDroidActivity, HighScoreView.class);
+            movSimDroidActivity.startActivity(intent);
+            
+        } else {
+            movSimDroidActivity.showInfo(message.toString(), gamePerformanceMessage.toString());   
         }
-        movSimDroidActivity.showInfo(message.toString(), gamePerformanceMessage.toString());
     }
 
     private boolean isGame() {

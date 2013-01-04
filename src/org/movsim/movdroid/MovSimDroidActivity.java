@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ * Copyright (C) 2012, 2013 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
  * <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
@@ -81,7 +81,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private RoadNetwork roadNetwork;
     private Resources res;
     private String projectName;
-    private int projectPosition = 0;
     private String projectPath;
     private MovSimActionBar movsimActionBar;
 
@@ -154,7 +153,6 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         OnFirstBoot.show(this, "start", itemPosition + "start.accepted",
                 res.getStringArray(R.array.infoScenario)[itemPosition], res.getString(R.string.onFirstBoot_title));
         // project selection
-        projectPosition = itemPosition;
         projectName = res.getStringArray(R.array.projectName)[itemPosition];
         projectPath = res.getStringArray(R.array.projectPath)[itemPosition];
         createInputStreams();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
+ * Copyright (C) 2012, 2013 by Ralph Germ, Martin Budden, Arne Kesting, Martin Treiber
  * <ralph.germ@gmail.com>
  * -----------------------------------------------------------------------------------------
  * 
@@ -43,11 +43,16 @@ import android.content.Context;
 public class HighScoreForGame {
     private static final int MAX_RANK_FOR_HIGHSCORE = 50;
     private MovSimDroidActivity movSimDroidActivity;
+    private TreeSet<HighscoreEntry> sortedResults;
     
+    public TreeSet<HighscoreEntry> getSortedResults() {
+        return sortedResults;
+    }
+
     public HighScoreForGame(MovSimDroidActivity movSimDroidActivity, HighscoreEntry highscoreEntry) {
         this.movSimDroidActivity = movSimDroidActivity;
         String highscoreFilename = ProjectMetaData.getInstance().getProjectName() + "_highscore.txt";
-        TreeSet<HighscoreEntry> sortedResults = new TreeSet<HighscoreEntry>(new Comparator<HighscoreEntry>() {
+        sortedResults = new TreeSet<HighscoreEntry>(new Comparator<HighscoreEntry>() {
             @Override
             public int compare(HighscoreEntry o1, HighscoreEntry o2) {
                 Double d1 = Double.valueOf(o1.getQuantity(HighscoreEntry.Quantity.totalSimulationTime));
