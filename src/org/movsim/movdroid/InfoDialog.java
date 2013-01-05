@@ -34,7 +34,7 @@ public class InfoDialog extends SherlockActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.text);
+        setContentView(R.layout.infotext);
 
         // Resources res = getResources();
         Bundle bundle = this.getIntent().getExtras();

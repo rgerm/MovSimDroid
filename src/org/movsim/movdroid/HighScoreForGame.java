@@ -42,7 +42,6 @@ import org.movsim.movdroid.util.HighscoreEntry;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
 
 @SuppressLint("NewApi")
@@ -50,10 +49,7 @@ public class HighScoreForGame {
     private static final int MAX_RANK_FOR_HIGHSCORE = 100;
     private MovSimDroidActivity movSimDroidActivity;
     private TreeSet<HighscoreEntry> sortedResults;
-    
-    public List<HighscoreEntry> getSortedResults() {
-        return (List<HighscoreEntry>) new ArrayList<HighscoreEntry>(sortedResults);
-    }
+    private int rank;
 
     public HighScoreForGame(MovSimDroidActivity movSimDroidActivity, HighscoreEntry highscoreEntry) {
         this.movSimDroidActivity = movSimDroidActivity;
@@ -68,13 +64,14 @@ public class HighScoreForGame {
         });
         sortedResults.addAll(readHighscore(highscoreFilename));
 
-        int rank = determineRanking(highscoreEntry, sortedResults);
+        rank = determineRanking(highscoreEntry, sortedResults);
         if (rank <= MAX_RANK_FOR_HIGHSCORE) {
             Integer apiLevel = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
             if (apiLevel < 14) {
                 highscoreEntry.setPlayerName("Me");
             } else {
-                Cursor cursor = movSimDroidActivity.getContentResolver().query(Profile.CONTENT_URI, null, null, null, null);
+                Cursor cursor = movSimDroidActivity.getContentResolver().query(Profile.CONTENT_URI, null, null, null,
+                        null);
                 int count = cursor.getCount();
                 String[] columnNames = cursor.getColumnNames();
                 boolean b = cursor.moveToFirst();
@@ -82,13 +79,13 @@ public class HighScoreForGame {
                 if (count == 1 && position == 0) {
                     for (int j = 0; j < columnNames.length; j++) {
                         String columnName = columnNames[j];
-                        String columnValue = cursor.getString(cursor.getColumnIndex(columnName));
                         if (columnName.equals("display_name")) {
+                            String columnValue = cursor.getString(cursor.getColumnIndex(columnName));
                             highscoreEntry.setPlayerName(columnValue);
                         }
                     }
                 }
-                cursor.close(); 
+                cursor.close();
             }
         }
 
@@ -96,7 +93,7 @@ public class HighScoreForGame {
 
         writeFile(highscoreFilename, sortedResults);
     }
-    
+
     private int determineRanking(HighscoreEntry resultEntry, TreeSet<HighscoreEntry> sortedResults) {
         int ranking = 1;
         for (HighscoreEntry entry : sortedResults) {
@@ -108,10 +105,11 @@ public class HighScoreForGame {
         }
         return ranking;
     }
-    
+
     private void writeFile(String highscoreFilename, Iterable<HighscoreEntry> highscores) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(movSimDroidActivity.openFileOutput(highscoreFilename, Context.MODE_PRIVATE)));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(movSimDroidActivity.openFileOutput(
+                    highscoreFilename, Context.MODE_PRIVATE)));
             for (HighscoreEntry entry : highscores) {
                 writer.write(entry.toString());
                 writer.newLine();
@@ -127,7 +125,8 @@ public class HighScoreForGame {
         List<HighscoreEntry> highscore = new LinkedList<HighscoreEntry>();
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(movSimDroidActivity.openFileInput(filename)));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    movSimDroidActivity.openFileInput(filename)));
             String line;
             while ((line = reader.readLine()) != null) {
                 highscore.add(new HighscoreEntry(line));
@@ -148,5 +147,13 @@ public class HighScoreForGame {
 
         return highscore;
     }
-    
+
+    public int getRank() {
+        return rank;
+    }
+
+    public List<HighscoreEntry> getSortedResults() {
+        return (List<HighscoreEntry>) new ArrayList<HighscoreEntry>(sortedResults);
+    }
+
 }

@@ -95,6 +95,7 @@ public class SimulationFinished {
             Intent intent = new Intent();
             intent.putExtra("message", message.toString());
             intent.putExtra("highscore", gamePerformanceMessage.toString());
+            intent.putExtra("rank", String.valueOf(highScoreForGame.getRank()));
             intent.setClass(movSimDroidActivity, HighScoreView.class);
             movSimDroidActivity.startActivity(intent);
             

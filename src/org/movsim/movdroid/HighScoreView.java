@@ -66,9 +66,11 @@ public class HighScoreView extends SherlockActivity {
         Bundle bundle = this.getIntent().getExtras();
         String message = bundle.getString("message");
         String highscore = bundle.getString("highscore");
+        String rank = bundle.getString("rank");
         List<HighscoreEntry> sortedResults = SimulationFinished.getResults();
 
         ((TextView) findViewById(R.id.text)).setText(message);
+        ((TextView) findViewById(R.id.rank)).setText("Rank: "+ rank);
         if (highscore != null) {
             ((TextView) findViewById(R.id.highscore)).setText(highscore);
         }
