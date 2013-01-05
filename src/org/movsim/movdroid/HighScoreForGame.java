@@ -71,8 +71,6 @@ public class HighScoreForGame {
         sortedResults.add(highscoreEntry);
 
         writeFile(highscoreFilename, sortedResults);
-
-        displayHighscore(sortedResults);
     }
     
     private int determineRanking(HighscoreEntry resultEntry, TreeSet<HighscoreEntry> sortedResults) {
@@ -111,24 +109,20 @@ public class HighScoreForGame {
                 highscore.add(new HighscoreEntry(line));
             }
         } catch (IOException e1) {
-            return new LinkedList<HighscoreEntry>();
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(movSimDroidActivity.getAssets().open(filename)));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    highscore.add(new HighscoreEntry(line));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new LinkedList<HighscoreEntry>();
+            }
         }
 
         return highscore;
     }
     
-    private void displayHighscore(TreeSet<HighscoreEntry> results) {
-        for (HighscoreEntry entry: results) {
-            int row = 0;
-            if (row  > MAX_RANK_FOR_HIGHSCORE) {
-                break;
-            }
-            for (HighscoreEntry.Quantity quantity : HighscoreEntry.Quantity.values()) {
-                System.out.println(String.format("%d", row+1));
-                System.out.println(String.format("%s", entry.getPlayerName()));
-                System.out.println(String.format("%.1f", entry.getQuantity(quantity)));
-            }
-            ++row;
-        }
-    }
 }
