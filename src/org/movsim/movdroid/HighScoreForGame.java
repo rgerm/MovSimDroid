@@ -39,8 +39,13 @@ import java.util.TreeSet;
 import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.util.HighscoreEntry;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Profile;
 
+@SuppressLint("NewApi")
 public class HighScoreForGame {
     private static final int MAX_RANK_FOR_HIGHSCORE = 100;
     private MovSimDroidActivity movSimDroidActivity;
@@ -65,7 +70,26 @@ public class HighScoreForGame {
 
         int rank = determineRanking(highscoreEntry, sortedResults);
         if (rank <= MAX_RANK_FOR_HIGHSCORE) {
-            highscoreEntry.setPlayerName("Me");
+            Integer apiLevel = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+            if (apiLevel < 14) {
+                highscoreEntry.setPlayerName("Me");
+            } else {
+                Cursor cursor = movSimDroidActivity.getContentResolver().query(Profile.CONTENT_URI, null, null, null, null);
+                int count = cursor.getCount();
+                String[] columnNames = cursor.getColumnNames();
+                boolean b = cursor.moveToFirst();
+                int position = cursor.getPosition();
+                if (count == 1 && position == 0) {
+                    for (int j = 0; j < columnNames.length; j++) {
+                        String columnName = columnNames[j];
+                        String columnValue = cursor.getString(cursor.getColumnIndex(columnName));
+                        if (columnName.equals("display_name")) {
+                            highscoreEntry.setPlayerName(columnValue);
+                        }
+                    }
+                }
+                cursor.close(); 
+            }
         }
 
         sortedResults.add(highscoreEntry);
