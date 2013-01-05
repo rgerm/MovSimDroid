@@ -20,7 +20,7 @@
         </CONSUMPTION_MODEL>
     </FUEL_CONSUMPTION>
     <VEHICLES write_fund_diagrams="false">
-        <VEHICLE label="ACC1" length="6" b_max="40" consumption="carDiesel" width="4.4" reaction_time="0">
+        <VEHICLE label="ACC1" length="8.5" b_max="40" consumption="carDiesel" width="5.6" reaction_time="0">
             <LONGITUDINAL_MODEL>
                 <ACC v0="35" T="1.2" s0="2" s1="0" delta="4" a="1.2" b="2.0" coolness="1" />
             </LONGITUDINAL_MODEL>
@@ -29,7 +29,7 @@
             </LANE_CHANGE_MODEL>
         </VEHICLE>
         <!-- trucks -->
-        <VEHICLE label="ACC2" length="16" b_max="40" consumption="carDiesel" width="4.4" reaction_time="0">
+        <VEHICLE label="ACC2" length="20" b_max="40" consumption="carDiesel" width="6.6" reaction_time="0">
             <LONGITUDINAL_MODEL>
                 <ACC v0="25" T="1.4" s0="2" s1="2" delta="4" a="0.8" b="2.0" coolness="1" />
             </LONGITUDINAL_MODEL>
