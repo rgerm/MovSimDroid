@@ -557,8 +557,12 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
 
         switch (vehicleColorMode) {
         case VELOCITY_COLOR:
-            final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
-            color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
+            if (vehicle.exitRoadSegmentId() != Vehicle.ROAD_SEGMENT_ID_NOT_SET) {
+                color = Color.WHITE;
+            } else {
+                final double v = vehicle.physicalQuantities().getSpeed() * 3.6;
+                color = getColorAccordingToSpectrum(0, getVmaxForColorSpectrum(), v);
+            }
             break;
         case ACCELERATION_COLOR:
             final double a = vehicle.physicalQuantities().getAcc();
@@ -604,7 +608,7 @@ public class MovSimTrafficView extends ViewBase implements UpdateDrawingCallback
         int[] rgbArray = hsv2rgb(h, s, b);
 
         final int rgb = Color.rgb(rgbArray[0], rgbArray[1], rgbArray[2]);
-        return v > 0 ? rgb : Color.BLACK;
+        return v > 0.1 ? rgb : Color.BLACK;
     }
 
     private int[] hsv2rgb(float h, float s, float v) {
