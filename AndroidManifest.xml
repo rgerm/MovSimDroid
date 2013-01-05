@@ -36,6 +36,13 @@
             </intent-filter>
         </activity>
         
+        <activity android:label="@string/dialog" android:name=".HighScoreView" android:theme="@style/Theme.Sherlock.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+              <!--   <category android:name="com.actionbarsherlock.sample.demos.EXAMPLE"/> --> 
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>
