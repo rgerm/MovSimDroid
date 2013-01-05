@@ -42,7 +42,7 @@ import org.movsim.movdroid.util.HighscoreEntry;
 import android.content.Context;
 
 public class HighScoreForGame {
-    private static final int MAX_RANK_FOR_HIGHSCORE = 50;
+    private static final int MAX_RANK_FOR_HIGHSCORE = 100;
     private MovSimDroidActivity movSimDroidActivity;
     private TreeSet<HighscoreEntry> sortedResults;
     
@@ -65,7 +65,7 @@ public class HighScoreForGame {
 
         int rank = determineRanking(highscoreEntry, sortedResults);
         if (rank <= MAX_RANK_FOR_HIGHSCORE) {
-            highscoreEntry.setPlayerName("Elmo");
+            highscoreEntry.setPlayerName("Me");
         }
 
         sortedResults.add(highscoreEntry);

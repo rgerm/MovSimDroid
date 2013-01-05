@@ -26,8 +26,10 @@
 package org.movsim.movdroid;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.movsim.movdroid.util.HighscoreEntry;
+import org.movsim.movdroid.util.HighscoreEntry.Quantity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -41,7 +43,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 
 public class HighScoreView extends SherlockActivity {
-    
+
     /**
      * This static class holds the Views in the rows of the ListView, so that
      * they don't have to be created every time for every row
@@ -52,7 +54,7 @@ public class HighScoreView extends SherlockActivity {
         TextView textTopValue;
         TextView textBottomValue;
     }
-    
+
     private ListView highscoreListView;
 
     @Override
@@ -65,20 +67,20 @@ public class HighScoreView extends SherlockActivity {
         String message = bundle.getString("message");
         String highscore = bundle.getString("highscore");
         List<HighscoreEntry> sortedResults = SimulationFinished.getResults();
-        
+
         ((TextView) findViewById(R.id.text)).setText(message);
         if (highscore != null) {
             ((TextView) findViewById(R.id.highscore)).setText(highscore);
         }
-        
+
         highscoreListView = (ListView) findViewById(R.id.highscoreListView);
         ResultsAdapter resultsAdapter = new ResultsAdapter(this, R.layout.row, (List<HighscoreEntry>) sortedResults);
         highscoreListView.setAdapter(resultsAdapter);
     }
-    
+
     private class ResultsAdapter extends ArrayAdapter<HighscoreEntry> {
 
-        private List<HighscoreEntry>  items;
+        private List<HighscoreEntry> items;
 
         public ResultsAdapter(Context context, int textViewResourceId, List<HighscoreEntry> items) {
             super(context, textViewResourceId, items);
@@ -87,7 +89,7 @@ public class HighScoreView extends SherlockActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            
+
             Viewholder viewholder; // Google i/o 2010 ListView
             if (convertView == null) {
                 LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -103,27 +105,30 @@ public class HighScoreView extends SherlockActivity {
             } else {
                 viewholder = (Viewholder) convertView.getTag();
             }
-            
+
             HighscoreEntry entry = items.get(position);
-            
+
             if (entry != null) {
                 if (viewholder.textTop != null) {
                     viewholder.textTop.setText(entry.getPlayerName());
                 }
                 if (viewholder.textBottom != null) {
-                    viewholder.textBottom.setText("");
+                    viewholder.textBottom.setText("Fuel used: "
+                            + String.format(Locale.US, "%.1f", entry.getQuantity(Quantity.totalFuelUsedLiters)) + " [l]");
                 }
                 if (viewholder.textTopValue != null) {
-                    viewholder.textTopValue.setText("");
+                    viewholder.textTopValue.setText(String.valueOf(position + 1));
                 }
                 if (viewholder.textBottomValue != null) {
-                    viewholder.textBottomValue.setText("");
+                    viewholder.textBottomValue.setText(String.format(Locale.US, "%.1f",
+                            entry.getQuantity(Quantity.totalSimulationTime))
+                            + " [s]");
                 }
+
             }
 
             return convertView;
         }
-        
-        
+
     }
 }
