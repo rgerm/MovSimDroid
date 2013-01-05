@@ -20,7 +20,7 @@
         </CONSUMPTION_MODEL>
     </FUEL_CONSUMPTION>
     <VEHICLES write_fund_diagrams="false">
-        <VEHICLE label="ACC1" length="6" b_max="40" consumption="carDiesel" width="4.4" reaction_time="0">
+        <VEHICLE label="ACC1" length="7" b_max="40" consumption="carDiesel" width="5.4" reaction_time="0">
             <LONGITUDINAL_MODEL>
                 <ACC v0="35" T="1.2" s0="3" s1="2" delta="4" a="1.2" b="2.0" coolness="1" />
             </LONGITUDINAL_MODEL>
@@ -29,7 +29,7 @@
                 <MOBIL b_safe="30.0" s_min="2.0" threshold="0.05" bias_right="0.1" politeness="0." />
             </LANE_CHANGE_MODEL>
         </VEHICLE>
-        <VEHICLE label="ACC2" length="6" b_max="40" consumption="carDiesel" width="4.4" reaction_time="0">
+        <VEHICLE label="ACC2" length="7" b_max="40" consumption="carDiesel" width="5.4" reaction_time="0">
             <LONGITUDINAL_MODEL>
                 <ACC v0="35" T="1.2" s0="3" s1="2" delta="4" a="0.8" b="2.0" coolness="1" />
             </LONGITUDINAL_MODEL>
@@ -38,7 +38,7 @@
                 <MOBIL b_safe="30.0" s_min="2.0" threshold="0.05" bias_right="0.1" politeness="0." />
             </LANE_CHANGE_MODEL>
         </VEHICLE>
-        <VEHICLE label="ACC3" length="6" b_max="40" consumption="carDiesel" width="4.4" reaction_time="0">
+        <VEHICLE label="ACC3" length="7" b_max="40" consumption="carDiesel" width="5.4" reaction_time="0">
             <LONGITUDINAL_MODEL>
                 <ACC v0="35" T="1.2" s0="3" s1="2" delta="4" a="0.8" b="2.0" coolness="1" />
             </LONGITUDINAL_MODEL>
