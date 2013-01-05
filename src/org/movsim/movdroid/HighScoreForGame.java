@@ -30,6 +30,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,8 +46,8 @@ public class HighScoreForGame {
     private MovSimDroidActivity movSimDroidActivity;
     private TreeSet<HighscoreEntry> sortedResults;
     
-    public TreeSet<HighscoreEntry> getSortedResults() {
-        return sortedResults;
+    public List<HighscoreEntry> getSortedResults() {
+        return (List<HighscoreEntry>) new ArrayList<HighscoreEntry>(sortedResults);
     }
 
     public HighScoreForGame(MovSimDroidActivity movSimDroidActivity, HighscoreEntry highscoreEntry) {
