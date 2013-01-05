@@ -25,10 +25,13 @@
  */
 package org.movsim.movdroid.util;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Locale;
 
-public final class HighscoreEntry {
+public final class HighscoreEntry implements Serializable{
+    private static final long serialVersionUID = 1974005142035642175L;
+
     private static final String CSV_SEPARATOR = ";";
     
     public enum Quantity {

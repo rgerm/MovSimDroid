@@ -26,7 +26,6 @@
 package org.movsim.movdroid;
 
 import java.util.List;
-import java.util.TreeSet;
 
 import org.movsim.movdroid.util.HighscoreEntry;
 
@@ -65,7 +64,7 @@ public class HighScoreView extends SherlockActivity {
         Bundle bundle = this.getIntent().getExtras();
         String message = bundle.getString("message");
         String highscore = bundle.getString("highscore");
-        TreeSet<HighscoreEntry> sortedResults = (TreeSet<HighscoreEntry>) bundle.get("highscorelist");
+        List<HighscoreEntry> sortedResults = SimulationFinished.getResults();
         
         ((TextView) findViewById(R.id.text)).setText(message);
         if (highscore != null) {

@@ -25,6 +25,8 @@
  */
 package org.movsim.movdroid;
 
+import java.util.List;
+
 import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.util.FormatUtil;
 import org.movsim.movdroid.util.HighscoreEntry;
@@ -34,6 +36,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 
 public class SimulationFinished {
+
+    private static List<HighscoreEntry> results;
+
+    public static List<HighscoreEntry> getResults() {
+        return results;
+    }
 
     public SimulationFinished(Resources res, double totalVehicleTravelTime, double totalVehicleTravelDistance,
             double totalVehicleFuelUsedLiters, String formatedSimulationDuration, double simulationTime, MovSimDroidActivity movSimDroidActivity) {
@@ -82,11 +90,11 @@ public class SimulationFinished {
             highscoreEntry.setQuantity(HighscoreEntry.Quantity.totalFuelUsedLiters, totalVehicleFuelUsedLiters);
 
             HighScoreForGame highScoreForGame = new HighScoreForGame(movSimDroidActivity, highscoreEntry);
+            results = highScoreForGame.getSortedResults();
             
             Intent intent = new Intent();
             intent.putExtra("message", message.toString());
             intent.putExtra("highscore", gamePerformanceMessage.toString());
-            intent.putExtra("highscorelist", highScoreForGame.getSortedResults());
             intent.setClass(movSimDroidActivity, HighScoreView.class);
             movSimDroidActivity.startActivity(intent);
             
