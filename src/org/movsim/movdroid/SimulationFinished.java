@@ -99,7 +99,7 @@ public class SimulationFinished {
             movSimDroidActivity.startActivity(intent);
             
         } else {
-            movSimDroidActivity.showInfo(message.toString(), gamePerformanceMessage.toString());   
+            movSimDroidActivity.showInfo(message.toString());   
         }
     }
 

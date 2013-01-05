@@ -227,10 +227,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         super.onPause();
     }
 
-    public void showInfo(String info, String highscore) {
+    public void showInfo(String info) {
         Intent intent = new Intent();
         intent.putExtra("message", info);
-        intent.putExtra("highscore", highscore);
         intent.setClass(MovSimDroidActivity.this, InfoDialog.class);
         startActivity(intent);
     }

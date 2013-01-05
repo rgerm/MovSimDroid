@@ -153,12 +153,12 @@ public class MovSimActionBar {
 
     private void actionInfo() {
         String infoText = res.getString(R.string.introduction_text);
-        movSimDroidActivity.showInfo(infoText, "");
+        movSimDroidActivity.showInfo(infoText);
     }
 
     private void actionScenarioInfo(int projectPosition) {
         String infoText = res.getStringArray(R.array.infoScenario)[projectPosition];
-        movSimDroidActivity.showInfo(infoText, "");
+        movSimDroidActivity.showInfo(infoText);
     }
 
     private void actonPause(MenuItem item) {
