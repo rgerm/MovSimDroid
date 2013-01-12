@@ -13,8 +13,8 @@
     <string name="faster">schneller</string>
     <string name="slower">langsamer</string>
     <string name="pause">Pause</string>
-    <string name="simulation_finished_in">"Simulation beendet nach: "</string>
-    <string name="total_travel_time">"\nabsolute Reisezeit: "</string>
+    <string name="simulation_finished_in">"Simulation beendet nach [s]: "</string>
+    <string name="total_travel_time">"\nabsolute Reisezeit [h]: "</string>
     <string name="total_travel_distance">"\ngesamte gefahrene Distanz [km]: "</string>
     <string name="total_fuel_used">"\ngesamter Benzinverbrauch [l]: "</string>
 

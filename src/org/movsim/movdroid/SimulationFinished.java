@@ -26,6 +26,7 @@
 package org.movsim.movdroid;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.movsim.input.ProjectMetaData;
 import org.movsim.movdroid.util.FormatUtil;
@@ -47,7 +48,7 @@ public class SimulationFinished {
             double totalVehicleFuelUsedLiters, String formatedSimulationDuration, double simulationTime, MovSimDroidActivity movSimDroidActivity) {
 
         final StringBuffer message = new StringBuffer(res.getString(R.string.simulation_finished_in))
-                .append(formatedSimulationDuration).append(res.getString(R.string.total_travel_time))
+                .append(String.format(Locale.US, "%.1f", simulationTime)).append(res.getString(R.string.total_travel_time))
                 .append(FormatUtil.getFormatedTime(totalVehicleTravelTime))
                 .append(res.getString(R.string.total_travel_distance))
                 .append(String.format("%.3f", totalVehicleTravelDistance))

@@ -137,6 +137,7 @@ public class MovSimActionBar {
     }
 
     private void actionRestart() {
+        simulationRunnable.pause();
         movSimDroidActivity.createInputStreams();
         roadNetwork.clear();
         simulator.initialize();

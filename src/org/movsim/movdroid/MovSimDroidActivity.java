@@ -150,6 +150,9 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        if (simulationRunnable != null) {
+            simulationRunnable.pause();
+        }
         OnFirstBoot.show(this, "start", itemPosition + "start.accepted",
                 res.getStringArray(R.array.infoScenario)[itemPosition], res.getString(R.string.onFirstBoot_title));
         // project selection
