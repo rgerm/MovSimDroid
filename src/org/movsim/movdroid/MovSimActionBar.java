@@ -87,7 +87,7 @@ public class MovSimActionBar {
         } else if (title.equals(res.getString(R.string.slower))) {
             actionSlower();
         } else if (title.equals(res.getString(R.string.info))) {
-            actionScenarioInfo(item.getItemId());
+            actionScenarioInfo(movSimDroidActivity.getNavigationItemPosition());
         } else if (title.equals(res.getString(R.string.movsimInfo))) {
             actionInfo();
         } else if (title.equals(res.getString(R.string.action))) {

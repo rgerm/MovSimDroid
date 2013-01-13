@@ -83,6 +83,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
     private String projectName;
     private String projectPath;
     private MovSimActionBar movsimActionBar;
+    private int navigationItemPosition;
 
     /** Called when the activity is first created. */
     @Override
@@ -150,6 +151,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        this.navigationItemPosition = itemPosition;
         if (simulationRunnable != null) {
             simulationRunnable.pause();
         }
@@ -247,6 +249,10 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
 
     public Menu getMenu() {
         return menu;
+    }
+
+    public int getNavigationItemPosition() {
+        return navigationItemPosition;
     }
 
 }
