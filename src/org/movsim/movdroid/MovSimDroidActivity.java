@@ -127,6 +127,7 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         menu.add(res.getString(R.string.restart)).setIcon(R.drawable.ic_action_restart)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
         menu.add(res.getString(R.string.action)).setIcon(R.drawable.ic_action_trafficlight)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
@@ -171,6 +172,14 @@ public class MovSimDroidActivity extends SherlockActivity implements OnNavigatio
         trafficView.forceRepaintBackground();
         if (menu != null) {
             menu.getItem(0).setIcon(R.drawable.ic_action_start).setTitle(R.string.start);
+            
+            // Set visibility of interaction button
+            if (itemPosition == 0 || itemPosition == 1) {
+                menu.getItem(2).setVisible(true);
+            } else {
+                menu.getItem(2).setVisible(false);
+            }
+            
         }
         return true;
     }
