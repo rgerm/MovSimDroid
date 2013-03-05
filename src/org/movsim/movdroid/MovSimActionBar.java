@@ -96,26 +96,33 @@ public class MovSimActionBar {
     }
 
     private void actionInteraction() {
-        for (RoadSegment roadSegment : roadNetwork) {
-            if (projectMetaData.getProjectName().equals("routing")) {
-                if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
-                    VariableMessageSignBase variableMessageSign = movSimDroidActivity.getVariableMessageSign();
-                    if (diversionOn == false) {
-                        diversionOn = true;
-                        roadSegment.addVariableMessageSign(variableMessageSign);
-                    } else {
-                        diversionOn = false;
-                        roadSegment.removeVariableMessageSign(variableMessageSign);
+        movSimDroidActivity.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                for (RoadSegment roadSegment : roadNetwork) {
+                    if (projectMetaData.getProjectName().equals("routing")) {
+                        if (roadNetwork.hasVariableMessageSign() && roadSegment.userId().equals("1")) {
+                            VariableMessageSignBase variableMessageSign = movSimDroidActivity.getVariableMessageSign();
+                            if (diversionOn == false) {
+                                diversionOn = true;
+                                roadSegment.addVariableMessageSign(variableMessageSign);
+                            } else {
+                                diversionOn = false;
+                                roadSegment.removeVariableMessageSign(variableMessageSign);
+                            }
+                        }
+                    }
+                    if (roadSegment.trafficLights() != null) {
+                        for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
+                            trafficLight.nextState();
+                            movSimDroidActivity.getMovSimTrafficView().forceRepaintBackground();
+                        }
                     }
                 }
             }
-            if (roadSegment.trafficLights() != null) {
-                for (final TrafficLight trafficLight : roadSegment.trafficLights()) {
-                    trafficLight.nextState();
-                    movSimDroidActivity.getMovSimTrafficView().forceRepaintBackground();
-                }
-            }
-        }
+        });
+
     }
 
     private void actionSlower() {

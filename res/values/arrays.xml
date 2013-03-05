@@ -4,32 +4,34 @@
     <string-array name="project">
         <item>routing  game</item>
         <item>ramp metering game</item>
-        <item>ring road</item>
-        <item>ring road two lanes</item>
-        <item>clover leaf</item>
-        <item>cellular automata</item>
+<!--         <item>ring road</item> -->
+<!--         <item>ring road two lanes</item> -->
+<!--         <item>clover leaf</item> -->
+<!--         <item>cellular automata</item> -->
     </string-array>
     <string-array name="projectName">
         <item>routing</item>
         <item>ramp_metering</item>
-        <item>ringroad_1lane</item>
-        <item>ringroad_2lanes</item>
-        <item>cloverleaf</item>
-        <item>startStop_all_ca</item>
+<!--         <item>ringroad_1lane</item> -->
+<!--         <item>ringroad_2lanes</item> -->
+<!--         <item>cloverleaf</item> -->
+<!--         <item>startStop_all_ca</item> -->
     </string-array>
     <string-array name="projectPath">
         <item>sim/games/</item>
         <item>sim/games/</item>
-        <item>sim/buildingBlocks/</item>
-        <item>sim/buildingBlocks/</item>
-        <item>sim/buildingBlocks/</item>
-        <item>sim/bookScenarioStartStop/</item>
+<!--         <item>sim/buildingBlocks/</item> -->
+<!--         <item>sim/buildingBlocks/</item> -->
+<!--         <item>sim/buildingBlocks/</item> -->
+<!--         <item>sim/bookScenarioStartStop/</item> -->
     </string-array>
     <string-array name="infoScenario">
         <item>            Objective:\n\n
             Switch the routing recommendation to use the capacity
 of the two roads optimally.\n\n
 What makes the game interesting:\n\n
+Optimal routing is a quite complex problem. The game demonstrates the difficulty.
+\n\n
 Externally given:
 \n\n
 A fixed traffic demand curve with a "rush-hour" peak. The main road ("freeway") has a road-works
@@ -54,25 +56,25 @@ with a "rush-hour" peak. A fixed percentage of vehicles on the
 secondary road (e.g., 50%) turns right and enters the freeway via the traffic
 light. The traffic flow is set so that congestion occurs on the
 freeway if the traffic light is left green all the time.</item>
-        <item>What makes the scenario interesting:\n\n
-            traffic jam.
-            Externally given:\n\n
-            IDM with noise</item>
-        <item>What makes the scenario interesting:\n\n
-            traffic jam.
-            Externally given:\n\njam with lane change</item>
-        <item>            Objective:\n\n
-            What makes the scenario interesting:\n\n
-            Complex road network. Just a perfamance test for your Android device.
-            Externally given:\n\n</item>
-        <item>MovSim is a scientic research tool. The objective is how to model basic traffic situations.
-            \n\n
-            What makes the scenario interesting:\n\n
-            Here you can see a different approach to model vehicles. In the previous scenaris we used a car-following model.\n Here cellular automata are used. You should \"see\" the difference.\n\n The advantage of the cellular automata models: they are faster.\n\n
-            The displayed models in this start-stop scenario are:\n\n
-            Nagel-Schreckeberg\n
-            Barlovic\n
-            Kerner-Klenow-Wolf</item>
+<!--         <item>What makes the scenario interesting:\n\n -->
+<!--             traffic jam. -->
+<!--             Externally given:\n\n -->
+<!--             IDM with noise</item> -->
+<!--         <item>What makes the scenario interesting:\n\n -->
+<!--             traffic jam. -->
+<!--             Externally given:\n\njam with lane change</item> -->
+<!--         <item>            Objective:\n\n -->
+<!--             What makes the scenario interesting:\n\n -->
+<!--             Complex road network. Just a perfamance test for your Android device. -->
+<!--             Externally given:\n\n</item> -->
+<!--         <item>MovSim is a scientic research tool. The objective is how to model basic traffic situations. -->
+<!--             \n\n -->
+<!--             What makes the scenario interesting:\n\n -->
+<!--             Here you can see a different approach to model vehicles. In the previous scenaris we used a car-following model.\n Here cellular automata are used. You should \"see\" the difference.\n\n The advantage of the cellular automata models: they are faster.\n\n -->
+<!--             The displayed models in this start-stop scenario are:\n\n -->
+<!--             Nagel-Schreckeberg\n -->
+<!--             Barlovic\n -->
+<!--             Kerner-Klenow-Wolf</item> -->
     </string-array>
     <string-array name="highscoreRouting">
         <item>Wow, King of the road! You really have figured this out.</item>

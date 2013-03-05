@@ -4,10 +4,10 @@
     <string-array name="project">
         <item>Routen-Spiel</item>
         <item>Zuflußregelungs-Spiel</item>
-        <item>Ringstraße</item>
-        <item>Ringstraße mit 2 Spuren</item>
-        <item>Autobahnkreuz</item>
-        <item>zelluläre Automaten</item>
+<!--         <item>Ringstraße</item> -->
+<!--         <item>Ringstraße mit 2 Spuren</item> -->
+<!--         <item>Autobahnkreuz</item> -->
+<!--         <item>zelluläre Automaten</item> -->
     </string-array>
 
 <!--   <string-array name="highscoreRouting">
